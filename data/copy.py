@@ -10,10 +10,16 @@ class CopyDataset(object):
             vocab.add(char)
         self.vocab = vocab
 
-    def sample(self):
+    def _sample(self):
         seq = [np.random.choice(self.chars) for _ in range(10)]
         seq = self.vocab.encode(seq)
         return seq, seq
+
+    def sample_train(self):
+        return self._sample()
+
+    def sample_holdout(self):
+        return self._sample()
 
     def novel(self, utt):
         return False
