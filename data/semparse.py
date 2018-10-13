@@ -13,7 +13,7 @@ def clean(s):
     return s.replace('"', ' " ').replace('(', ' ( ').replace(')', ' ) ')
 
 class SemparseDataset(OneShotDataset):
-    def __init__(self):
+    def __init__(self, **kwargs):
         with open(os.path.join(DATA_DIR, DATASET)) as fh:
             data = json.load(fh)
 
@@ -37,4 +37,9 @@ class SemparseDataset(OneShotDataset):
 
                 dataset[utt["question-split"]].append((built_txt, built_sql))
 
-        super().__init__(dataset["train"], dataset["dev"])
+        super().__init__(
+            dataset["train"],
+            dataset["dev"],
+            dataset["test"],
+            **kwargs
+        )

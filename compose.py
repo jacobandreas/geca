@@ -27,19 +27,22 @@ DEVICE = torch.device("cuda:0")
 n_batch = 10
 
 def main(argv):
-    dataset = get_dataset()
-    model = GeneratorModel(dataset.vocab).to(DEVICE)
+    dataset = get_dataset(dedup=FLAGS.dedup)
+    model = GeneratorModel(
+        dataset.vocab,
+        copy=True,
+        self_attention=True
+    ).to(DEVICE)
     path = os.path.join(FLAGS.model_dir, FLAGS.model)
     checkpoint = torch.load(path)
     model.load_state_dict(checkpoint)
 
     realized = []
     for i in range(0, FLAGS.n_sample, n_batch):
-        ctx, _, names = dataset.sample_holdout(wug_limit=FLAGS.wug_limit)
-        ctx = batch_seqs([ctx]).to(DEVICE)
+        ctx, _, names = dataset.sample_comp_gen(wug_limit=FLAGS.wug_limit)
+        ctx = batch_seqs([ctx for _ in range(n_batch)]).to(DEVICE)
         generate = min(FLAGS.n_sample - i, n_batch)
-        print(generate)
-        preds, scores = model.sample(ctx, generate)
+        preds, scores = model.sample(ctx)
 
         keep = []
         for pred, score in zip(preds, scores):

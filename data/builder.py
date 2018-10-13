@@ -1,5 +1,6 @@
 from collections import defaultdict
 import numpy as np
+from torchdec import hlog
 from torchdec.vocab import Vocab
 
 max_wugs = 3
@@ -28,17 +29,31 @@ def t_replace_all(old_subseq, new_subseq, seq):
     return after
 
 class OneShotDataset(object):
-    def __init__(self, train_utts, test_utts, ngram_size=1, holdout=frozenset()):
+    def __init__(
+            self,
+            train_utts,
+            val_utts,
+            test_utts,
+            ngram_size=1,
+            holdout=frozenset(),
+            aug_data=(),
+            dedup=False
+    ):
         index = defaultdict(set)
         vocab = Vocab()
         for i_wug in range(max_wugs):
             vocab.add(wug_template % i_wug)
         vocab.add(sep)
         for inp, out in train_utts:
-            for i in range(len(inp)-ngram_size+1):
-                ngram = tuple(inp[i:i+ngram_size])
-                index[ngram].add((tuple(inp), tuple(out)))
-                for word in inp + out:
+            for seq in (inp, out):
+                for i in range(len(seq)-ngram_size+1):
+                    ngram = tuple(seq[i:i+ngram_size])
+                    index[ngram].add((tuple(inp), tuple(out)))
+                for word in seq:
+                    vocab.add(word)
+        for inp, out in val_utts + test_utts:
+            for seq in (inp, out):
+                for word in seq:
                     vocab.add(word)
 
         self.vocab = vocab
@@ -60,7 +75,17 @@ class OneShotDataset(object):
             holdout = keys
         self.holdout = holdout
 
+        train_utts = train_utts + [(d["inp"], d["out"]) for d in aug_data]
+        if dedup:
+            train_utts = [(tuple(i), tuple(o)) for i, o in train_utts]
+            train_utts = sorted(list(set(train_utts)))
+        hlog.value("aug", len(aug_data))
+        hlog.value("train+aug", len(train_utts))
+
         self.sep = sep
+        self.train_utts = train_utts
+        self.val_utts = val_utts
+        self.test_utts = test_utts
 
     def realize(self, seq, names):
         dec = list(self.vocab.decode(seq))
@@ -72,7 +97,15 @@ class OneShotDataset(object):
                 out.append(w)
         return out
 
-    def _sample(self, key=None, wug_limit=None):
+    def _sample(self, utts, index=None):
+        if index is None:
+            index = np.random.randint(len(utts))
+        inp, out = utts[index]
+        inp = self.vocab.encode(inp)
+        out = self.vocab.encode(out)
+        return inp, out
+
+    def _sample_comp(self, key=None, wug_limit=None):
         if key is None:
             i_key = np.random.choice(len(self.keys), p=self.weights)
             key = self.keys[i_key]
@@ -100,7 +133,8 @@ class OneShotDataset(object):
                 names[wug] = word
         else:
             unk_indices = [
-                i for i, w in enumerate(c1) 
+                #i for i, w in enumerate(c1) 
+                i for i, w in enumerate(ctx)
                 if w != sep and self.counts[(w,)] < wug_limit
             ]
             if len(unk_indices) >= max_wugs:
@@ -112,17 +146,29 @@ class OneShotDataset(object):
                 ctx = t_replace_all(word, (wug,), ctx)
                 out = t_replace_all(word, (wug,), out)
                 names[wug] = word
-        print(names)
 
         ctx = self.vocab.encode(ctx)
         out = self.vocab.encode(out)
 
         return ctx, out, names
 
-    def sample_train(self, wug_limit=None):
-        return self._sample(wug_limit=wug_limit)
+    def sample_comp_train(self, wug_limit=None):
+        return self._sample_comp(wug_limit=wug_limit)[:2]
 
-    def sample_holdout(self, wug_limit=None):
+    def sample_comp_gen(self, wug_limit=None):
         keys = list(self.holdout)
         key = keys[np.random.randint(len(keys))]
-        return self._sample(key=key, wug_limit=wug_limit)
+        return self._sample_comp(key=key, wug_limit=wug_limit)
+
+    def sample_train(self):
+        return self._sample(self.train_utts)
+
+    def get_val(self):
+        return [
+            self._sample(self.val_utts, i) for i in range(len(self.val_utts))
+        ]
+
+    def get_test(self):
+        return [
+            self._sample(self.test_utts, i) for i in range(len(self.test_utts))
+        ]

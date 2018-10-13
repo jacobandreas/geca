@@ -7,6 +7,13 @@ TRAIN = "tasks_train_addprim_jump.txt"
 TEST = "tasks_test_addprim_jump.txt"
 
 class ScanDataset(OneShotDataset):
+    def __init__(self, **kwargs):
+        train = self.load_split(TRAIN)
+        test = self.load_split(TEST)
+        super().__init__(
+            train, test, test, holdout={("jump",), ("I_JUMP",)}, **kwargs
+        )
+
     def load_split(self, split):
         data = []
         with open(os.path.join(DATA_DIR, split)) as fh:
@@ -17,8 +24,3 @@ class ScanDataset(OneShotDataset):
                 out = toks[split+1:]
                 data.append((inp, out))
         return data
-
-    def __init__(self):
-        train = self.load_split(TRAIN)
-        test = self.load_split(TEST)
-        super().__init__(train, test, holdout={("jump",)})
