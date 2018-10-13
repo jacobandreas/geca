@@ -1,12 +1,48 @@
 from torchdec import hlog
 from torchdec.seq import Encoder, Decoder, SimpleAttention
 
+from collections import Counter, defaultdict
 import numpy as np
 import torch
 from torch import nn
 
 n_emb = 64
 n_enc = 512
+
+class StupidModel():
+    def train(self, dataset):
+        self.vocab = dataset.vocab
+        counter = Counter()
+        data = defaultdict(set)
+        for _ in range(10000):
+            ctx, out = dataset.sample_train()
+            for tok in ctx:
+                counter[tok] += 1
+            for tok in out:
+                counter[tok] += 1
+            ctx, out = tuple(ctx), tuple(out)
+            data[ctx].add(out)
+            data[out].add(ctx)
+        self.counter = counter
+        self.data = data
+
+    def generalize(self, ctx):
+        c = 0
+        for d in self.data.keys():
+            if len(d) > 5:
+                continue
+            if c > 100:
+                break
+            print(d)
+            c += 1
+        print("===")
+        print(ctx)
+        print()
+
+        ctx = tuple(ctx)
+        if ctx in self.data:
+            return self.data[ctx]
+        return set()
 
 class GeneratorModel(nn.Module):
     def __init__(self, vocab):
@@ -47,7 +83,12 @@ class GeneratorModel(nn.Module):
     def sample(self, ctx, n_samples):
         enc, state = self.encoder(ctx)
         enc = self.proj(enc)
-        state = [s.sum(dim=0, keepdim=True) for s in state]
+        assert(enc.shape[1] == 1)
+        enc = enc.expand(-1, n_samples, -1).contiguous()
+        state = [
+            s.sum(dim=0, keepdim=True).expand(-1, n_samples, -1).contiguous()
+            for s in state
+        ]
         return self.decoder.sample(
             state, 150, att_features=[enc], att_tokens=[ctx]
         )

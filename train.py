@@ -1,15 +1,18 @@
 #!/usr/bin/env python
+
 import fakeprof
 
+import flags as _flags
 from data.scan import ScanDataset
 from data.copy import CopyDataset
 from data.semparse import SemparseDataset
 from grammar import RgFactory
 from model import GeneratorModel
 
+from absl import app, flags
 from collections import namedtuple
-import gflags
 import numpy as np
+import os
 import torch
 from torch import optim
 from torch.optim import lr_scheduler as opt_sched
@@ -17,16 +20,13 @@ from torch.nn.utils.clip_grad import clip_grad_norm_
 from torchdec import hlog
 from torchdec.seq import batch_seqs
 
-FLAGS = gflags.FLAGS
-
-gflags.DEFINE_integer("seed", 0, "random seed")
-gflags.DEFINE_string("dataset", None, "dataset to load")
-gflags.DEFINE_integer("n_epochs", 512, "number of training epochs")
-gflags.DEFINE_integer("n_epoch_batches", 32, "batches per epoch")
-gflags.DEFINE_integer("n_batch", 64, "batch size")
-gflags.DEFINE_float("lr", 0.001, "learning rate"
-gflags.DEFINE_float("clip", 1., "gradient clipping")
-gflags.DEFINE_string("model_dir", "model")
+FLAGS = flags.FLAGS
+flags.DEFINE_integer("seed", 0, "random seed")
+flags.DEFINE_integer("n_epochs", 512, "number of training epochs")
+flags.DEFINE_integer("n_epoch_batches", 32, "batches per epoch")
+flags.DEFINE_integer("n_batch", 64, "batch size")
+flags.DEFINE_float("lr", 0.001, "learning rate")
+flags.DEFINE_float("clip", 1., "gradient clipping")
 
 DEVICE = torch.device("cuda:0")
 
@@ -48,7 +48,10 @@ def get_dataset():
     assert False, "unknown dataset %s" % FLAGS.dataset
 
 @profile
-def main():
+def main(argv):
+    torch.manual_seed(FLAGS.seed)
+    np.random.seed(FLAGS.seed)
+
     dataset = get_dataset()
     model = GeneratorModel(dataset.vocab).to(DEVICE)
     opt = optim.Adam(model.parameters(), lr=FLAGS.lr)
@@ -69,7 +72,7 @@ def main():
                 clip_grad_norm_(model.parameters(), FLAGS.clip)
                 opt.step()
                 epoch_loss += loss.item()
-            epoch_loss /= n_epoch_batches
+            epoch_loss /= FLAGS.n_epoch_batches
             hlog.value("loss", epoch_loss)
             evaluate(dataset, model)
             torch.save(
@@ -96,6 +99,4 @@ def evaluate(dataset, model):
     print()
 
 if __name__ == "__main__":
-    torch.manual_seed(FLAGS.seed)
-    np.random.seed(FLAGS.seed)
-    main()
+    app.run(main)
