@@ -7,7 +7,7 @@ import flags as _flags
 from data.scan import ScanDataset
 from data.copy import CopyDataset
 from data.semparse import SemparseDataset
-from model import GeneratorModel
+from model import GeneratorModel, RetrievalModel
 from trainer import train, make_batch, Datum
 
 from absl import app, flags
@@ -43,14 +43,17 @@ def main(argv):
         os.mkdir(FLAGS.model_dir)
 
     dataset = get_dataset()
-    model = GeneratorModel(
-        dataset.vocab,
-        copy=True,
-        self_attention=True
-    ).to(DEVICE)
+    #model = GeneratorModel(
+    #    dataset.vocab,
+    #    copy=True,
+    #    self_attention=False
+    #).to(DEVICE)
+    model = RetrievalModel(
+        dataset.vocab
+    )
+    model.prepare(dataset)
 
     def callback(i_epoch):
-        print("callback")
         model.eval()
         evaluate(dataset, model)
         torch.save(
@@ -73,9 +76,9 @@ def visualize(datum, vocab, model):
 @hlog.fn("eval", timer=False)
 def evaluate(dataset, model):
     with hlog.task("train", timer=False):
-        visualize(make_batch([dataset.sample_comp_train()]), dataset.vocab, model)
+        visualize(make_batch([dataset.sample_comp_train()], dataset.vocab), dataset.vocab, model)
     with hlog.task("holdout", timer=False):
-        visualize(make_batch([dataset.sample_comp_gen()[:2]]), dataset.vocab, model)
+        visualize(make_batch([dataset.sample_comp_gen()[:2]], dataset.vocab), dataset.vocab, model)
     print()
 
 if __name__ == "__main__":

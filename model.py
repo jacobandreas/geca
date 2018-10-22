@@ -11,6 +11,58 @@ FLAGS = flags.FLAGS
 flags.DEFINE_integer("n_emb", 64, "embedding size")
 flags.DEFINE_integer("n_enc", 512, "encoder hidden size")
 flags.DEFINE_float("dropout", 0, "dropout probability")
+flags.DEFINE_boolean("copy_sup", False, "supervised copy")
+
+class RetrievalModel():
+    def __init__(self, vocab):
+        self.vocab = vocab
+
+    def prepare(self, dataset):
+        iterator = dataset.enumerate_comp_train()
+        templ_to_arg = defaultdict(set)
+        arg_to_templ = defaultdict(set)
+        for template, arguments in iterator:
+            templ_to_arg[template].add(arguments)
+            arg_to_templ[arguments].add(template)
+
+        for template in templ_to_arg:
+            neighbors = []
+            for argument in templ_to_arg[template]:
+                for neighbor in arg_to_templ[argument]:
+                    if neighbor == template:
+                        continue
+                    neighbors.append(neighbor)
+
+
+        templates = list(templ_to_arg.keys())
+        weights = np.asarray([len(templ_to_arg[t]) for t in templates])
+        weights = weights / weights.sum()
+        self.templates = templates
+        self.weights = weights
+        self.templ_to_arg = templ_to_arg
+        self.arg_to_templ = arg_to_templ
+
+    def sample(self, inp):
+        inp = inp.detach().cpu().numpy().transpose().tolist()
+        assert len(inp) == 1
+        inp = tuple(inp[0])
+        if (
+            inp not in self.templates 
+            or self.weights[self.templates.index(inp)] == 0
+        ):
+            return [], []
+
+        args = self.templ_to_arg[inp]
+        neighbors = [
+            neighbor for arg in args 
+            for neighbor in self.arg_to_templ[arg]
+            if neighbor != inp
+        ]
+        if len(neighbors) == 0:
+            return [], []
+
+        chosen = neighbors[np.random.randint(len(neighbors))]
+        return [chosen], [0]
 
 class StupidModel():
     def train(self, dataset):
@@ -90,17 +142,18 @@ class GeneratorModel(nn.Module):
         )
         n_batch, n_seq = out_next.shape
 
-        #pred = pred.view(n_batch * n_seq, -1)
-        #out_next = out_next.contiguous().view(-1)
-        #loss = self.loss(pred, out_next)
-        #return loss
+        if FLAGS.copy_sup:
+            dpred = torch.stack(dpred).view(n_batch * n_seq, -1)
+            cpred = torch.stack(cpred).view(n_batch * n_seq, -1)
+            dout_next = dout[1:, :].contiguous().view(-1)
+            cout_next = cout[1:, :].contiguous().view(-1)
+            loss = self.loss(dpred, dout_next) + self.loss(cpred, cout_next)
+        else:
+            pred = pred.view(n_batch * n_seq, -1)
+            out_next = out_next.contiguous().view(-1)
+            loss = self.loss(pred, out_next)
+            return loss
 
-        #pred = pred.view(n_batch * n_seq, -1)
-        dpred = torch.stack(dpred).view(n_batch * n_seq, -1)
-        cpred = torch.stack(cpred).view(n_batch * n_seq, -1)
-        dout_next = dout[1:, :].contiguous().view(-1)
-        cout_next = cout[1:, :].contiguous().view(-1)
-        loss = self.loss(dpred, dout_next) + self.loss(cpred, cout_next)
         return loss
 
     def sample(self, inp, greedy=False):

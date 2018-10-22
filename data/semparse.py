@@ -1,10 +1,14 @@
 from .builder import OneShotDataset
 
+from absl import flags
 from collections import Counter
 import json
 import numpy as np
 from torchdec.vocab import Vocab
 import os
+
+FLAGS = flags.FLAGS
+flags.DEFINE_string("semparse_split", "question", "which split of the semparse dataset to use")
 
 DATA_DIR = "/x/jda/data/text2sql-data/data/"
 DATASET = "geography.json"
@@ -35,7 +39,17 @@ class SemparseDataset(OneShotDataset):
                 built_sql = tuple(built_sql.split())
                 built_txt = tuple(built_txt.split())
 
-                dataset[utt["question-split"]].append((built_txt, built_sql))
+                if FLAGS.semparse_split == "question":
+                    split = utt["question-split"]
+                elif FLAGS.semparse_split == "query":
+                    split = query["query-split"]
+                else:
+                    assert False, "unknown split %s" % FLAGS.split
+
+                dataset[split].append((built_txt, built_sql))
+
+        if FLAGS.TEST:
+            dataset["train"] += dataset["dev"]
 
         super().__init__(
             dataset["train"],

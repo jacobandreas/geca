@@ -1,2 +1,4 @@
-.pyc
+*.pyc
 __pycache__
+*.chk
+*.swp

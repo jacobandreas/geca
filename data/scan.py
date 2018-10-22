@@ -11,7 +11,9 @@ class ScanDataset(OneShotDataset):
         train = self.load_split(TRAIN)
         test = self.load_split(TEST)
         super().__init__(
-            train, test, test, holdout={("jump",), ("I_JUMP",)}, **kwargs
+            train, test, test, 
+            #holdout={("jump",), ("I_JUMP",)},
+            **kwargs
         )
 
     def load_split(self, split):
