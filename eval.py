@@ -11,11 +11,14 @@ from trainer import train, make_batch, Datum
 from absl import app, flags, logging
 import json
 import numpy as np
+import os
 import torch
 from torchdec import hlog
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string("augment", None, "file with composed data for augmentation")
+flags.DEFINE_float("aug_ratio", 0, "fraction of samples to draw from augmentation")
+flags.DEFINE_boolean("invert", False, "swap input/output")
 
 DEVICE = torch.device("cuda:0")
 
@@ -31,14 +34,25 @@ def main(argv):
     else:
         aug_data = []
 
-    dataset = get_dataset(aug_data=aug_data, dedup=FLAGS.dedup)
+    dataset = get_dataset(aug_data=aug_data, invert=FLAGS.invert)
     model = GeneratorModel(
         dataset.vocab,
         copy=True,
         self_attention=False
     ).to(DEVICE)
 
+    fine_tune = [True]
+
+    def sample():
+        if fine_tune[0]:
+            return dataset.sample_train(aug_ratio=FLAGS.aug_ratio)
+        else:
+            return dataset.sample_train(aug_ratio=FLAGS.aug_ratio)
+
     def callback(i_epoch):
+        if not fine_tune[0] and i_epoch >= 20:
+            hlog.log("FINE_TUNE")
+            fine_tune[0] = True
         model.eval()
         with hlog.task("eval_train", timer=False):
             train_data = [dataset.sample_train() for _ in range(1000)]
@@ -50,14 +64,19 @@ def main(argv):
             with hlog.task("eval_test", timer=False):
                 test_data = dataset.get_test()
                 evaluate(model, test_data)
+        if (i_epoch+1) % FLAGS.n_checkpoint == 0: 
+            torch.save(
+                model.state_dict(),
+                os.path.join(FLAGS.model_dir, "model.%05d.chk" % i_epoch)
+            )
         return val_acc
 
-    train(dataset, model, dataset.sample_train, callback)
+    train(dataset, model, sample, callback, staged=False)
 
 def evaluate(model, data, vis=False):
     correct = 0
     for i in range(0, len(data), FLAGS.n_batch):
-        batch = make_batch(data[i:i+FLAGS.n_batch], model.vocab)
+        batch = make_batch(data[i:i+FLAGS.n_batch], model.vocab, staged=False)
         preds, _ = model.sample(batch.inp_data, greedy=True)
         for j in range(len(preds)):
             if vis:

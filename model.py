@@ -1,5 +1,5 @@
 from torchdec import hlog
-from torchdec.seq import Encoder, Decoder, SimpleAttention
+from torchdec.seq import Encoder, Decoder, SimpleAttention, batch_seqs
 
 from absl import flags
 from collections import Counter, defaultdict
@@ -18,86 +18,134 @@ class RetrievalModel():
         self.vocab = vocab
 
     def prepare(self, dataset):
-        iterator = dataset.enumerate_comp_train()
-        templ_to_arg = defaultdict(set)
-        arg_to_templ = defaultdict(set)
-        for template, arguments in iterator:
-            templ_to_arg[template].add(arguments)
-            arg_to_templ[arguments].add(template)
+        self.dataset = dataset
 
-        for template in templ_to_arg:
-            neighbors = []
-            for argument in templ_to_arg[template]:
-                for neighbor in arg_to_templ[argument]:
-                    if neighbor == template:
-                        continue
-                    neighbors.append(neighbor)
-
-
-        templates = list(templ_to_arg.keys())
-        weights = np.asarray([len(templ_to_arg[t]) for t in templates])
-        weights = weights / weights.sum()
-        self.templates = templates
-        self.weights = weights
-        self.templ_to_arg = templ_to_arg
-        self.arg_to_templ = arg_to_templ
-
-    def sample(self, inp):
-        inp = inp.detach().cpu().numpy().transpose().tolist()
-        assert len(inp) == 1
-        inp = tuple(inp[0])
-        if (
-            inp not in self.templates 
-            or self.weights[self.templates.index(inp)] == 0
-        ):
-            return [], []
-
-        args = self.templ_to_arg[inp]
-        neighbors = [
-            neighbor for arg in args 
-            for neighbor in self.arg_to_templ[arg]
-            if neighbor != inp
+    def sample(self, inp, out):
+        out = [
+            s.detach().cpu().numpy().transpose().tolist()
+            for s in out
         ]
-        if len(neighbors) == 0:
-            return [], []
+        #out = out.detach().cpu().numpy().transpose().tolist()
+        #assert len(out[0]) == 1
+        return out, [0]
+        #out = (tuple(out[0][0]), tuple(out[1][0]))
+        #out = self.dataset.join(out)
+        #args = self.templ_to_arg[inp]
+        #arg = args[np.random.randint(len(args))]
+        #templs = self.arg_to_templ[arg]
+        #templ = templs[np.random.randint(len(templs))]
+        #templ_inp, templ_out = self.dataset.split(templ)
+        #return ([templ_inp], [templ_out]), [0]
 
-        chosen = neighbors[np.random.randint(len(neighbors))]
-        return [chosen], [0]
+class StagedModel(nn.Module):
+    def __init__(self, vocab, copy=False, self_attention=False):
+        super().__init__()
+        self.vocab = vocab
+        def make_encoder():
+            enc = Encoder(
+                vocab,
+                FLAGS.n_emb,
+                FLAGS.n_enc,
+                1,
+                bidirectional=True,
+                dropout=FLAGS.dropout,
+            )
+            proj = nn.Linear(FLAGS.n_enc * 2, FLAGS.n_enc)
+            return enc, proj
+        def make_decoder(n_att):
+            return Decoder(
+                vocab,
+                FLAGS.n_emb,
+                FLAGS.n_enc,
+                1,
+                attention=[
+                    SimpleAttention(FLAGS.n_enc, FLAGS.n_enc) 
+                    for _ in range(n_att)
+                ],
+                copy=copy,
+                self_attention=self_attention,
+                dropout=FLAGS.dropout
+            )
 
-class StupidModel():
-    def train(self, dataset):
-        self.vocab = dataset.vocab
-        counter = Counter()
-        data = defaultdict(set)
-        for _ in range(10000):
-            ctx, out = dataset.sample_train()
-            for tok in ctx:
-                counter[tok] += 1
-            for tok in out:
-                counter[tok] += 1
-            ctx, out = tuple(ctx), tuple(out)
-            data[ctx].add(out)
-            data[out].add(ctx)
-        self.counter = counter
-        self.data = data
+        self.inp_encoder, self.inp_proj = make_encoder()
+        self.out_encoder, self.out_proj = make_encoder()
+        self.inp_decoder = make_decoder(1)
+        self.out_decoder = make_decoder(2)
+        self.loss = nn.CrossEntropyLoss(ignore_index=vocab.pad())
 
-    def generalize(self, ctx):
-        c = 0
-        for d in self.data.keys():
-            if len(d) > 5:
-                continue
-            if c > 100:
-                break
-            print(d)
-            c += 1
-        print("===")
-        print(ctx)
-        print()
+    def prepare(self, dataset):
+        pass
 
-        ctx = tuple(ctx)
-        if ctx in self.data:
-            return self.data[ctx]
-        return set()
+    def forward(self, ref, tgt, _dout, _cout):
+        ref_inp, ref_out = ref
+        inp, out = tgt
+
+        enc_ref_inp, state_ref_inp = self.inp_encoder(ref_inp)
+        enc_inp, state_inp = self.inp_encoder(inp)
+        enc_ref_out, state_ref_out = self.out_encoder(ref_out)
+
+        enc_ref_inp = self.inp_proj(enc_ref_inp)
+        state_ref_inp = [s.sum(dim=0, keepdim=True) for s in state_ref_inp]
+
+        enc_inp = self.inp_proj(enc_inp)
+        state_inp = [s.sum(dim=0, keepdim=True) for s in state_inp]
+
+        enc_ref_out = self.out_proj(enc_ref_out)
+        state_ref_out = [s.sum(dim=0, keepdim=True) for s in state_inp]
+
+        inp_prev = inp[:-1, :]
+        inp_next = inp[1:, :]
+        out_prev = out[:-1, :]
+        out_next = out[1:, :]
+
+        pred_inp, *_, = self.inp_decoder(
+            state_ref_inp,
+            inp_prev.shape[0],
+            inp_prev,
+            att_features=[enc_ref_inp],
+            att_tokens=[ref_inp]
+        )
+
+        pred_out, *_, = self.out_decoder(
+            [state_inp[i] + state_ref_out[i] for i in range(len(state_inp))],
+            out_prev.shape[0],
+            out_prev,
+            att_features=[enc_inp, enc_ref_out],
+            att_tokens=[inp, ref_out]
+        )
+
+        n_batch, n_seq = inp_next.shape
+        pred_inp = pred_inp.view(n_batch * n_seq, -1)
+        inp_next = inp_next.contiguous().view(-1)
+        n_batch, n_seq = out_next.shape
+        pred_out = pred_out.view(n_batch * n_seq, -1)
+        out_next = out_next.contiguous().view(-1)
+        return self.loss(pred_inp, inp_next) + self.loss(pred_out, out_next)
+
+    def sample(self, ref, greedy=False):
+        ref_inp, ref_out = ref
+        enc_ref_inp, state_ref_inp = self.inp_encoder(ref_inp)
+        enc_ref_out, state_ref_out = self.out_encoder(ref_out)
+        enc_ref_inp = self.inp_proj(enc_ref_inp)
+        state_ref_inp = [s.sum(dim=0, keepdim=True) for s in state_ref_inp]
+        enc_ref_out = self.out_proj(enc_ref_out)
+        state_ref_out = [s.sum(dim=0, keepdim=True) for s in state_ref_out]
+
+        raw_inp, inp_scores = self.inp_decoder.sample(
+            state_ref_inp, 150, att_features=[enc_ref_inp], att_tokens=[ref_inp]
+        )
+        inp = batch_seqs(raw_inp).to(ref_inp.device)
+
+        enc_inp, state_inp = self.inp_encoder(inp)
+        enc_inp = self.inp_proj(enc_inp)
+        state_inp = [s.sum(dim=0, keepdim=True) for s in state_inp]
+
+        raw_out, out_scores = self.out_decoder.sample(
+            [state_inp[i] + state_ref_out[i] for i in range(len(state_inp))],
+            150, att_features=[enc_inp, enc_ref_out],
+            att_tokens=[inp, ref_out]
+        )
+        return (raw_inp, raw_out), [si + so for si, so in zip(inp_scores, out_scores)]
 
 class GeneratorModel(nn.Module):
     def __init__(self, vocab, copy=False, self_attention=False):
@@ -124,6 +172,9 @@ class GeneratorModel(nn.Module):
         )
         self.loss = nn.CrossEntropyLoss(ignore_index=vocab.pad())
 
+    def prepare(self, dataset):
+        pass
+
     @profile
     def forward(self, inp, out, dout, cout):
         enc, state = self.encoder(inp)
@@ -132,7 +183,6 @@ class GeneratorModel(nn.Module):
 
         out_prev = out[:-1, :]
         out_next = out[1:, :]
-        att_mask = (inp == self.vocab.pad()).float()
         pred, _, _, (dpred, cpred) = self.decoder(
             state,
             out_prev.shape[0],

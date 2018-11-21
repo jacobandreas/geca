@@ -1,0 +1,59 @@
+I1104 13:39:23.613862 140049759975168 hlog.py:24] # --noTEST
+I1104 13:39:23.614286 140049759975168 hlog.py:24] # --seed=0
+I1104 13:39:23.614806 140049759975168 hlog.py:24] # --dataset=semparse
+I1104 13:39:23.615002 140049759975168 hlog.py:24] # --model_dir=model
+I1104 13:39:23.615096 140049759975168 hlog.py:24] # --nologtostderr
+I1104 13:39:23.615194 140049759975168 hlog.py:24] # --noalsologtostderr
+I1104 13:39:23.615307 140049759975168 hlog.py:24] # --log_dir=
+I1104 13:39:23.615391 140049759975168 hlog.py:24] # --verbosity=0
+I1104 13:39:23.615474 140049759975168 hlog.py:24] # --verbosity=0
+I1104 13:39:23.615562 140049759975168 hlog.py:24] # --stderrthreshold=fatal
+I1104 13:39:23.615671 140049759975168 hlog.py:24] # --showprefixforinfo
+I1104 13:39:23.615754 140049759975168 hlog.py:24] # --nocompute_adjacencies
+I1104 13:39:23.615835 140049759975168 hlog.py:24] # --nodedup
+I1104 13:39:23.615923 140049759975168 hlog.py:24] # --semparse_split=query
+I1104 13:39:23.616029 140049759975168 hlog.py:24] # --semparse_dataset=atis
+I1104 13:39:23.616112 140049759975168 hlog.py:24] # --n_emb=64
+I1104 13:39:23.616193 140049759975168 hlog.py:24] # --n_enc=512
+I1104 13:39:23.616274 140049759975168 hlog.py:24] # --dropout=0.5
+I1104 13:39:23.616361 140049759975168 hlog.py:24] # --copy_sup
+I1104 13:39:23.616465 140049759975168 hlog.py:24] # --n_epochs=150
+I1104 13:39:23.616567 140049759975168 hlog.py:24] # --n_epoch_batches=32
+I1104 13:39:23.616649 140049759975168 hlog.py:24] # --n_batch=64
+I1104 13:39:23.616730 140049759975168 hlog.py:24] # --lr=0.001
+I1104 13:39:23.616818 140049759975168 hlog.py:24] # --clip=1.0
+I1104 13:39:23.616924 140049759975168 hlog.py:24] # --sched_factor=0.5
+I1104 13:39:23.617008 140049759975168 hlog.py:24] # --norun_with_pdb
+I1104 13:39:23.617089 140049759975168 hlog.py:24] # --nopdb_post_mortem
+I1104 13:39:23.617176 140049759975168 hlog.py:24] # --norun_with_profiling
+I1104 13:39:23.617280 140049759975168 hlog.py:24] # --use_cprofile_for_profiling
+I1104 13:39:23.617365 140049759975168 hlog.py:24] # --noonly_check_args
+I1104 13:39:23.617446 140049759975168 hlog.py:24] # --augment=composed.json
+I1104 13:39:23.617526 140049759975168 hlog.py:24] # --aug_ratio=0.332
+I1104 13:39:23.617606 140049759975168 hlog.py:24] # --nohelp
+I1104 13:39:23.617686 140049759975168 hlog.py:24] # --nohelp
+I1104 13:39:23.617774 140049759975168 hlog.py:24] # --nohelpshort
+I1104 13:39:23.617880 140049759975168 hlog.py:24] # --nohelpfull
+I1104 13:39:23.617963 140049759975168 hlog.py:24] # --nohelpxml
+I1104 13:39:23.618044 140049759975168 hlog.py:24] # 
+I1104 13:39:24.062986 140049759975168 hlog.py:32] train 4812
+I1104 13:39:24.063208 140049759975168 hlog.py:32] aug 326
+THCudaCheck FAIL file=/pytorch/aten/src/THC/generic/THCStorage.cu line=58 error=2 : out of memory
+Traceback (most recent call last):
+  File "../../eval.py", line 86, in <module>
+    app.run(main)
+  File "/x/jda/anaconda3/lib/python3.6/site-packages/absl/app.py", line 274, in run
+    _run_main(main, args)
+  File "/x/jda/anaconda3/lib/python3.6/site-packages/absl/app.py", line 238, in _run_main
+    sys.exit(main(argv))
+  File "../../eval.py", line 67, in main
+    train(dataset, model, sample, callback, staged=False)
+  File "/x/jda/metacomp2/torchdec/hlog.py", line 55, in wrapped
+    result = underlying(*args, **kwargs)
+  File "/x/jda/metacomp2/trainer.py", line 78, in train
+    datum.direct_out_data, datum.copy_out_data
+  File "/x/jda/anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py", line 491, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/x/jda/metacomp2/model.py", line 196, in forward
+    cpred = torch.stack(cpred).view(n_batch * n_seq, -1)
+RuntimeError: cuda runtime error (2) : out of memory at /pytorch/aten/src/THC/generic/THCStorage.cu:58

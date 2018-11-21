@@ -6,10 +6,12 @@ import flags as _flags
 from data.scan import ScanDataset
 from data.copy import CopyDataset
 from data.semparse import SemparseDataset
-from model import GeneratorModel, RetrievalModel
+from model import GeneratorModel, RetrievalModel, StagedModel
+from trainer import make_batch
 from train import get_dataset
 
 from absl import app, flags
+from itertools import islice
 import json
 import numpy as np
 import os
@@ -21,19 +23,30 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("model", None, "name of the model to load")
 flags.DEFINE_integer("n_sample", 1000, "number of training examples to sample")
-flags.DEFINE_integer("wug_limit", 1, "wug limit")
 flags.DEFINE_string("write", None, "path to write to")
 
-DEVICE = torch.device("cuda:0")
+flags.DEFINE_string("base_dir", None, "")
+flags.DEFINE_string("base_model", None, "")
+flags.DEFINE_string("inv_dir", None, "")
+flags.DEFINE_string("inv_model", None, "")
 
-n_batch = 10
+DEVICE = torch.device("cuda:0")
 
 def main(argv):
     torch.manual_seed(FLAGS.seed)
     np.random.seed(FLAGS.seed)
 
-    dataset = get_dataset(dedup=FLAGS.dedup)
-    #model = GeneratorModel(
+    dataset = get_dataset()
+
+    for u in dataset.train_utts:
+        print(" ".join(u[0]))
+        #print(" ".join(u[1]))
+    print("\n\n\n")
+    for u in dataset.val_utts:
+        print(" ".join(u[0]))
+        #print(" ".join(u[1]))
+
+    #model = StagedModel(
     #    dataset.vocab,
     #    copy=True,
     #    self_attention=False
@@ -41,32 +54,43 @@ def main(argv):
     model = RetrievalModel(
         dataset.vocab
     )
+
+    ### base_model = GeneratorModel(dataset.vocab, copy=True).to(DEVICE)
+    ### base_model.load_state_dict(torch.load(os.path.join(FLAGS.base_dir, FLAGS.base_model)))
+    ### inv_model = GeneratorModel(dataset.vocab, copy=True).to(DEVICE)
+    ### inv_model.load_state_dict(torch.load(os.path.join(FLAGS.inv_dir, FLAGS.inv_model)))
+
     model.prepare(dataset)
     if isinstance(model, nn.Module):
         path = os.path.join(FLAGS.model_dir, FLAGS.model)
         checkpoint = torch.load(path)
         model.load_state_dict(checkpoint)
 
-    realized = []
+    realized = set()
+    comp_data = dataset.enumerate_comp()
     while len(realized) < FLAGS.n_sample:
-    #for i in range(0, FLAGS.n_sample, n_batch):
-        ctx, _, names = dataset.sample_comp_gen(wug_limit=FLAGS.wug_limit)
-        split = ctx.index(dataset.vocab["##"])
-        c_inp, c_out = ctx[:split], ctx[split+1:]
+        try:
+            templ1, templ2, names = next(comp_data)
+        except StopIteration:
+            break
+        datum = make_batch([(templ1, templ2)], dataset.vocab, staged=True)
+        (inps, outs), scores = model.sample(datum.inp_data, datum.out_data)
 
-        ctx = batch_seqs([ctx for _ in range(1)]).to(DEVICE)
-        preds, scores = model.sample(ctx)
+        ### (inp,), _ = model.sample(datum.inp_data, datum.out_data)
+        ### inp = dataset.vocab.encode(dataset.realize(inp, names))
+        ### print(" ".join(dataset.vocab.decode(inp)))
+        ### inps = [inp for _ in range(10)]
+        ### datum2 = make_batch(zip(inps, inps), dataset.vocab, staged=False)
+        ### outs, scores = base_model.sample(datum2.inp_data)
+        ### outs = [tuple(o) for o in outs]
+        ### for out, score in set(zip(outs, scores)):
+        ###     print(score, " ".join(dataset.vocab.decode(out)))
+        ### print()
+        ### continue
 
         keep = []
-        for pred, score in zip(preds, scores):
-            sep = dataset.vocab[dataset.sep]
-            sep_indices = [i for i in range(len(pred)) if pred[i] == sep]
-            if len(sep_indices) != 1:
-                continue
-            index, = sep_indices
-            inp, out = pred[:index], pred[index+1:]
+        for inp, out, score in zip(inps, outs, scores):
             keep.append(((inp, out), score))
-        #keep = [pair for pair, score in keep]
         for (inp, out), score in keep:
             inp_realized = dataset.realize(inp, names)
             out_realized = dataset.realize(out, names)
@@ -75,13 +99,22 @@ def main(argv):
                 and dataset.novel(out=out_realized)
             ):
                 continue
-            from_inp = dataset.vocab["WUG0"] in c_inp
-            from_out = dataset.vocab["WUG0"] in c_out
-            if (
-                (from_inp and dataset.vocab["WUG0"] not in inp)
-                or (from_out and dataset.vocab["WUG0"] not in out)
-            ):
+            if (inp_realized, out_realized) in realized:
                 continue
+        #for inp, score in zip(inps, scores):
+        #    inp_realized = dataset.realize(inp, names)
+        #    if not dataset.novel(inp=inp_realized):
+        #        continue
+        #    if inp_realized in realized:
+        #        continue
+
+            #from_inp = dataset.vocab["WUG0"] in ctx[0]
+            #from_out = dataset.vocab["WUG0"] in ctx[1]
+            #if (
+            #    (from_inp and dataset.vocab["WUG0"] not in inp)
+            #    or (from_out and dataset.vocab["WUG0"] not in out)
+            #):
+            #    continue
             print(score)
             print(" ".join(dataset.vocab.decode(inp)))
             print(" ".join(inp_realized))
@@ -89,9 +122,11 @@ def main(argv):
             print(" ".join(dataset.vocab.decode(out)))
             print(" ".join(out_realized))
             print()
-            realized.append((inp_realized, out_realized))
+            realized.add((inp_realized, out_realized))
+            #realized.add(inp_realized)
 
     data = [{"inp": inp, "out": out} for inp, out in realized]
+    #data = [{"inp": inp} for inp in realized]
     with open(FLAGS.write, "w") as fh:
         json.dump(data, fh, indent=2)
 

@@ -23,27 +23,39 @@ Datum = namedtuple(
     "inp out inp_data out_data direct_out_data copy_out_data"
 )
 
-def make_batch(samples, vocab):
-    inp, out = zip(*samples)
-    inp_data = batch_seqs(inp).to(DEVICE)
-    out_data = batch_seqs(out).to(DEVICE)
+def make_batch(samples, vocab, staged):
+    seqs = zip(*samples)
+    if staged:
+        ref, tgt = seqs
+        (ref_inp, ref_out) = zip(*ref)
+        (inp, out) = zip(*tgt)
+        ref_inp_data, ref_out_data, inp_data, out_data = (
+            batch_seqs(seq).to(DEVICE) for seq in (ref_inp, ref_out, inp, out)
+        )
+        return Datum(
+            (ref_inp, ref_out), (inp, out), (ref_inp_data, ref_out_data), 
+            (inp_data, out_data), None, None
+        )
+    else:
+        inp, out = seqs
+        inp_data = batch_seqs(inp).to(DEVICE)
+        out_data = batch_seqs(out).to(DEVICE)
 
-    direct_out = []
-    copy_out = []
-    for i, o in zip(inp, out):
-        cout = [tok if tok in i[1:-1] else vocab.pad() for tok in o[1:-1]]
-        copy_out.append([o[0]] + cout + [o[-1]])
-        dout = [vocab.copy() if tok in i[1:-1] else tok for tok in o[1:-1]]
-        direct_out.append([o[0]] + dout + [o[-1]])
-    direct_out_data = batch_seqs(direct_out).to(DEVICE)
-    copy_out_data = batch_seqs(copy_out).to(DEVICE)
-    #direct_out_data = None
-    #copy_out_data = None
-
-    return Datum(inp, out, inp_data, out_data, direct_out_data, copy_out_data)
+        direct_out = []
+        copy_out = []
+        for i, o in zip(inp, out):
+            cout = [tok if tok in i[1:-1] else vocab.pad() for tok in o[1:-1]]
+            copy_out.append([o[0]] + cout + [o[-1]])
+            dout = [vocab.copy() if tok in i[1:-1] else tok for tok in o[1:-1]]
+            direct_out.append([o[0]] + dout + [o[-1]])
+        direct_out_data = batch_seqs(direct_out).to(DEVICE)
+        copy_out_data = batch_seqs(copy_out).to(DEVICE)
+        #direct_out_data = None
+        return Datum(inp, out, inp_data, out_data, direct_out_data, copy_out_data)
+        #copy_out_data = None
 
 @hlog.fn("train")
-def train(dataset, model, sample, callback):
+def train(dataset, model, sample, callback, staged):
     if not isinstance(model, nn.Module):
         return
 
@@ -59,7 +71,7 @@ def train(dataset, model, sample, callback):
             #sched.step()
             opt.zero_grad()
             datum = make_batch(
-                [sample() for _ in range(FLAGS.n_batch)], dataset.vocab
+                [sample() for _ in range(FLAGS.n_batch)], dataset.vocab, staged
             )
             loss = model(
                 datum.inp_data, datum.out_data, 
