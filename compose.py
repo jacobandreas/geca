@@ -55,11 +55,6 @@ def main(argv):
         dataset.vocab
     )
 
-    ### base_model = GeneratorModel(dataset.vocab, copy=True).to(DEVICE)
-    ### base_model.load_state_dict(torch.load(os.path.join(FLAGS.base_dir, FLAGS.base_model)))
-    ### inv_model = GeneratorModel(dataset.vocab, copy=True).to(DEVICE)
-    ### inv_model.load_state_dict(torch.load(os.path.join(FLAGS.inv_dir, FLAGS.inv_model)))
-
     model.prepare(dataset)
     if isinstance(model, nn.Module):
         path = os.path.join(FLAGS.model_dir, FLAGS.model)
@@ -76,18 +71,6 @@ def main(argv):
         datum = make_batch([(templ1, templ2)], dataset.vocab, staged=True)
         (inps, outs), scores = model.sample(datum.inp_data, datum.out_data)
 
-        ### (inp,), _ = model.sample(datum.inp_data, datum.out_data)
-        ### inp = dataset.vocab.encode(dataset.realize(inp, names))
-        ### print(" ".join(dataset.vocab.decode(inp)))
-        ### inps = [inp for _ in range(10)]
-        ### datum2 = make_batch(zip(inps, inps), dataset.vocab, staged=False)
-        ### outs, scores = base_model.sample(datum2.inp_data)
-        ### outs = [tuple(o) for o in outs]
-        ### for out, score in set(zip(outs, scores)):
-        ###     print(score, " ".join(dataset.vocab.decode(out)))
-        ### print()
-        ### continue
-
         keep = []
         for inp, out, score in zip(inps, outs, scores):
             keep.append(((inp, out), score))
@@ -101,20 +84,7 @@ def main(argv):
                 continue
             if (inp_realized, out_realized) in realized:
                 continue
-        #for inp, score in zip(inps, scores):
-        #    inp_realized = dataset.realize(inp, names)
-        #    if not dataset.novel(inp=inp_realized):
-        #        continue
-        #    if inp_realized in realized:
-        #        continue
 
-            #from_inp = dataset.vocab["WUG0"] in ctx[0]
-            #from_out = dataset.vocab["WUG0"] in ctx[1]
-            #if (
-            #    (from_inp and dataset.vocab["WUG0"] not in inp)
-            #    or (from_out and dataset.vocab["WUG0"] not in out)
-            #):
-            #    continue
             print(score)
             print(" ".join(dataset.vocab.decode(inp)))
             print(" ".join(inp_realized))
@@ -123,10 +93,9 @@ def main(argv):
             print(" ".join(out_realized))
             print()
             realized.add((inp_realized, out_realized))
-            #realized.add(inp_realized)
+            print(len(realized))
 
     data = [{"inp": inp, "out": out} for inp, out in realized]
-    #data = [{"inp": inp} for inp in realized]
     with open(FLAGS.write, "w") as fh:
         json.dump(data, fh, indent=2)
 
