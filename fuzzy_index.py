@@ -33,7 +33,7 @@ class FuzzyIndex(object):
             else:
                 score = 1
             for cand in self.key_part_to_key[part]:
-                candidates[cand] += score
+                candidates[cand] += score / len(parts)
         ret = []
         for k, count in candidates.items():
             if count >= threshold:

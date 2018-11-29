@@ -8,7 +8,7 @@ python -u ../../compose.py \
   --seed 0 \
   --compute_adjacencies \
   --wug_limit 50 \
-  --n_sample 1000 \
+  --n_sample 2000 \
   --write "composed.json" \
   > compose.out 2> compose.err
   #--model_dir ../semparse_query/model \

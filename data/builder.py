@@ -128,81 +128,112 @@ class OneShotDataset(object):
                 #yield tuple(self.vocab.encode(seq))
                 for generic in self._make_generic(seq, keep_args):
                 #    yield generic + (tuple(self.vocab.encode(seq)),)
-                    yield generic
+                    yield generic, utt
 
         arg_to_templ = defaultdict(set)
         templ_to_arg = defaultdict(set)
         templ_to_templ = defaultdict(set)
-        for templ, args in enumerate():
+        sim_templ = FuzzyIndex(tfidf=True)
+        templ_to_orig = defaultdict(set)
+        for (templ, args), orig in enumerate():
             arg_to_templ[args].add(templ)
             templ_to_arg[templ].add(args)
+            sim_templ.put(templ, args)
+            templ_to_orig[templ].add(orig)
 
+        multiplicity = defaultdict(lambda: 0)
         for args1 in arg_to_templ:
             for templ1 in arg_to_templ[args1]:
-                alt_args = [
-                    a for a in templ_to_arg[templ1] 
-                    if len(set(a) & set(args1)) == 0
-                ]
-                if len(alt_args) == 0:
-                    continue
+                multiplicity[templ1] += 1
+                #alt_args = [
+                #    a for a in templ_to_arg[templ1] 
+                #    if len(set(a) & set(args1)) == 0
+                #]
+                #if len(alt_args) == 0:
+                #    continue
                 for templ2 in arg_to_templ[args1]:
                     if templ1 == templ2:
                         continue
                     if (templ1, templ2) in templ_to_templ:
                         continue
-                    if all(args2 in templ_to_arg[templ2] for args2 in alt_args):
-                        continue
+                    #if all(args2 in templ_to_arg[templ2] for args2 in alt_args):
+                    #    continue
                     templ_to_templ[templ2].add(templ1)
+
+        #for templ, count in sorted(multiplicity.items(), key=lambda p: -p[1]):
+        #    #if count > 1:
+        #    #    continue
+        #    n_args = len(next(iter(templ_to_arg[templ])))
+        #    for sim in sorted(sim_templ.get(templ, 0), key=lambda s: -s.score):
+        #        if sim.score < 4.5:
+        #            continue
+        #        if len(next(iter(sim.values))) != n_args:
+        #            continue
+        #        if templ_to_orig[templ] == templ_to_orig[sim.key]:
+        #            continue
+        #        print(count, " ".join(self.vocab.decode(templ)))
+        #        print(sim.score, "~ " + " ".join(self.vocab.decode(sim.key)))
+        #        print()
+        #        break
 
         self.templ_to_arg = templ_to_arg
         self.arg_to_templ = arg_to_templ
         self.templ_to_templ = templ_to_templ
+        self.multiplicity = multiplicity
 
-    def _compute_adjacencies(self, utts):
-        counts = Counter()
-        for utt in utts:
-            inp, out = utt
-            for seq in (inp, out):
-                enc = self.vocab.encode(seq)[1:-1]
-                for span in range(1, max_size+1):
-                    for i in range(len(enc)+1-span):
-                        counts[tuple(enc[i:i+span])] += 1
-        keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
-
-        def enumerate():
-            for utt in utts:
-                inp, out = utt
-                seq = inp + (sep,) + out
-                #seq = inp
-                for generic in self._make_generic(seq):
-                    yield generic
-        counts = Counter()
-        templ_to_arg = defaultdict(set)
-        arg_to_templ = defaultdict(set)
-        for templ, args in enumerate():
-            if any(a not in keep_args for a in args):
+        comp_pairs = []
+        for templ1 in self.templ_to_templ:
+            if self.multiplicity[templ1] <= 1:
                 continue
-            templ_to_arg[templ].add(args)
-            arg_to_templ[args].add(templ)
+            for templ2 in self.templ_to_templ[templ1]:
+                comp_pairs.append((templ1, templ2))
+        self.comp_pairs = comp_pairs
 
-        self.templates = []
-        for templ, args in templ_to_arg.items():
-            assert all(a in keep_args for aa in args for a in aa)
-            if any(len(arg_to_templ[a]) > 1 for a in args):
-                self.templates.append(templ)
-        self.templates = sorted(self.templates)
+    #def _compute_adjacencies(self, utts):
+    #    counts = Counter()
+    #    for utt in utts:
+    #        inp, out = utt
+    #        for seq in (inp, out):
+    #            enc = self.vocab.encode(seq)[1:-1]
+    #            for span in range(1, max_size+1):
+    #                for i in range(len(enc)+1-span):
+    #                    counts[tuple(enc[i:i+span])] += 1
+    #    keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
 
-        self.arg_to_templ = {k: sorted(list(v)) for k, v in arg_to_templ.items()}
-        self.templ_to_arg = {k: sorted(list(v)) for k, v in templ_to_arg.items()}
-        weights = np.zeros(len(self.templates))
-        for arg, templs in self.arg_to_templ.items():
-            for templ in templs:
-                if templ in self.templates:
-                    weights[self.templates.index(templ)] += 1
-        weights = weights / weights.sum()
-        self.weights = weights
+    #    def enumerate():
+    #        for utt in utts:
+    #            inp, out = utt
+    #            seq = inp + (sep,) + out
+    #            #seq = inp
+    #            for generic in self._make_generic(seq):
+    #                yield generic
+    #    counts = Counter()
+    #    templ_to_arg = defaultdict(set)
+    #    arg_to_templ = defaultdict(set)
+    #    for templ, args in enumerate():
+    #        if any(a not in keep_args for a in args):
+    #            continue
+    #        templ_to_arg[templ].add(args)
+    #        arg_to_templ[args].add(templ)
 
-        hlog.log("LOADED")
+    #    self.templates = []
+    #    for templ, args in templ_to_arg.items():
+    #        assert all(a in keep_args for aa in args for a in aa)
+    #        if any(len(arg_to_templ[a]) > 1 for a in args):
+    #            self.templates.append(templ)
+    #    self.templates = sorted(self.templates)
+
+    #    self.arg_to_templ = {k: sorted(list(v)) for k, v in arg_to_templ.items()}
+    #    self.templ_to_arg = {k: sorted(list(v)) for k, v in templ_to_arg.items()}
+    #    weights = np.zeros(len(self.templates))
+    #    for arg, templs in self.arg_to_templ.items():
+    #        for templ in templs:
+    #            if templ in self.templates:
+    #                weights[self.templates.index(templ)] += 1
+    #    weights = weights / weights.sum()
+    #    self.weights = weights
+
+    #    hlog.log("LOADED")
 
     def _make_generic(self, seq, keep):
         for span1 in range(1, max_size+1):
@@ -250,6 +281,7 @@ class OneShotDataset(object):
             args = [
                 arg 
                 for templ1 in self.templ_to_templ[templ2]
+                if self.multiplicity[templ1] > 1
                 for arg in self.templ_to_arg[templ1]
                 if arg not in self.templ_to_arg[templ2]
             ]
@@ -260,6 +292,14 @@ class OneShotDataset(object):
                 yield self.split(templ2), self.split(templ2), names
                 count += 1
         print("%d proposals" % count)
+
+    def _sample_comp(self):
+        i = np.random.randint(len(self.comp_pairs))
+        return self.comp_pairs[i]
+
+    def sample_comp_train(self):
+        templ1, templ2 = self._sample_comp()
+        return self.split(templ1), self.split(templ2)
 
     #def _sample_comp(self):
     #    #weight_arg = self.args[np.random.randint(len(self.args))]

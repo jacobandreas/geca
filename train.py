@@ -84,12 +84,12 @@ def evaluate(dataset, model):
             dataset.vocab,
             model
         )
-    with hlog.task("holdout", timer=False):
-        visualize(
-            make_batch([dataset.sample_comp_gen()[:2]], dataset.vocab, staged=True), 
-            dataset.vocab,
-            model
-        )
+    #with hlog.task("holdout", timer=False):
+    #    visualize(
+    #        make_batch([dataset.sample_comp_gen()[:2]], dataset.vocab, staged=True), 
+    #        dataset.vocab,
+    #        model
+    #    )
     print()
 
 if __name__ == "__main__":
