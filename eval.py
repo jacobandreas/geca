@@ -54,12 +54,13 @@ def main(argv):
             hlog.log("FINE_TUNE")
             fine_tune[0] = True
         model.eval()
+        dump = i_epoch == FLAGS.n_epochs - 1
         with hlog.task("eval_train", timer=False):
             train_data = [dataset.sample_train() for _ in range(1000)]
             evaluate(model, train_data)
         with hlog.task("eval_val", timer=False):
             val_data = dataset.get_val()
-            val_acc = evaluate(model, val_data, vis=True)
+            val_acc = evaluate(model, val_data, vis=dump)
         if FLAGS.TEST:
             with hlog.task("eval_test", timer=False):
                 test_data = dataset.get_test()
@@ -75,17 +76,23 @@ def main(argv):
 
 def evaluate(model, data, vis=False):
     correct = 0
+    total = 0
     for i in range(0, len(data), FLAGS.n_batch):
         batch = make_batch(data[i:i+FLAGS.n_batch], model.vocab, staged=False)
         preds, _ = model.sample(batch.inp_data, greedy=True)
         for j in range(len(preds)):
+            correct_here = preds[j] == batch.out[j]
             if vis:
-                logging.debug(model.vocab.decode(preds[j]))
-                logging.debug(model.vocab.decode(batch.out[j]))
-                logging.debug("")
-            if preds[j] == batch.out[j]:
+                with hlog.task(str(total)):
+                    hlog.value("input", " ".join(model.vocab.decode(batch.inp[j])))
+                    hlog.value("pred", " ".join(model.vocab.decode(preds[j])))
+                    hlog.value("gold", " ".join(model.vocab.decode(batch.out[j])))
+                    hlog.value("corr", correct_here)
+                    hlog.log("")
+            total += 1
+            if correct_here:
                 correct += 1
-    acc = 1. * correct / len(data)
+    acc = 1. * correct / total
     hlog.value("acc", acc)
     return acc
 

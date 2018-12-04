@@ -3,9 +3,6 @@
 import fakeprof
 
 import flags as _flags
-from data.scan import ScanDataset
-from data.copy import CopyDataset
-from data.semparse import SemparseDataset
 from model import GeneratorModel, RetrievalModel, StagedModel
 from trainer import make_batch
 from train import get_dataset
@@ -19,41 +16,40 @@ import torch
 from torch import nn
 from torchdec.seq import batch_seqs
 
-FLAGS = flags.FLAGS
+MODEL_TYPES = ["retrieval", "staged"]
 
+FLAGS = flags.FLAGS
+flags.DEFINE_enum("model_type", None, MODEL_TYPES, "type of model to use")
 flags.DEFINE_string("model", None, "name of the model to load")
 flags.DEFINE_integer("n_sample", 1000, "number of training examples to sample")
 flags.DEFINE_string("write", None, "path to write to")
 
-flags.DEFINE_string("base_dir", None, "")
-flags.DEFINE_string("base_model", None, "")
-flags.DEFINE_string("inv_dir", None, "")
-flags.DEFINE_string("inv_model", None, "")
-
 DEVICE = torch.device("cuda:0")
+
+def pick_model(dataset):
+    if FLAGS.model_type == "retrieval":
+        return RetrievalModel(
+            dataset.vocab
+        )
+    elif FLAGS.model_type == "staged":
+        return StagedModel(
+            dataset.vocab,
+            copy=True,
+            self_attention=False
+        ).to(DEVICE)
+
+def pick_examples(dataset):
+    if FLAGS.model_type == "retrieval":
+        return dataset.enumerate_comp()
+    else:
+        return dataset.enumerate_freq()
 
 def main(argv):
     torch.manual_seed(FLAGS.seed)
     np.random.seed(FLAGS.seed)
 
     dataset = get_dataset()
-
-    for u in dataset.train_utts:
-        print(" ".join(u[0]))
-        #print(" ".join(u[1]))
-    print("\n\n\n")
-    for u in dataset.val_utts:
-        print(" ".join(u[0]))
-        #print(" ".join(u[1]))
-
-    #model = StagedModel(
-    #    dataset.vocab,
-    #    copy=True,
-    #    self_attention=False
-    #).to(DEVICE)
-    model = RetrievalModel(
-        dataset.vocab
-    )
+    model = pick_model(dataset)
 
     model.prepare(dataset)
     if isinstance(model, nn.Module):
@@ -62,21 +58,23 @@ def main(argv):
         model.load_state_dict(checkpoint)
 
     realized = set()
-    comp_data = dataset.enumerate_comp()
+    examples = pick_examples(dataset)
     while len(realized) < FLAGS.n_sample:
         try:
-            templ1, templ2, names = next(comp_data)
+            templ, names = next(examples)
         except StopIteration:
             break
-        datum = make_batch([(templ1, templ2)], dataset.vocab, staged=True)
+        datum = make_batch([(templ, templ) for _ in range(10)], dataset.vocab, staged=True)
         (inps, outs), scores = model.sample(datum.inp_data, datum.out_data)
 
         keep = []
         for inp, out, score in zip(inps, outs, scores):
-            keep.append(((inp, out), score))
-        for (inp, out), score in keep:
-            inp_realized = dataset.realize(inp, names)
-            out_realized = dataset.realize(out, names)
+            inp_realized, inp_used = dataset.realize(inp, names)
+            out_realized, out_used = dataset.realize(out, names)
+            if len(inp_used) == 0 or len(out_used) == 0:
+                continue
+            if len(inp_used | out_used) != len(names):
+                continue
             if not (
                 dataset.novel(inp=inp_realized) 
                 and dataset.novel(out=out_realized)
@@ -84,12 +82,18 @@ def main(argv):
                 continue
             if (inp_realized, out_realized) in realized:
                 continue
-
+            keep.append(((inp_realized, out_realized), score))
+        for (inp_realized, out_realized), score in keep:
+            print(
+                " ".join(dataset.vocab.decode(templ[0])),
+                " ".join(dataset.vocab.decode(templ[1])),
+                names
+            )
             print(score)
-            print(" ".join(dataset.vocab.decode(inp)))
+            #print(" ".join(dataset.vocab.decode(inp)))
             print(" ".join(inp_realized))
             print("--")
-            print(" ".join(dataset.vocab.decode(out)))
+            #print(" ".join(dataset.vocab.decode(out)))
             print(" ".join(out_realized))
             print()
             realized.add((inp_realized, out_realized))

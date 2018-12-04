@@ -25,17 +25,7 @@ class RetrievalModel():
             s.detach().cpu().numpy().transpose().tolist()
             for s in out
         ]
-        #out = out.detach().cpu().numpy().transpose().tolist()
-        #assert len(out[0]) == 1
         return out, [0]
-        #out = (tuple(out[0][0]), tuple(out[1][0]))
-        #out = self.dataset.join(out)
-        #args = self.templ_to_arg[inp]
-        #arg = args[np.random.randint(len(args))]
-        #templs = self.arg_to_templ[arg]
-        #templ = templs[np.random.randint(len(templs))]
-        #templ_inp, templ_out = self.dataset.split(templ)
-        #return ([templ_inp], [templ_out]), [0]
 
 class StagedModel(nn.Module):
     def __init__(self, vocab, copy=False, self_attention=False):

@@ -1,18 +1,20 @@
 from fuzzy_index import FuzzyIndex
 
+from absl import flags
 from collections import Counter, defaultdict
+import heapq
+import itertools as it
 import numpy as np
 from torchdec import hlog
 from torchdec.vocab import Vocab
-from absl import flags
-import heapq
 
 FLAGS = flags.FLAGS
-flags.DEFINE_boolean("compute_adjacencies", False, "compute adjacencies")
 flags.DEFINE_boolean("dedup", False, "deduplicate training examples")
 flags.DEFINE_integer("wug_limit", None, "wug limit")
+flags.DEFINE_boolean("build_comp_table", False, "do compositionality")
 
 max_size = 2
+variants = 5
 wug_template = "WUG%d"
 wug1 = wug_template % 0
 wug2 = wug_template % 1
@@ -88,7 +90,7 @@ class OneShotDataset(object):
         self.aug_utts = aug_utts
         self.val_utts = val_utts
         self.test_utts = test_utts
-        if FLAGS.compute_adjacencies:
+        if FLAGS.build_comp_table:
             self._compute_similarities(train_utts)
 
     def novel(self, inp=None, out=None):
@@ -103,12 +105,14 @@ class OneShotDataset(object):
     def realize(self, seq, names):
         dec = list(self.vocab.decode(seq))
         out = []
+        used = set()
         for w in dec:
             if w in names:
+                used.add(w)
                 out += list(names[w])
             else:
                 out.append(w)
-        return tuple(out)
+        return tuple(out), used
 
     def _compute_similarities(self, utts):
         counts = Counter()
@@ -125,9 +129,7 @@ class OneShotDataset(object):
             for utt in utts:
                 inp, out = utt
                 seq = inp + (sep,) + out
-                #yield tuple(self.vocab.encode(seq))
                 for generic in self._make_generic(seq, keep_args):
-                #    yield generic + (tuple(self.vocab.encode(seq)),)
                     yield generic, utt
 
         arg_to_templ = defaultdict(set)
@@ -145,36 +147,12 @@ class OneShotDataset(object):
         for args1 in arg_to_templ:
             for templ1 in arg_to_templ[args1]:
                 multiplicity[templ1] += 1
-                #alt_args = [
-                #    a for a in templ_to_arg[templ1] 
-                #    if len(set(a) & set(args1)) == 0
-                #]
-                #if len(alt_args) == 0:
-                #    continue
                 for templ2 in arg_to_templ[args1]:
                     if templ1 == templ2:
                         continue
                     if (templ1, templ2) in templ_to_templ:
                         continue
-                    #if all(args2 in templ_to_arg[templ2] for args2 in alt_args):
-                    #    continue
                     templ_to_templ[templ2].add(templ1)
-
-        #for templ, count in sorted(multiplicity.items(), key=lambda p: -p[1]):
-        #    #if count > 1:
-        #    #    continue
-        #    n_args = len(next(iter(templ_to_arg[templ])))
-        #    for sim in sorted(sim_templ.get(templ, 0), key=lambda s: -s.score):
-        #        if sim.score < 4.5:
-        #            continue
-        #        if len(next(iter(sim.values))) != n_args:
-        #            continue
-        #        if templ_to_orig[templ] == templ_to_orig[sim.key]:
-        #            continue
-        #        print(count, " ".join(self.vocab.decode(templ)))
-        #        print(sim.score, "~ " + " ".join(self.vocab.decode(sim.key)))
-        #        print()
-        #        break
 
         self.templ_to_arg = templ_to_arg
         self.arg_to_templ = arg_to_templ
@@ -188,52 +166,6 @@ class OneShotDataset(object):
             for templ2 in self.templ_to_templ[templ1]:
                 comp_pairs.append((templ1, templ2))
         self.comp_pairs = comp_pairs
-
-    #def _compute_adjacencies(self, utts):
-    #    counts = Counter()
-    #    for utt in utts:
-    #        inp, out = utt
-    #        for seq in (inp, out):
-    #            enc = self.vocab.encode(seq)[1:-1]
-    #            for span in range(1, max_size+1):
-    #                for i in range(len(enc)+1-span):
-    #                    counts[tuple(enc[i:i+span])] += 1
-    #    keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
-
-    #    def enumerate():
-    #        for utt in utts:
-    #            inp, out = utt
-    #            seq = inp + (sep,) + out
-    #            #seq = inp
-    #            for generic in self._make_generic(seq):
-    #                yield generic
-    #    counts = Counter()
-    #    templ_to_arg = defaultdict(set)
-    #    arg_to_templ = defaultdict(set)
-    #    for templ, args in enumerate():
-    #        if any(a not in keep_args for a in args):
-    #            continue
-    #        templ_to_arg[templ].add(args)
-    #        arg_to_templ[args].add(templ)
-
-    #    self.templates = []
-    #    for templ, args in templ_to_arg.items():
-    #        assert all(a in keep_args for aa in args for a in aa)
-    #        if any(len(arg_to_templ[a]) > 1 for a in args):
-    #            self.templates.append(templ)
-    #    self.templates = sorted(self.templates)
-
-    #    self.arg_to_templ = {k: sorted(list(v)) for k, v in arg_to_templ.items()}
-    #    self.templ_to_arg = {k: sorted(list(v)) for k, v in templ_to_arg.items()}
-    #    weights = np.zeros(len(self.templates))
-    #    for arg, templs in self.arg_to_templ.items():
-    #        for templ in templs:
-    #            if templ in self.templates:
-    #                weights[self.templates.index(templ)] += 1
-    #    weights = weights / weights.sum()
-    #    self.weights = weights
-
-    #    hlog.log("LOADED")
 
     def _make_generic(self, seq, keep):
         for span1 in range(1, max_size+1):
@@ -275,23 +207,43 @@ class OneShotDataset(object):
         inp, out = templ
         return inp[:-1] + (self.vocab[self.sep],) + out[1:]
 
+    def overlap(self, arg, ref_args):
+        if arg in ref_args:
+            return True
+        #if all(len(set(arg) & set(a)) > 0 for a in ref_args):
+        #    return True
+        return False
+
     def enumerate_comp(self):
-        count = 0
         for templ2 in self.templ_to_templ:
+            args2 = self.templ_to_arg[templ2]
             args = [
                 arg 
                 for templ1 in self.templ_to_templ[templ2]
                 if self.multiplicity[templ1] > 1
                 for arg in self.templ_to_arg[templ1]
-                if arg not in self.templ_to_arg[templ2]
+                if not self.overlap(arg, args2)
             ]
+            if len(args) == 0:
+                continue
+            np.random.shuffle(args)
+            #args = it.islice(it.chain.from_iterable(it.repeat(args)), variants)
+            arg = args[:2]
+            for arg in args:
+                dec_arg = [self.vocab.decode(a) for a in arg]
+                names = dict(zip([wug1, wug2], dec_arg))
+                yield self.split(templ2), names
+
+    def enumerate_freq(self):
+        for templ, count in self.multiplicity.items():
+            if count <= 1:
+                continue
+            args = list(self.templ_to_arg[templ])
             np.random.shuffle(args)
             for arg in args[:2]:
                 dec_arg = [self.vocab.decode(a) for a in arg]
                 names = dict(zip([wug1, wug2], dec_arg))
-                yield self.split(templ2), self.split(templ2), names
-                count += 1
-        print("%d proposals" % count)
+                yield self.split(templ), names
 
     def _sample_comp(self):
         i = np.random.randint(len(self.comp_pairs))
@@ -300,30 +252,6 @@ class OneShotDataset(object):
     def sample_comp_train(self):
         templ1, templ2 = self._sample_comp()
         return self.split(templ1), self.split(templ2)
-
-    #def _sample_comp(self):
-    #    #weight_arg = self.args[np.random.randint(len(self.args))]
-    #    templ1 = self.templates[np.random.choice(len(self.templates), p=self.weights)]
-    #    #templs = self.arg_to_templ[weight_arg]
-    #    #templ1 = templs[np.random.randint(len(templs))]
-    #    templ2 = None
-    #    while templ2 is None:
-    #        args = self.templ_to_arg[templ1]
-    #        arg = args[np.random.randint(len(args))]
-    #        neighbors = self.arg_to_templ[arg]
-    #        templ2 = neighbors[np.random.randint(len(neighbors))]
-    #        if templ2 == templ1:
-    #            templ2 = None
-    #    names = dict(zip([wug1, wug2], [self.vocab.decode(a) for a in arg]))
-    #    templ1 = self.split(templ1)
-    #    templ2 = self.split(templ2)
-    #    return templ1, templ2, names
-
-    #def sample_comp_train(self):
-    #    return self._sample_comp()[:2]
-
-    #def sample_comp_gen(self):
-    #    return self._sample_comp()
 
     def _sample(self, utts, index=None):
         if index is None:
@@ -338,6 +266,11 @@ class OneShotDataset(object):
             return self._sample(self.aug_utts)
         else:
             return self._sample(self.train_utts)
+
+    def get_train(self):
+        return [
+            self._sample(self.train_utts, i) for i in range(len(self.train_utts))
+        ]
 
     def get_val(self):
         return [

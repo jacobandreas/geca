@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for i in `seq 0 4`
+for i in `seq 0 9`
 do
 
   python -u ../../eval.py \
