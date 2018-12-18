@@ -20,13 +20,13 @@ DEVICE = torch.device("cuda:0")
 
 Datum = namedtuple(
     "Datum", 
-    "inp out inp_data out_data direct_out_data copy_out_data"
+    "inp out inp_data out_data direct_out_data copy_out_data extra"
 )
 
 def make_batch(samples, vocab, staged):
     seqs = zip(*samples)
     if staged:
-        ref, tgt = seqs
+        ref, tgt, *extra = seqs
         (ref_inp, ref_out) = zip(*ref)
         (inp, out) = zip(*tgt)
         ref_inp_data, ref_out_data, inp_data, out_data = (
@@ -34,10 +34,10 @@ def make_batch(samples, vocab, staged):
         )
         return Datum(
             (ref_inp, ref_out), (inp, out), (ref_inp_data, ref_out_data), 
-            (inp_data, out_data), None, None
+            (inp_data, out_data), None, None, extra
         )
     else:
-        inp, out = seqs
+        inp, out, *extra = seqs
         inp_data = batch_seqs(inp).to(DEVICE)
         out_data = batch_seqs(out).to(DEVICE)
 
@@ -51,7 +51,9 @@ def make_batch(samples, vocab, staged):
         direct_out_data = batch_seqs(direct_out).to(DEVICE)
         copy_out_data = batch_seqs(copy_out).to(DEVICE)
         #direct_out_data = None
-        return Datum(inp, out, inp_data, out_data, direct_out_data, copy_out_data)
+        return Datum(
+            inp, out, inp_data, out_data, direct_out_data, copy_out_data, extra
+        )
         #copy_out_data = None
 
 @hlog.fn("train")
@@ -75,7 +77,8 @@ def train(dataset, model, sample, callback, staged):
             )
             loss = model(
                 datum.inp_data, datum.out_data, 
-                datum.direct_out_data, datum.copy_out_data
+                datum.direct_out_data, datum.copy_out_data,
+                *datum.extra
             )
             loss.backward()
             clip_grad_norm_(model.parameters(), FLAGS.clip)

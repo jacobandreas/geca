@@ -11,13 +11,17 @@ from torchdec.vocab import Vocab
 FLAGS = flags.FLAGS
 flags.DEFINE_boolean("dedup", False, "deduplicate training examples")
 flags.DEFINE_integer("wug_limit", None, "wug limit")
-flags.DEFINE_boolean("build_comp_table", False, "do compositionality")
+flags.DEFINE_integer("wug_size", 4, "wug size")
+flags.DEFINE_integer("wug_count", 2, "number of wugs to insert")
+flags.DEFINE_boolean("compute_adjacency", False, "do compositionality")
 
-max_size = 2
 variants = 5
 wug_template = "WUG%d"
-wug1 = wug_template % 0
-wug2 = wug_template % 1
+def _wugs():
+    return [wug_template % i for i in range(FLAGS.n_wugs)]
+#wug1 = wug_template % 0
+#wug2 = wug_template % 1
+
 sep = "##"
 
 def t_subseq(subseq, seq):
@@ -62,8 +66,8 @@ class OneShotDataset(object):
             invert=False,
     ):
         vocab = Vocab()
-        vocab.add(wug1)
-        vocab.add(wug2)
+        for i in range(FLAGS.wug_count):
+            vocab.add(wug_template % i)
         vocab.add(sep)
         for utts in (train_utts, val_utts, test_utts):
             for inp, out in utts:
@@ -90,8 +94,8 @@ class OneShotDataset(object):
         self.aug_utts = aug_utts
         self.val_utts = val_utts
         self.test_utts = test_utts
-        if FLAGS.build_comp_table:
-            self._compute_similarities(train_utts)
+        if FLAGS.compute_adjacency:
+            self.compute_adjacency(train_utts)
 
     def novel(self, inp=None, out=None):
         if inp is None:
@@ -114,13 +118,13 @@ class OneShotDataset(object):
                 out.append(w)
         return tuple(out), used
 
-    def _compute_similarities(self, utts):
+    def _compute_adjacency(self, utts):
         counts = Counter()
         for utt in utts:
             inp, out = utt
             for seq in (inp, out):
                 enc = self.vocab.encode(seq)[1:-1]
-                for span in range(1, max_size+1):
+                for span in range(1, FLAGS.wug_size+1):
                     for i in range(len(enc)+1-span):
                         counts[tuple(enc[i:i+span])] += 1
         keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
@@ -165,10 +169,16 @@ class OneShotDataset(object):
                 continue
             for templ2 in self.templ_to_templ[templ1]:
                 comp_pairs.append((templ1, templ2))
-        self.comp_pairs = comp_pairs
+        self.comp_pairs = sorted(comp_pairs)
+        self.templates = sorted(self.templ_to_arg.keys())
+
+    def compute_similarity(self, sim_model):
+        wugs = [self.vocab[w] for w in [wug1, wug2]]
+        for templ in self.templates:
+            idx = [templ.index(w) for w in wugs if w in templ]
 
     def _make_generic(self, seq, keep):
-        for span1 in range(1, max_size+1):
+        for span1 in range(1, FLAGS.wug_size+1):
             for i in range(len(seq)+1-span1):
                 arg1 = seq[i:i+span1]
                 templ1 = t_replace_all(arg1, (wug1,), seq)
@@ -181,7 +191,7 @@ class OneShotDataset(object):
                     tuple(self.vocab.encode(templ1)),
                     (arg1_enc,)
                 )
-                for span2 in range(1, max_size+1):
+                for span2 in range(1, FLAGS.wug_size+1):
                     for j in range(i+1, len(seq)+1-span2):
                         if i+span1 > j:
                             continue
@@ -210,8 +220,8 @@ class OneShotDataset(object):
     def overlap(self, arg, ref_args):
         if arg in ref_args:
             return True
-        #if all(len(set(arg) & set(a)) > 0 for a in ref_args):
-        #    return True
+        if all(len(set(arg) & set(a)) > 0 for a in ref_args):
+            return True
         return False
 
     def enumerate_comp(self):
@@ -228,7 +238,7 @@ class OneShotDataset(object):
                 continue
             np.random.shuffle(args)
             #args = it.islice(it.chain.from_iterable(it.repeat(args)), variants)
-            arg = args[:2]
+            args = args[:2]
             for arg in args:
                 dec_arg = [self.vocab.decode(a) for a in arg]
                 names = dict(zip([wug1, wug2], dec_arg))
@@ -252,6 +262,17 @@ class OneShotDataset(object):
     def sample_comp_train(self):
         templ1, templ2 = self._sample_comp()
         return self.split(templ1), self.split(templ2)
+
+    def sample_ctx_train(self):
+        templ = self.templates[np.random.randint(len(self.templates))]
+        args = sorted(self.templ_to_arg[templ])
+        arg = args[np.random.randint(len(args))]
+        wugs = [self.vocab[w] for w in [wug1, wug2]]
+        named_arg = list(zip(arg, wugs))
+        arg_part, name = named_arg[np.random.randint(len(named_arg))]
+
+        del_arg_part = (self.vocab.sos(),) + arg_part + (self.vocab.eos(),)
+        return templ, del_arg_part, templ.index(name)
 
     def _sample(self, utts, index=None):
         if index is None:

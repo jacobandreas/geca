@@ -37,6 +37,8 @@ def pick_model(dataset):
             copy=True,
             self_attention=False
         ).to(DEVICE)
+    elif FLAGS.model_type == "sim":
+        return ContextModel(dataset.vocab)
 
 def pick_examples(dataset):
     if FLAGS.model_type == "retrieval":

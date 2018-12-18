@@ -1,5 +1,12 @@
 #!/bin/sh
 
+python -u ../../info.py \
+  --dataset semparse \
+  --semparse_dataset geography-logic.txt \
+  --semparse_mrl logic \
+  --semparse_split query \
+  > info.out 2> /dev/null
+
 for i in `seq 0 9`
 do
 
@@ -9,9 +16,7 @@ do
     --semparse_mrl logic \
     --semparse_split query \
     --seed $i \
-    --model_type staged \
-    --model_dir ../semparse_query_train/model \
-    --model "model.00299.chk" \
+    --model_type sim \
     --wug_limit 50 \
     --build_comp_table \
     --n_sample 1000 \

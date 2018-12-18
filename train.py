@@ -23,8 +23,6 @@ from torchdec.seq import batch_seqs
 
 FLAGS = flags.FLAGS
 
-DEVICE = torch.device("cuda:0")
-
 def get_dataset(**kwargs):
     if FLAGS.dataset == "semparse":
         return SemparseDataset(**kwargs)
@@ -49,7 +47,7 @@ def main(argv):
         dataset.vocab,
         copy=True,
         self_attention=False
-    ).to(DEVICE)
+    ).to(_flags.device())
     #model = RetrievalModel(
     #    dataset.vocab
     #)

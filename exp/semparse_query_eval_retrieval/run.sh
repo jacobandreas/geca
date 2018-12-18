@@ -7,8 +7,6 @@ python -u ../../info.py \
   --semparse_split query \
   > info.out 2> /dev/null
 
-exit 0
-
 for i in `seq 0 9`
 do
 

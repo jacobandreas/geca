@@ -1,14 +1,15 @@
 #!/bin/sh
 
-python -u ../../train.py \
+python -u ../../train_ctx.py \
   --dataset semparse \
   --semparse_dataset geography-logic.txt \
   --semparse_mrl logic \
   --semparse_split query \
   --seed 0 \
-  --compute_adjacencies \
+  --hard_comp_table \
   --wug_limit 50 \
-  --n_epochs 300 \
+  --wug_size 4 \
+  --n_epochs 100 \
   --n_enc 512 \
   --sched_factor 1.0 \
   --dropout 0.2 \

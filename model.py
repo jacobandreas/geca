@@ -1,3 +1,4 @@
+import flags as _flags
 from torchdec import hlog
 from torchdec.seq import Encoder, Decoder, SimpleAttention, batch_seqs
 
@@ -26,6 +27,47 @@ class RetrievalModel():
             for s in out
         ]
         return out, [0]
+
+class ContextModel(nn.Module):
+    def __init__(self, vocab):
+        super().__init__()
+        self.vocab = vocab
+        self.encoder = Encoder(
+            vocab,
+            FLAGS.n_emb,
+            FLAGS.n_enc,
+            1,
+            bidirectional=True,
+            dropout=FLAGS.dropout
+        )
+        self.proj = nn.Linear(FLAGS.n_enc * 2, FLAGS.n_enc)
+        self.decoder = Decoder(
+            vocab,
+            FLAGS.n_emb,
+            FLAGS.n_enc,
+            1,
+            dropout=FLAGS.dropout
+        )
+        self.loss = nn.CrossEntropyLoss()
+
+    def forward(self, inp, out, _dout, _cout, idx):
+        enc, state = self.encoder(inp)
+
+        gather = np.zeros((1, enc.shape[1], enc.shape[2]))
+        gather[...] = np.asarray(idx)[np.newaxis, :, np.newaxis]
+        rep = enc.gather(0, torch.LongTensor(gather).to(_flags.device()))
+        rep = self.proj(rep)
+        rep = (rep, torch.zeros_like(rep))
+
+        out_prev = out[:-1, :]
+        out_next = out[1:, :]
+        n_batch, n_seq = out_next.shape
+        pred, *_ = self.decoder(rep, out_prev.shape[0], out_prev)
+        pred = pred.view(n_batch * n_seq, -1)
+        out_next = out_next.contiguous().view(-1)
+        loss = self.loss(pred, out_next)
+
+        return loss
 
 class StagedModel(nn.Module):
     def __init__(self, vocab, copy=False, self_attention=False):
