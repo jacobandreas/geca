@@ -1,6 +1,8 @@
 #!/bin/sh
 
-python -u ../../info.py \
+home="../../.."
+
+python -u $home/info.py \
   --dataset semparse \
   --semparse_dataset geography-logic.txt \
   --semparse_mrl logic \
@@ -10,7 +12,7 @@ python -u ../../info.py \
 for i in `seq 0 9`
 do
 
-  python -u ../../compose.py \
+  python -u $home/compose.py \
     --dataset semparse \
     --semparse_dataset geography-logic.txt \
     --semparse_mrl logic \
@@ -18,13 +20,15 @@ do
     --seed $i \
     --model_type retrieval \
     --wug_limit 50 \
-    --build_comp_table \
+    --compute_adjacency \
     --n_sample 1000 \
     --write "composed.val$i.json" \
-    > compose.val$i.out 2> compose.val$i.err
+    #> compose.val$i.out_x 2> compose.val$i.err_x
     #--TEST \
 
-  python -u ../../eval.py \
+  exit 0
+
+  python -u $home/eval.py \
     --dataset semparse \
     --semparse_dataset geography-logic.txt \
     --semparse_mrl logic \

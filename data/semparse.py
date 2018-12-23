@@ -9,21 +9,21 @@ import os
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string("semparse_split", "question", "which split of the dataset to use")
-flags.DEFINE_string("semparse_dataset", "geography", "which dataset to use")
+flags.DEFINE_string("semparse_dataset", None, "which dataset to use")
 flags.DEFINE_string("semparse_mrl", "sql", "logical form type")
 flags.DEFINE_string("val_fold", "8", "")
 flags.DEFINE_string("test_fold", "9", "")
 
 #DATA_DIR = "/x/jda/data/text2sql-data/data"
-DATA_DIR = "/x/jda/data/text2sql-data/data/non-sql-data"
+#DATA_DIR = "/x/jda/data/text2sql-data/data/non-sql-data"
 
 def clean(s):
     return s.replace('"', ' " ').replace('(', ' ( ').replace(')', ' ) ')
 
 class SemparseDataset(OneShotDataset):
     def __init__(self, **kwargs):
-        dataset = FLAGS.semparse_dataset
-        with open(os.path.join(DATA_DIR, dataset)) as fh:
+        with open(FLAGS.semparse_dataset) as fh:
+        #with open(os.path.join(DATA_DIR, dataset)) as fh:
             data = json.load(fh)
 
         dataset = {
@@ -62,10 +62,6 @@ class SemparseDataset(OneShotDataset):
 
         if FLAGS.TEST:
             dataset["train"] += dataset["dev"]
-
-        #np.random.shuffle(dataset["train"])
-        #np.random.shuffle(dataset["dev"])
-        #np.random.shuffle(dataset["test"])
 
         super().__init__(
             dataset["train"],

@@ -1,0 +1,20 @@
+I1218 03:03:02.635808 140146062685952 hlog.py:32] train 543
+I1218 03:03:02.635983 140146062685952 hlog.py:32] aug 0
+Traceback (most recent call last):
+  File "../../../compose.py", line 109, in <module>
+    app.run(main)
+  File "/x/jda/anaconda3/lib/python3.6/site-packages/absl/app.py", line 274, in run
+    _run_main(main, args)
+  File "/x/jda/anaconda3/lib/python3.6/site-packages/absl/app.py", line 238, in _run_main
+    sys.exit(main(argv))
+  File "../../../compose.py", line 53, in main
+    dataset = get_dataset()
+  File "/x/jda/metacomp2/train.py", line 28, in get_dataset
+    return SemparseDataset(**kwargs)
+  File "/x/jda/metacomp2/data/semparse.py", line 74, in __init__
+    **kwargs
+  File "/x/jda/metacomp2/data/builder.py", line 98, in __init__
+    self._compute_adjacency(train_utts)
+  File "/x/jda/metacomp2/data/builder.py", line 157, in _compute_adjacency
+    if (templ1, templ2) in templ_to_templ:
+KeyboardInterrupt

@@ -18,9 +18,7 @@ flags.DEFINE_boolean("compute_adjacency", False, "do compositionality")
 variants = 5
 wug_template = "WUG%d"
 def _wugs():
-    return [wug_template % i for i in range(FLAGS.n_wugs)]
-#wug1 = wug_template % 0
-#wug2 = wug_template % 1
+    return [wug_template % i for i in range(FLAGS.wug_count)]
 
 sep = "##"
 
@@ -95,7 +93,7 @@ class OneShotDataset(object):
         self.val_utts = val_utts
         self.test_utts = test_utts
         if FLAGS.compute_adjacency:
-            self.compute_adjacency(train_utts)
+            self._compute_adjacency(train_utts)
 
     def novel(self, inp=None, out=None):
         if inp is None:
@@ -118,6 +116,7 @@ class OneShotDataset(object):
                 out.append(w)
         return tuple(out), used
 
+    @profile
     def _compute_adjacency(self, utts):
         counts = Counter()
         for utt in utts:
@@ -129,22 +128,25 @@ class OneShotDataset(object):
                         counts[tuple(enc[i:i+span])] += 1
         keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
 
-        def enumerate():
-            for utt in utts:
+        print(len(utts))
+        def enumerate_templates():
+            for i, utt in enumerate(utts):
                 inp, out = utt
                 seq = inp + (sep,) + out
+                print(i, len(seq))
                 for generic in self._make_generic(seq, keep_args):
+                    #print(" ".join(self.vocab.decode(generic[0])))
                     yield generic, utt
 
         arg_to_templ = defaultdict(set)
         templ_to_arg = defaultdict(set)
         templ_to_templ = defaultdict(set)
-        sim_templ = FuzzyIndex(tfidf=True)
+        #sim_templ = FuzzyIndex(tfidf=True)
         templ_to_orig = defaultdict(set)
-        for (templ, args), orig in enumerate():
+        for (templ, args), orig in enumerate_templates():
             arg_to_templ[args].add(templ)
             templ_to_arg[templ].add(args)
-            sim_templ.put(templ, args)
+            #sim_templ.put(templ, args)
             templ_to_orig[templ].add(orig)
 
         multiplicity = defaultdict(lambda: 0)
@@ -173,42 +175,44 @@ class OneShotDataset(object):
         self.templates = sorted(self.templ_to_arg.keys())
 
     def compute_similarity(self, sim_model):
-        wugs = [self.vocab[w] for w in [wug1, wug2]]
+        wugs = [self.vocab[w] for w in _wugs()]
         for templ in self.templates:
             idx = [templ.index(w) for w in wugs if w in templ]
 
     def _make_generic(self, seq, keep):
-        for span1 in range(1, FLAGS.wug_size+1):
-            for i in range(len(seq)+1-span1):
-                arg1 = seq[i:i+span1]
-                templ1 = t_replace_all(arg1, (wug1,), seq)
-                if sep in arg1:
-                    continue
-                arg1_enc = tuple(self.vocab.encode(arg1)[1:-1])
-                if arg1_enc not in keep:
-                    continue
-                yield (
-                    tuple(self.vocab.encode(templ1)),
-                    (arg1_enc,)
-                )
-                for span2 in range(1, FLAGS.wug_size+1):
-                    for j in range(i+1, len(seq)+1-span2):
-                        if i+span1 > j:
-                            continue
-                        arg2 = seq[j:j+span2]
-                        if sep in arg2:
-                            continue
-                        arg2_enc = tuple(self.vocab.encode(arg2)[1:-1])
-                        if arg2_enc not in keep:
-                            continue
-                        if len(set(arg1_enc) & set(arg2_enc)) > 0:
-                            continue
+        enc_seq = tuple(self.vocab.encode(seq))
+        wugs = [self.vocab[w] for w in _wugs()]
+        out = self._make_generic_helper(enc_seq, keep, 0, 0, (), wugs)
+        return out
 
-                        templ2 = t_replace_all(arg2, (wug2,), templ1)
-                        yield (
-                            tuple(self.vocab.encode(templ2)),
-                            (arg1_enc, arg2_enc)
-                        )
+    @profile
+    def _make_generic_helper(self, seq, keep, begin, i_wug, used_args, wugs):
+        for span in range(1, FLAGS.wug_size+1):
+            for i in range(begin, len(seq)+1-span):
+                arg = seq[i:i+span]
+                arg_enc = arg
+                templ = t_replace_all(arg, (wugs[i_wug],), seq)
+                #templ = seq[:i] + (wugs[i_wug],) + seq[i+span:]
+                templ_enc = templ
+                if self.vocab[sep] in arg:
+                    continue
+                #arg_enc = tuple(self.vocab.encode(arg)[1:-1])
+                if arg_enc not in keep:
+                    continue
+                if any(len(set(uarg) & set(arg_enc)) > 0 for uarg in used_args):
+                    continue
+                next_args = used_args + (arg_enc,)
+                assert self.vocab[sep] in templ_enc
+                yield (
+                    #tuple(self.vocab.encode(templ)),
+                    templ_enc,
+                    next_args,
+                )
+                if i_wug+1 < FLAGS.wug_count:
+                    for rest in self._make_generic_helper(
+                        templ, keep, i+1, i_wug+1, next_args, wugs
+                    ):
+                        yield rest
 
     def split(self, templ):
         return t_split(self.vocab[self.sep], templ, self.vocab)
@@ -241,7 +245,7 @@ class OneShotDataset(object):
             args = args[:2]
             for arg in args:
                 dec_arg = [self.vocab.decode(a) for a in arg]
-                names = dict(zip([wug1, wug2], dec_arg))
+                names = dict(zip(_wugs(), dec_arg))
                 yield self.split(templ2), names
 
     def enumerate_freq(self):
@@ -252,7 +256,7 @@ class OneShotDataset(object):
             np.random.shuffle(args)
             for arg in args[:2]:
                 dec_arg = [self.vocab.decode(a) for a in arg]
-                names = dict(zip([wug1, wug2], dec_arg))
+                names = dict(zip(_wugs(), dec_arg))
                 yield self.split(templ), names
 
     def _sample_comp(self):
@@ -267,7 +271,7 @@ class OneShotDataset(object):
         templ = self.templates[np.random.randint(len(self.templates))]
         args = sorted(self.templ_to_arg[templ])
         arg = args[np.random.randint(len(args))]
-        wugs = [self.vocab[w] for w in [wug1, wug2]]
+        wugs = [self.vocab[w] for w in _wugs()]
         named_arg = list(zip(arg, wugs))
         arg_part, name = named_arg[np.random.randint(len(named_arg))]
 
