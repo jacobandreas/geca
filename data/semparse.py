@@ -11,6 +11,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string("semparse_split", "question", "which split of the dataset to use")
 flags.DEFINE_string("semparse_dataset", None, "which dataset to use")
 flags.DEFINE_string("semparse_mrl", "sql", "logical form type")
+#flags.DEFINE_boolean("semparse_lower", True, "lowercase LFs")
 flags.DEFINE_string("val_fold", "8", "")
 flags.DEFINE_string("test_fold", "9", "")
 
@@ -41,8 +42,12 @@ class SemparseDataset(OneShotDataset):
                     built_sql = built_sql.replace(k, v)
                     built_txt = built_txt.replace(k, v)
 
+                #if FLAGS.semparse_lower:
+                #    built_sql = built_sql.lower()
+
                 built_sql = tuple(built_sql.split())
-                built_txt = tuple(built_txt.lower().split())
+                #built_txt = tuple(built_txt.lower().split())
+                built_txt = tuple(built_txt.split())
 
                 if FLAGS.semparse_split == "question":
                     split = utt["question-split"]
