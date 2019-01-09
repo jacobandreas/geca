@@ -54,17 +54,17 @@ def main(argv):
             hlog.log("FINE_TUNE")
             fine_tune[0] = True
         model.eval()
-        dump = i_epoch == FLAGS.n_epochs - 1
+        final = i_epoch == FLAGS.n_epochs - 1
         with hlog.task("eval_train", timer=False):
             train_data = [dataset.sample_train() for _ in range(1000)]
             evaluate(model, train_data)
         with hlog.task("eval_val", timer=False):
             val_data = dataset.get_val()
-            val_acc = evaluate(model, val_data, vis=dump)
+            val_acc = evaluate(model, val_data, vis=final, beam=final)
         if FLAGS.TEST:
             with hlog.task("eval_test", timer=False):
                 test_data = dataset.get_test()
-                evaluate(model, test_data)
+                evaluate(model, test_data, beam=final)
         if (i_epoch+1) % FLAGS.n_checkpoint == 0: 
             torch.save(
                 model.state_dict(),
@@ -74,12 +74,12 @@ def main(argv):
 
     train(dataset, model, sample, callback, staged=False)
 
-def evaluate(model, data, vis=False):
+def evaluate(model, data, vis=False, beam=False):
     correct = 0
     total = 0
     for i in range(0, len(data), FLAGS.n_batch):
         batch = make_batch(data[i:i+FLAGS.n_batch], model.vocab, staged=False)
-        preds, _ = model.sample(batch.inp_data, greedy=True)
+        preds, _ = model.sample(batch.inp_data, greedy=True, beam=beam)
         for j in range(len(preds)):
             correct_here = preds[j] == batch.out[j]
             if vis:

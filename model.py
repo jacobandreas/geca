@@ -13,6 +13,7 @@ flags.DEFINE_integer("n_emb", 64, "embedding size")
 flags.DEFINE_integer("n_enc", 512, "encoder hidden size")
 flags.DEFINE_float("dropout", 0, "dropout probability")
 flags.DEFINE_boolean("copy_sup", False, "supervised copy")
+flags.DEFINE_integer("beam", None, "decode with a beam")
 
 class RetrievalModel():
     def __init__(self, vocab):
@@ -238,7 +239,15 @@ class GeneratorModel(nn.Module):
 
         return loss
 
-    def sample(self, inp, greedy=False):
+    def sample(self, inp, greedy=False, beam=False):
+        if beam and (FLAGS.beam is not None):
+            preds = []
+            scores = []
+            for i in range(inp.shape[1]):
+                p = self.beam(inp[:, i:i+1], FLAGS.beam)
+                preds.append(p[0])
+                scores.append(0)
+            return preds, scores
         enc, state = self.encoder(inp)
         enc = self.proj(enc)
         #assert(enc.shape[1] == 1)
