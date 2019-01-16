@@ -20,7 +20,7 @@ do
     --semparse_split question \
     --seed $i \
     --model_type retrieval \
-    --wug_limit 32 \
+    --wug_limit 50 \
     --wug_size 4 \
     --wug_count 3 \
     --compute_adjacency \
