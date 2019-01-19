@@ -1,0 +1,2078 @@
+could you tell me what is the highest point in the state of oregon
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( oregon ) ) ) ) )
+
+give me all the states of usa
+( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) )
+
+give me the cities in texas
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+give me the cities in virginia
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( virginia ) ) ) )
+
+give me the cities which are in texas
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+tell me what cities are in texas
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what are the cities in california
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( california ) ) ) )
+
+what cities are located in pennsylvania
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( pennsylvania ) ) ) )
+
+what cities in california
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( california ) ) ) )
+
+give me the largest state
+( A , _largest ( A , _state ( A ) ) )
+
+what is the biggest state
+( A , _largest ( A , _state ( A ) ) )
+
+what is the largest state
+( A , _largest ( A , _state ( A ) ) )
+
+what state is the biggest
+( A , _largest ( A , _state ( A ) ) )
+
+give me the longest river that passes through the us
+( A , _longest ( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+give me the number of rivers in california
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( california ) ) ) , A ) )
+
+how many rivers are found in colorado
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( colorado ) ) ) , A ) )
+
+how many rivers are in colorado
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( colorado ) ) ) , A ) )
+
+how many rivers are in iowa
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( iowa ) ) ) , A ) )
+
+how many rivers are in missouri
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( missouri ) ) ) , A ) )
+
+how many rivers are in new york
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( new york ) ) ) , A ) )
+
+how many rivers are there in idaho
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( idaho ) ) ) , A ) )
+
+how many rivers are there in texas
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) , A ) )
+
+how many rivers does alaska have
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( alaska ) ) ) , A ) )
+
+how many rivers does colorado have
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( colorado ) ) ) , A ) )
+
+how many rivers in washington
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( washington ) ) ) , A ) )
+
+give me the states that border utah
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( utah ) ) ) )
+
+states bordering iowa
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( iowa ) ) ) )
+
+what are the neighboring states for michigan
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( michigan ) ) ) )
+
+what is the adjacent state of california
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( california ) ) ) )
+
+what state borders michigan
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( michigan ) ) ) )
+
+what state borders new york
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( new york ) ) ) )
+
+what states are next to arizona
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( arizona ) ) ) )
+
+what states are next to texas
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what states are next to the mississippi
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( mississippi ) ) ) )
+
+what states border alaska
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what states border arkansas
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( arkansas ) ) ) )
+
+what states border delaware
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( delaware ) ) ) )
+
+what states border florida
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( florida ) ) ) )
+
+what states border georgia
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( georgia ) ) ) )
+
+what states border hawaii
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( hawaii ) ) ) )
+
+what states border indiana
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( indiana ) ) ) )
+
+what states border kentucky
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( kentucky ) ) ) )
+
+what states border michigan
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( michigan ) ) ) )
+
+what states border missouri
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( missouri ) ) ) )
+
+what states border montana
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( montana ) ) ) )
+
+what states border new hampshire
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( new hampshire ) ) ) )
+
+what states border new jersey
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( new jersey ) ) ) )
+
+what states border ohio
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( ohio ) ) ) )
+
+what states border rhode island
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( rhode island ) ) ) )
+
+what states border texas
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what states border wisconsin
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( wisconsin ) ) ) )
+
+what states neighbor maine
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( maine ) ) ) )
+
+what states surround kentucky
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( kentucky ) ) ) )
+
+which state border kentucky
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( kentucky ) ) ) )
+
+which state borders florida
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( florida ) ) ) )
+
+which state borders hawaii
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( hawaii ) ) ) )
+
+which states adjoin alabama
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( alabama ) ) ) )
+
+which states border alabama
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( alabama ) ) ) )
+
+which states border alaska
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+which states border arizona
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( arizona ) ) ) )
+
+which states border colorado
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( colorado ) ) ) )
+
+which states border hawaii
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( hawaii ) ) ) )
+
+which states border illinois
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( illinois ) ) ) )
+
+which states border iowa
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( iowa ) ) ) )
+
+which states border kentucky
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( kentucky ) ) ) )
+
+which states border michigan
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( michigan ) ) ) )
+
+which states border new york
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( new york ) ) ) )
+
+which states border south dakota
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( south dakota ) ) ) )
+
+which states border texas
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+how big is the city of new york
+( A , ( _size ( B , A ) , _const ( B , _cityid ( new york , _ ) ) ) )
+
+how high are the highest points of all the states
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _state ( C ) ) ) ) )
+
+how high is guadalupe peak
+( A , ( _elevation ( B , A ) , _const ( B , _placeid ( guadalupe peak ) ) ) )
+
+how high is mount mckinley
+( A , ( _elevation ( B , A ) , _const ( B , _placeid ( mount mckinley ) ) ) )
+
+how tall is mount mckinley
+( A , ( _elevation ( B , A ) , _const ( B , _placeid ( mount mckinley ) ) ) )
+
+what is the elevation of death valley
+( A , ( _elevation ( B , A ) , _const ( B , _placeid ( death valley ) ) ) )
+
+how high is the highest point in america
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the elevation of the highest point in the usa
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the height of the highest point in the usa
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the highest elevation in the united states
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+how large is the largest city in alaska
+( A , ( _size ( B , A ) , _largest ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( alaska ) ) ) ) ) )
+
+how long is the longest river in california
+( A , ( _len ( B , A ) , _longest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( california ) ) ) ) ) )
+
+how long is the longest river in the usa
+( A , ( _len ( B , A ) , _longest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the length of the longest river in the usa
+( A , ( _len ( B , A ) , _longest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+how long is the shortest river in the usa
+( A , ( _len ( B , A ) , _shortest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+how many big cities are in pennsylvania
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( pennsylvania ) ) ) , A ) )
+
+how many major cities are in arizona
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( arizona ) ) ) , A ) )
+
+how many major cities are in florida
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( florida ) ) ) , A ) )
+
+how many major cities are in texas
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) , A ) )
+
+how many major cities are there in oregon
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( oregon ) ) ) , A ) )
+
+how many capitals does rhode island have
+( A , _count ( B , ( _capital ( B ) , _const ( C , _stateid ( rhode island ) ) , _loc ( B , C ) ) , A ) )
+
+how many cities are in louisiana
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( louisiana ) ) ) , A ) )
+
+how many cities are in montana
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( montana ) ) ) , A ) )
+
+how many cities does texas have
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) , A ) )
+
+how many citizens does the biggest city have in the usa
+( A , ( _population ( B , A ) , _largest ( B , _city ( B ) ) ) )
+
+how many citizens in boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+how many inhabitants does montgomery have
+( A , ( _population ( B , A ) , _const ( B , _cityid ( montgomery , _ ) ) ) )
+
+how many people in boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+how many people live in austin
+( A , ( _population ( B , A ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+how many people live in chicago
+( A , ( _population ( B , A ) , _const ( B , _cityid ( chicago , _ ) ) ) )
+
+how many people live in detroit
+( A , ( _population ( B , A ) , _const ( B , _cityid ( detroit , _ ) ) ) )
+
+how many people live in houston
+( A , ( _population ( B , A ) , _const ( B , _cityid ( houston , _ ) ) ) )
+
+how many people live in kalamazoo
+( A , ( _population ( B , A ) , _const ( B , _cityid ( kalamazoo , _ ) ) ) )
+
+how many people live in riverside
+( A , ( _population ( B , A ) , _const ( B , _cityid ( riverside , _ ) ) ) )
+
+how many people live in san francisco
+( A , ( _population ( B , A ) , _const ( B , _cityid ( san francisco , _ ) ) ) )
+
+how many people lived in austin
+( A , ( _population ( B , A ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+number of citizens in boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+number of people in boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+people in boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+population of boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+what is the population in boston
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boston , _ ) ) ) )
+
+what is the population of atlanta
+( A , ( _population ( B , A ) , _const ( B , _cityid ( atlanta , _ ) ) ) )
+
+what is the population of austin
+( A , ( _population ( B , A ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+what is the population of boulder
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boulder , _ ) ) ) )
+
+what is the population of dallas
+( A , ( _population ( B , A ) , _const ( B , _cityid ( dallas , _ ) ) ) )
+
+what is the population of denver
+( A , ( _population ( B , A ) , _const ( B , _cityid ( denver , _ ) ) ) )
+
+what is the population of houston
+( A , ( _population ( B , A ) , _const ( B , _cityid ( houston , _ ) ) ) )
+
+what is the population of new york city
+( A , ( _population ( B , A ) , _const ( B , _cityid ( new york , _ ) ) ) )
+
+what is the population of sacramento
+( A , ( _population ( B , A ) , _const ( B , _cityid ( sacramento , _ ) ) ) )
+
+what is the population of san antonio
+( A , ( _population ( B , A ) , _const ( B , _cityid ( san antonio , _ ) ) ) )
+
+what is the population of seattle
+( A , ( _population ( B , A ) , _const ( B , _cityid ( seattle , _ ) ) ) )
+
+what is the population of tucson
+( A , ( _population ( B , A ) , _const ( B , _cityid ( tucson , _ ) ) ) )
+
+how many major cities are in states bordering nebraska
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _state ( C ) , _next_to ( C , D ) , _const ( D , _stateid ( nebraska ) ) ) , A ) )
+
+how many major cities are in states bordering utah
+( A , _count ( B , ( _major ( B ) , _city ( B ) , _loc ( B , C ) , _state ( C ) , _next_to ( C , D ) , _const ( D , _stateid ( utah ) ) ) , A ) )
+
+how many major rivers cross ohio
+( A , _count ( B , ( _major ( B ) , _river ( B ) , _traverse ( B , C ) , _const ( C , _stateid ( ohio ) ) ) , A ) )
+
+how many people live in austin texas
+( A , ( _population ( B , A ) , _const ( B , _cityid ( austin , texas ) ) ) )
+
+how many people live in minneapolis minnesota
+( A , ( _population ( B , A ) , _const ( B , _cityid ( minneapolis , minnesota ) ) ) )
+
+how many people live in spokane washington
+( A , ( _population ( B , A ) , _const ( B , _cityid ( spokane , washington ) ) ) )
+
+how many people live in washington dc
+( A , ( _population ( B , A ) , _const ( B , _cityid ( washington , dc ) ) ) )
+
+what is the population of atlanta georgia
+( A , ( _population ( B , A ) , _const ( B , _cityid ( atlanta , georgia ) ) ) )
+
+what is the population of austin texas
+( A , ( _population ( B , A ) , _const ( B , _cityid ( austin , texas ) ) ) )
+
+what is the population of boston massachusetts
+( A , ( _population ( B , A ) , _const ( B , _cityid ( boston , massachusetts ) ) ) )
+
+what is the population of erie pennsylvania
+( A , ( _population ( B , A ) , _const ( B , _cityid ( erie , pennsylvania ) ) ) )
+
+what is the population of portland maine
+( A , ( _population ( B , A ) , _const ( B , _cityid ( portland , maine ) ) ) )
+
+what is the population of seattle washington
+( A , ( _population ( B , A ) , _const ( B , _cityid ( seattle , washington ) ) ) )
+
+what is the population of springfield missouri
+( A , ( _population ( B , A ) , _const ( B , _cityid ( springfield , missouri ) ) ) )
+
+what is the population of springfield south dakota
+( A , ( _population ( B , A ) , _const ( B , _cityid ( springfield , south dakota ) ) ) )
+
+what is the population of tempe arizona
+( A , ( _population ( B , A ) , _const ( B , _cityid ( tempe , arizona ) ) ) )
+
+what is the population of washington dc
+( A , ( _population ( B , A ) , _const ( B , _cityid ( washington , dc ) ) ) )
+
+how many people live in the biggest city in new york state
+( A , ( _population ( B , A ) , _largest ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( new york ) ) , _state ( C ) ) ) ) )
+
+how many people live in the capital of georgia
+( A , ( _population ( B , A ) , _capital ( B ) , _loc ( B , C ) , _const ( C , _stateid ( georgia ) ) ) )
+
+how many people live in the capital of texas
+( A , ( _population ( B , A ) , _capital ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+how many people live in the smallest state bordering wyoming
+( A , ( _population ( B , A ) , _smallest ( B , ( _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( wyoming ) ) ) ) ) )
+
+how many people live in the state with the largest population density
+( A , ( _population ( B , A ) , _largest ( C , ( _state ( B ) , _density ( B , C ) ) ) ) )
+
+what is the population of the state with the highest population density
+( A , ( _population ( B , A ) , _largest ( C , ( _state ( B ) , _density ( B , C ) ) ) ) )
+
+how many rivers are in the state that has the most rivers
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _most ( C , D , ( _state ( C ) , _loc ( D , C ) , _river ( D ) ) ) ) , A ) )
+
+how many rivers are in the state with the largest population
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _largest ( D , ( _state ( C ) , _population ( C , D ) ) ) ) , A ) )
+
+how many rivers do not traverse the state with the capital albany
+( A , _count ( B , ( _river ( B ) , \+ ( _traverse ( B , C ) , _state ( C ) , _loc ( D , C ) , _capital ( D ) , _const ( D , _cityid ( albany , _ ) ) ) ) , A ) )
+
+how many rivers in texas are longer than the red
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) , _longer ( B , D ) , _const ( D , _riverid ( red ) ) ) , A ) )
+
+how many rivers run through texas
+( A , _count ( B , ( _river ( B ) , _traverse ( B , C ) , _const ( C , _stateid ( texas ) ) ) , A ) )
+
+how many square kilometers in the us
+( A , ( _area ( B , A ) , _const ( B , _countryid ( usa ) ) ) )
+
+what is the total area of the usa
+( A , ( _area ( B , A ) , _const ( B , _countryid ( usa ) ) ) )
+
+how many states are in the united states
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many states are in the usa
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many states are there in the usa
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many states are there in united states
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many states does usa have
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many states are there
+( A , _count ( B , _state ( B ) , A ) )
+
+how many states border at least one other state
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) ) , A ) )
+
+how many states border colorado and border new mexico
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( colorado ) ) , _next_to ( B , D ) , _const ( D , _stateid ( new mexico ) ) ) , A ) )
+
+how many states border on the state whose capital is boston
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) , _loc ( D , C ) , _capital ( D ) , _const ( D , _cityid ( boston , _ ) ) ) , A ) )
+
+how many states border the state that borders the most states
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _most ( C , D , ( _state ( C ) , _next_to ( C , D ) , _state ( D ) ) ) ) , A ) )
+
+how many states border the state with the largest population
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _largest ( D , ( _state ( C ) , _population ( C , D ) ) ) ) , A ) )
+
+how many states do not have rivers
+( A , _count ( B , ( _state ( B ) , \+ ( _loc ( C , B ) , _river ( C ) ) ) , A ) )
+
+how many states have a higher point than the highest point of the state with the largest capital city in the us
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _higher ( C , D ) , _place ( C ) , _highest ( D , ( _place ( D ) , _loc ( D , E ) , _state ( E ) , _loc ( F , E ) , _largest ( F , ( _capital ( F ) , _city ( F ) , _loc ( F , G ) , _const ( G , _countryid ( usa ) ) ) ) ) ) ) , A ) )
+
+how many states have major rivers
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _major ( C ) , _river ( C ) ) , A ) )
+
+how many states in the us does the shortest river run through
+( A , _count ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) , _shortest ( D , _river ( D ) ) , _traverse ( D , B ) ) , A ) )
+
+in which state does the highest point in usa exist
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the state with the highest elevation in the united states
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what state contains the highest point in the us
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+in which state is rochester
+( A , ( _state ( A ) , _const ( B , _cityid ( rochester , _ ) ) , _loc ( B , A ) ) )
+
+san antonio is in what state
+( A , ( _state ( A ) , _const ( B , _cityid ( san antonio , _ ) ) , _loc ( B , A ) ) )
+
+what state is austin in
+( A , ( _state ( A ) , _const ( B , _cityid ( austin , _ ) ) , _loc ( B , A ) ) )
+
+what state is boston in
+( A , ( _state ( A ) , _const ( B , _cityid ( boston , _ ) ) , _loc ( B , A ) ) )
+
+what state is dallas in
+( A , ( _state ( A ) , _const ( B , _cityid ( dallas , _ ) ) , _loc ( B , A ) ) )
+
+what state is des moines located in
+( A , ( _state ( A ) , _const ( B , _cityid ( des moines , _ ) ) , _loc ( B , A ) ) )
+
+what state is miami in
+( A , ( _state ( A ) , _const ( B , _cityid ( miami , _ ) ) , _loc ( B , A ) ) )
+
+what state is pittsburgh in
+( A , ( _state ( A ) , _const ( B , _cityid ( pittsburgh , _ ) ) , _loc ( B , A ) ) )
+
+which state is kalamazoo in
+( A , ( _state ( A ) , _const ( B , _cityid ( kalamazoo , _ ) ) , _loc ( B , A ) ) )
+
+list the states
+( A , _state ( A ) )
+
+what are the states
+( A , _state ( A ) )
+
+name all the lakes of us
+( A , ( _lake ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) )
+
+name the longest river in us
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the longest river in america
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the longest river in the united states
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the longest river in the us
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what river is the longest one in the united states
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+which is the longest river in usa
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+name the states which have no surrounding states
+( A , ( _state ( A ) , \+ ( _next_to ( A , B ) , _state ( B ) ) ) )
+
+what states have no bordering state
+( A , ( _state ( A ) , \+ ( _next_to ( A , B ) , _state ( B ) ) ) )
+
+which states border no other states
+( A , ( _state ( A ) , \+ ( _next_to ( A , B ) , _state ( B ) ) ) )
+
+of the states washed by the mississippi river which has the lowest point
+( A , _lowest ( B , ( _state ( A ) , _traverse ( C , A ) , _const ( C , _riverid ( mississippi ) ) , _loc ( B , A ) , _place ( B ) ) ) )
+
+show major cities in colorado
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( colorado ) ) ) )
+
+what are the major cities in alabama
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alabama ) ) ) )
+
+what are the major cities in alaska
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what are the major cities in california
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( california ) ) ) )
+
+what are the major cities in delaware
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( delaware ) ) ) )
+
+what are the major cities in kansas
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( kansas ) ) ) )
+
+what are the major cities in missouri
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( missouri ) ) ) )
+
+what are the major cities in new mexico
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( new mexico ) ) ) )
+
+what are the major cities in new york
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( new york ) ) ) )
+
+what are the major cities in north carolina
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( north carolina ) ) ) )
+
+what are the major cities in ohio
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( ohio ) ) ) )
+
+what are the major cities in oklahoma
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( oklahoma ) ) ) )
+
+what are the major cities in rhode island
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( rhode island ) ) ) )
+
+what are the major cities in texas
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what are the major cities in vermont
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( vermont ) ) ) )
+
+what are the major cities in wyoming
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( wyoming ) ) ) )
+
+what are the major cities of texas
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what are the names of the major cities in illinois
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( illinois ) ) ) )
+
+what is the major cities in montana
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( montana ) ) ) )
+
+what major cities are located in pennsylvania
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( pennsylvania ) ) ) )
+
+show me all the major lakes in the us
+( A , ( _major ( A ) , _lake ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) )
+
+what are the major lakes in united states
+( A , ( _major ( A ) , _lake ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) )
+
+state the state with the largest area
+( A , _largest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+what is the state with the largest area
+( A , _largest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+what state has the largest area
+( A , _largest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+through which states does the mississippi flow
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _traverse ( B , A ) ) )
+
+through which states does the mississippi run
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _traverse ( B , A ) ) )
+
+what are the states that the potomac run through
+( A , ( _state ( A ) , _const ( B , _riverid ( potomac ) ) , _traverse ( B , A ) ) )
+
+what states does the mississippi run through
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _traverse ( B , A ) ) )
+
+what states does the missouri run through
+( A , ( _state ( A ) , _const ( B , _riverid ( missouri ) ) , _traverse ( B , A ) ) )
+
+which states does the colorado river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( colorado ) ) , _traverse ( B , A ) ) )
+
+which states does the mississippi run through
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _traverse ( B , A ) ) )
+
+which states does the missouri river pass through
+( A , ( _state ( A ) , _const ( B , _riverid ( missouri ) ) , _traverse ( B , A ) ) )
+
+what are the capital cities of the states which border texas
+( A , ( _capital ( A ) , _city ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what are the capitals of states that border missouri
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( missouri ) ) ) )
+
+what are the capitals of the states that border texas
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+which capitals are in the states that border texas
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what are the cities in states through which the mississippi runs
+( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _traverse ( C , B ) , _const ( C , _riverid ( mississippi ) ) ) )
+
+what are the cities of the state with the highest point
+( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _highest ( C , _place ( C ) ) ) )
+
+what are the high points of states surrounding mississippi
+( A , ( _high_point ( B , A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( mississippi ) ) ) )
+
+what are the highest points of states surrounding mississippi
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( mississippi ) ) ) ) )
+
+what is the highest point in states bordering georgia
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( georgia ) ) ) ) )
+
+what is the highest point in the states bordering colorado
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( colorado ) ) ) ) )
+
+what are the lakes in states bordering texas
+( A , ( _lake ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what are the largest cities in the states that border the largest state
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _largest ( C , _state ( C ) ) ) ) )
+
+what are the major cities in states through which the mississippi runs
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _state ( B ) , _traverse ( C , B ) , _const ( C , _riverid ( mississippi ) ) ) )
+
+what are the major cities in the largest state
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _largest ( B , _state ( B ) ) ) )
+
+what are the major cities in the smallest state in the us
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _smallest ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what are the major cities in the state of california
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( california ) ) ) )
+
+what are the major cities in the states through which the major river in virginia runs
+( A , ( _major ( A ) , _city ( A ) , _loc ( A , B ) , _state ( B ) , _river ( C ) , _loc ( C , D ) , _const ( D , _stateid ( virginia ) ) , _traverse ( C , B ) ) )
+
+what are the population densities of each us state
+( A , ( _density ( B , A ) , _state ( B ) ) )
+
+what are the populations of all the major cities in montana
+( A , ( _population ( B , A ) , _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( montana ) ) ) )
+
+what are the populations of the major cities of texas
+( A , ( _population ( B , A ) , _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what is the population of the major cities in wisconsin
+( A , ( _population ( B , A ) , _major ( B ) , _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( wisconsin ) ) ) )
+
+what are the populations of states through which the mississippi river run
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _river ( C ) , _traverse ( C , B ) ) )
+
+what are the populations of states through which the mississippi river runs
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _river ( C ) , _traverse ( C , B ) ) )
+
+what are the populations of the states through which the mississippi river run
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _river ( C ) , _traverse ( C , B ) ) )
+
+what are the populations of the states through which the mississippi river runs
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _river ( C ) , _traverse ( C , B ) ) )
+
+what are the populations of states through which the mississippi run
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what are the populations of states through which the mississippi runs
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what are the populations of the states through which the mississippi run
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what are the populations of the states through which the mississippi runs
+( A , ( _population ( B , A ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what are the populations of states which border texas
+( A , ( _population ( B , A ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what are the states that border the state with the greatest population
+( A , ( _state ( A ) , _next_to ( A , B ) , _largest ( C , ( _state ( B ) , _population ( B , C ) ) ) ) )
+
+what states border the most populous state
+( A , ( _state ( A ) , _next_to ( A , B ) , _largest ( C , ( _state ( B ) , _population ( B , C ) ) ) ) )
+
+what are the states through which the longest river runs
+( A , ( _state ( A ) , _longest ( B , _river ( B ) ) , _traverse ( B , A ) ) )
+
+which states does the longest river cross
+( A , ( _state ( A ) , _longest ( B , _river ( B ) ) , _traverse ( B , A ) ) )
+
+which states does the longest river run through
+( A , ( _state ( A ) , _longest ( B , _river ( B ) ) , _traverse ( B , A ) ) )
+
+what capital has the largest population
+( A , _largest ( B , ( _capital ( A ) , _population ( A , B ) ) ) )
+
+what capital is the largest in the us
+( A , _largest ( A , ( _capital ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what cities in texas have the highest number of citizens
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+what cities in texas have the highest populations
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+what is the city in texas with the largest population
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+what is the largest city in minnesota by population
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( minnesota ) ) , _population ( A , B ) ) ) )
+
+what is the most populous city in texas
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+what is the most populous city in wyoming
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( wyoming ) ) , _population ( A , B ) ) ) )
+
+where is the most populated area of new mexico
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( new mexico ) ) , _population ( A , B ) ) ) )
+
+which city in california has the largest population
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _stateid ( california ) ) , _population ( A , B ) ) ) )
+
+what city has the largest population
+( A , _largest ( B , ( _city ( A ) , _population ( A , B ) ) ) )
+
+what city has the most people
+( A , _largest ( B , ( _city ( A ) , _population ( A , B ) ) ) )
+
+what is the most populous city
+( A , _largest ( B , ( _city ( A ) , _population ( A , B ) ) ) )
+
+what city in the united states has the highest population density
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _countryid ( usa ) ) , _density ( A , B ) ) ) )
+
+which us city has the highest population density
+( A , _largest ( B , ( _city ( A ) , _loc ( A , C ) , _const ( C , _countryid ( usa ) ) , _density ( A , B ) ) ) )
+
+what is capital of the state with the lowest point
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _lowest ( C , _place ( C ) ) ) )
+
+what is largest capital
+( A , _largest ( A , _capital ( A ) ) )
+
+what is the largest capital
+( A , _largest ( A , _capital ( A ) ) )
+
+what is the area of all the states combined
+( A , _sum ( C , _state ( C ) , _area ( C ) , A ) )
+
+what is the combined area of all 50 states
+( A , _sum ( C , _state ( C ) , _area ( C ) , A ) )
+
+what is the area of the state with the capital albany
+( A , ( _area ( B , A ) , _state ( B ) , _loc ( C , B ) , _capital ( C ) , _const ( C , _cityid ( albany , _ ) ) ) )
+
+what is the area of the state with the smallest population density
+( A , ( _area ( B , A ) , _smallest ( C , ( _state ( B ) , _density ( B , C ) ) ) ) )
+
+what is the biggest capital city in the us
+( A , _largest ( A , ( _capital ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the largest capital city in the usa
+( A , _largest ( A , ( _capital ( A ) , _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the biggest city in arizona
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( arizona ) ) ) ) )
+
+what is the biggest city in georgia
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( georgia ) ) ) ) )
+
+what is the biggest city in kansas
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( kansas ) ) ) ) )
+
+what is the biggest city in louisiana
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( louisiana ) ) ) ) )
+
+what is the biggest city in nebraska
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( nebraska ) ) ) ) )
+
+what is the biggest city in oregon
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( oregon ) ) ) ) )
+
+what is the biggest city in texas
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the biggest city in wyoming
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( wyoming ) ) ) ) )
+
+what is the largest city in alabama
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alabama ) ) ) ) )
+
+what is the largest city in california
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( california ) ) ) ) )
+
+what is the largest city in michigan
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( michigan ) ) ) ) )
+
+what is the largest city in missouri
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( missouri ) ) ) ) )
+
+what is the largest city in rhode island
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( rhode island ) ) ) ) )
+
+what is the largest city in texas
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the largest city in wisconsin
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( wisconsin ) ) ) ) )
+
+what is the largest city of kansas
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( kansas ) ) ) ) )
+
+what is the biggest city in the smallest state
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _smallest ( B , _state ( B ) ) ) ) )
+
+what is the biggest city in the us
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the biggest city in the usa
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the biggest city in usa
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the biggest state in continental us
+( A , _largest ( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the biggest state in the usa
+( A , _largest ( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the largest state in the us
+( A , _largest ( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the largest state in usa
+( A , _largest ( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the capital of states that have cities named durham
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _city ( C ) , _const ( C , _cityid ( durham , _ ) ) ) )
+
+what is the capital of the smallest state
+( A , ( _capital ( A ) , _loc ( A , B ) , _smallest ( B , _state ( B ) ) ) )
+
+what is the capital of the state with the highest elevation
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _highest ( C , _place ( C ) ) ) )
+
+what is the capital of the state with the highest point
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _highest ( C , _place ( C ) ) ) )
+
+what is the capital of the state with the longest river
+( A , ( _capital ( A ) , _loc ( A , B ) , _longest ( C , ( _state ( B ) , _loc ( C , B ) , _river ( C ) ) ) ) )
+
+what is the height of mount mckinley
+( A , ( _elevation ( B , A ) , _const ( B , _placeid ( mount mckinley ) ) ) )
+
+what is the height of the highest mountain in texas
+( A , ( _elevation ( B , A ) , _highest ( B , ( _mountain ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) ) ) )
+
+what is the high point of wyoming
+( A , ( _high_point ( B , A ) , _loc ( A , B ) , _const ( B , _stateid ( wyoming ) ) ) )
+
+what is the highest mountain in alaska
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) ) )
+
+what is the highest mountain in texas
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the highest point in colorado
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( colorado ) ) ) ) )
+
+what is the highest point in delaware
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( delaware ) ) ) ) )
+
+what is the highest point in florida
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( florida ) ) ) ) )
+
+what is the highest point in iowa
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( iowa ) ) ) ) )
+
+what is the highest point in kansas
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( kansas ) ) ) ) )
+
+what is the highest point in maine
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( maine ) ) ) ) )
+
+what is the highest point in montana
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( montana ) ) ) ) )
+
+what is the highest point in new mexico
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( new mexico ) ) ) ) )
+
+what is the highest point in ohio
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( ohio ) ) ) ) )
+
+what is the highest point in rhode island
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( rhode island ) ) ) ) )
+
+what is the highest point in texas
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the highest point in virginia
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( virginia ) ) ) ) )
+
+what is the highest point in wyoming
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( wyoming ) ) ) ) )
+
+where is the highest point in hawaii
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( hawaii ) ) ) ) )
+
+where is the highest point in montana
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( montana ) ) ) ) )
+
+what is the highest point in each state whose lowest point is sea level
+( A , ( _high_point ( B , A ) , _state ( B ) , _low_point ( B , C ) , _elevation ( C , 0.0 ) ) )
+
+what is the highest point in the country
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point in the united states
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point in the us
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point in the usa
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point of the usa
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point in the smallest state
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _smallest ( B , _state ( B ) ) ) ) )
+
+what is the highest point in the state with capital austin
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _capital ( C ) , _const ( C , _cityid ( austin , _ ) ) ) ) )
+
+what is the highest point in the state with capital des moines
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _capital ( C ) , _const ( C , _cityid ( des moines , _ ) ) ) ) )
+
+what is the highest point in the state with the capital des moines
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _capital ( C ) , _const ( C , _cityid ( des moines , _ ) ) ) ) )
+
+what is the highest point in the state with the most rivers
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _most ( B , C , ( _state ( B ) , _traverse ( C , B ) , _river ( C ) ) ) ) ) )
+
+what is the highest point of the state with the largest area
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _largest ( C , ( _state ( B ) , _area ( B , C ) ) ) ) ) )
+
+what is the largest city in a state that borders texas
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( texas ) ) ) ) )
+
+what is the largest city in states that border california
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( california ) ) ) ) )
+
+what is the largest city in smallest state through which the mississippi runs
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _smallest ( B , ( _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) ) ) ) )
+
+what is the largest city in the smallest state in the usa
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _smallest ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) ) )
+
+what is the largest of the state that the rio grande runs through
+( A , _largest ( A , ( _state ( A ) , _traverse ( B , A ) , _const ( B , _riverid ( rio grande ) ) ) ) )
+
+what is the largest state traversed by the mississippi river
+( A , _largest ( A , ( _state ( A ) , _traverse ( B , A ) , _const ( B , _riverid ( mississippi ) ) ) ) )
+
+what is the largest state bordering arkansas
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( arkansas ) ) ) ) )
+
+what is the largest state bordering texas
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the largest state that borders california
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( california ) ) ) ) )
+
+what is the largest state that borders texas
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what state that borders texas is the largest
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the largest state capital in population
+( A , _largest ( B , ( _state ( C ) , _capital ( C , A ) , _population ( A , B ) ) ) )
+
+what is the largest state that borders the state with the highest population
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _largest ( C , ( _state ( B ) , _population ( B , C ) ) ) ) ) )
+
+what is the largest state that borders the state with the lowest point in the usa
+( A , _largest ( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _loc ( C , B ) , _lowest ( C , ( _place ( C ) , _loc ( C , D ) , _const ( D , _countryid ( usa ) ) ) ) ) ) )
+
+what is the least populous state
+( A , _smallest ( B , ( _state ( A ) , _population ( A , B ) ) ) )
+
+what is the state with the lowest population
+( A , _smallest ( B , ( _state ( A ) , _population ( A , B ) ) ) )
+
+what state has the smallest population
+( A , _smallest ( B , ( _state ( A ) , _population ( A , B ) ) ) )
+
+what state has the smallest urban population
+( A , _smallest ( B , ( _state ( A ) , _population ( A , B ) ) ) )
+
+what is the length of the colorado river in texas
+( A , ( _len ( B , A ) , _const ( B , _riverid ( colorado ) ) , _river ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what is the length of the longest river that runs through texas
+( A , ( _len ( B , A ) , _longest ( B , ( _river ( B ) , _traverse ( B , C ) , _const ( C , _stateid ( texas ) ) ) ) ) )
+
+what is the longest river in the largest state
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _largest ( B , _state ( B ) ) ) ) )
+
+what is the longest river in the smallest state in the usa
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _smallest ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) ) )
+
+what is the longest river in the state with the most major cities
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _most ( B , C , ( _state ( B ) , _loc ( C , B ) , _major ( C ) , _city ( C ) ) ) ) ) )
+
+what is the longest river in the states that border nebraska
+( A , _longest ( A , ( _river ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( nebraska ) ) ) ) )
+
+what is the longest river that does not run through texas
+( A , _longest ( A , ( _river ( A ) , \+ ( _traverse ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) ) )
+
+what is the longest river that flows through a state that borders indiana
+( A , _longest ( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( indiana ) ) ) ) )
+
+what is the longest river that runs through a state that borders tennessee
+( A , _longest ( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _next_to ( B , C ) , _const ( C , _stateid ( tennessee ) ) ) ) )
+
+what is the longest river
+( A , _longest ( A , _river ( A ) ) )
+
+what is the lowest elevation in pennsylvania
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( pennsylvania ) ) ) ) )
+
+what is the lowest point in arkansas
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( arkansas ) ) ) ) )
+
+what is the lowest point in california
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( california ) ) ) ) )
+
+what is the lowest point in louisiana
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( louisiana ) ) ) ) )
+
+what is the lowest point in massachusetts
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( massachusetts ) ) ) ) )
+
+what is the lowest point in mississippi
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( mississippi ) ) ) ) )
+
+what is the lowest point in nebraska in meters
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( nebraska ) ) ) ) )
+
+what is the lowest point in oregon
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( oregon ) ) ) ) )
+
+what is the lowest point in texas
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the lowest point in wisconsin
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( wisconsin ) ) ) ) )
+
+what is the lowest point of colorado
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( colorado ) ) ) ) )
+
+where is the lowest point in maryland
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( maryland ) ) ) ) )
+
+where is the lowest spot in iowa
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _stateid ( iowa ) ) ) ) )
+
+what is the lowest point of all states through which the colorado river runs through
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _const ( C , _riverid ( colorado ) ) , _river ( C ) , _traverse ( C , B ) ) ) )
+
+what is the maximum elevation of san francisco
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _const ( B , _cityid ( san francisco , _ ) ) ) ) )
+
+what is the most populated capital in the usa
+( A , _largest ( B , ( _population ( A , B ) , _capital ( A ) , _loc ( A , C ) , _const ( C , _countryid ( usa ) ) ) ) )
+
+what is the most populated state bordering oklahoma
+( A , _largest ( B , ( _state ( A ) , _next_to ( A , C ) , _const ( C , _stateid ( oklahoma ) ) , _population ( A , B ) ) ) )
+
+what state bordering nevada has the largest population
+( A , _largest ( B , ( _state ( A ) , _next_to ( A , C ) , _const ( C , _stateid ( nevada ) ) , _population ( A , B ) ) ) )
+
+what state that borders texas has the highest population
+( A , _largest ( B , ( _state ( A ) , _next_to ( A , C ) , _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+which of the states bordering pennsylvania has the largest population
+( A , _largest ( B , ( _state ( A ) , _next_to ( A , C ) , _const ( C , _stateid ( pennsylvania ) ) , _population ( A , B ) ) ) )
+
+what is the most populous state through which the mississippi runs
+( A , _largest ( B , ( _state ( A ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , A ) , _population ( A , B ) ) ) )
+
+what state which the mississippi runs through has the largest population
+( A , _largest ( B , ( _state ( A ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , A ) , _population ( A , B ) ) ) )
+
+what is the population density in the state with capital austin
+( A , ( _density ( B , A ) , _state ( B ) , _loc ( C , B ) , _capital ( C ) , _const ( C , _cityid ( austin , _ ) ) ) )
+
+what is the population density of the largest state
+( A , ( _density ( B , A ) , _largest ( B , _state ( B ) ) ) )
+
+what is the population density of the smallest state
+( A , ( _density ( B , A ) , _smallest ( B , _state ( B ) ) ) )
+
+what is the population density of the state with the smallest area
+( A , ( _density ( B , A ) , _smallest ( C , ( _state ( B ) , _area ( B , C ) ) ) ) )
+
+what is the population of the capital of the largest state through which the mississippi runs
+( A , ( _population ( B , A ) , _capital ( B ) , _loc ( B , C ) , _largest ( C , ( _state ( C ) , _const ( D , _riverid ( mississippi ) ) , _traverse ( D , C ) ) ) ) )
+
+what is the population of the capital of the largest state
+( A , ( _population ( B , A ) , _capital ( B ) , _loc ( B , C ) , _largest ( C , _state ( C ) ) ) )
+
+what is the population of the largest state
+( A , ( _population ( B , A ) , _largest ( B , _state ( B ) ) ) )
+
+what is the population of the smallest state
+( A , _smallest ( B , ( _population ( B , A ) , _state ( B ) ) ) )
+
+what is the population of the state that borders the most states
+( A , ( _population ( B , A ) , _most ( B , C , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) ) ) ) )
+
+what is the population of the state with the largest area
+( A , ( _population ( B , A ) , _largest ( C , ( _state ( B ) , _area ( B , C ) ) ) ) )
+
+what is the shortest river in alaska
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) ) )
+
+what is the shortest river in iowa
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( iowa ) ) ) ) )
+
+what is the shortest river in nebraska
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( nebraska ) ) ) ) )
+
+what is the shortest river in texas
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the size of the capital of texas
+( A , ( _size ( B , A ) , _capital ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) )
+
+what is the smallest city in the largest state
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _largest ( B , _state ( B ) ) ) ) )
+
+what is the smallest city of the smallest state in the us
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _smallest ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) ) )
+
+what is the smallest state by area
+( A , _smallest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+what is the state with the smallest area
+( A , _smallest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+what state has the smallest area
+( A , _smallest ( B , ( _state ( A ) , _area ( A , B ) ) ) )
+
+what is the smallest state in the usa
+( A , _smallest ( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the state that contains the highest point
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , _place ( B ) ) ) )
+
+what state has highest elevation
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , _place ( B ) ) ) )
+
+what state has the highest elevation
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , _place ( B ) ) ) )
+
+which state has the highest elevation
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , _place ( B ) ) ) )
+
+which state has the highest point
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , _place ( B ) ) ) )
+
+what is the state with the lowest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the least population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the lowest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the smallest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the sparsest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the least population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the lowest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the smallest average urban population
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the smallest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the sparsest population density
+( A , _smallest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what is the total population of the states that border texas
+( A , _sum ( C , ( _state ( C ) , _next_to ( D , C ) , _const ( D , _stateid ( texas ) ) ) , _population ( C ) , A ) )
+
+what mountains are in alaska
+( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what river flows through the most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+what river runs through the most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+what river traverses the most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+which river goes through the most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+which river runs through most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+which river runs through the most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+which river traverses most states
+( A , _most ( A , B , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) ) ) )
+
+what rivers do not run through tennessee
+( A , ( _river ( A ) , \+ ( _traverse ( A , B ) , _const ( B , _stateid ( tennessee ) ) ) ) )
+
+which rivers do not run through texas
+( A , ( _river ( A ) , \+ ( _traverse ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what rivers flow through states that border the state with the largest population
+( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _next_to ( B , C ) , _largest ( D , ( _state ( C ) , _population ( C , D ) ) ) ) )
+
+what rivers flow through the largest state
+( A , ( _river ( A ) , _traverse ( A , B ) , _largest ( B , _state ( B ) ) ) )
+
+what rivers run through the state with the lowest point in the usa
+( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _loc ( C , B ) , _lowest ( C , ( _place ( C ) , _loc ( C , D ) , _const ( D , _countryid ( usa ) ) ) ) ) )
+
+which rivers run through the state with the lowest elevation in the usa
+( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _loc ( C , B ) , _lowest ( C , ( _place ( C ) , _loc ( C , D ) , _const ( D , _countryid ( usa ) ) ) ) ) )
+
+what state borders the least states excluding alaska and excluding hawaii
+( A , _fewest ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , \+ _const ( A , _stateid ( alaska ) ) , \+ _const ( A , _stateid ( hawaii ) ) ) ) )
+
+what state borders the least states
+( A , _fewest ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) ) ) )
+
+what state borders the state with the smallest population
+( A , ( _state ( A ) , _next_to ( A , B ) , _smallest ( C , ( _state ( B ) , _population ( B , C ) ) ) ) )
+
+what state contains the highest point of those the colorado river traverses
+( A , ( _state ( A ) , _loc ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _state ( C ) , _const ( D , _riverid ( colorado ) ) , _river ( D ) , _traverse ( D , C ) ) ) ) )
+
+what state has no rivers
+( A , ( _state ( A ) , \+ ( _loc ( B , A ) , _river ( B ) ) ) )
+
+what state has the city flint
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( flint , _ ) ) ) )
+
+what states have a city named austin
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+what states have cities named austin
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+what states have cities named dallas
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( dallas , _ ) ) ) )
+
+what states have cities named plano
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( plano , _ ) ) ) )
+
+what states have cities named portland
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( portland , _ ) ) ) )
+
+what states have cities named rochester
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( rochester , _ ) ) ) )
+
+what states have cities named salt lake city
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( salt lake city , _ ) ) ) )
+
+what states have towns named springfield
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( springfield , _ ) ) ) )
+
+which state is the city denver located in
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( denver , _ ) ) ) )
+
+which states have cities named austin
+( A , ( _state ( A ) , _loc ( B , A ) , _city ( B ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+what state has the city with the largest population
+( A , ( _state ( A ) , _loc ( B , A ) , _largest ( C , ( _city ( B ) , _population ( B , C ) ) ) ) )
+
+what state has the city with the most population
+( A , ( _state ( A ) , _loc ( B , A ) , _largest ( C , ( _city ( B ) , _population ( B , C ) ) ) ) )
+
+what state has the largest capital
+( A , ( _state ( A ) , _loc ( B , A ) , _largest ( B , _capital ( B ) ) ) )
+
+what state has the largest city
+( A , _largest ( B , ( _state ( A ) , _loc ( B , A ) , _city ( B ) ) ) )
+
+which state has the largest city
+( A , _largest ( B , ( _state ( A ) , _loc ( B , A ) , _city ( B ) ) ) )
+
+what state has the most cities
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _city ( B ) ) ) )
+
+what state has the most major cities
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _city ( B ) ) ) )
+
+which state has the most major cities
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _city ( B ) ) ) )
+
+what state has the most rivers running through it
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) , _traverse ( B , A ) ) ) )
+
+which state has the most rivers running through it
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) , _traverse ( B , A ) ) ) )
+
+what state has the most rivers
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) ) )
+
+which state contains most rivers
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) ) )
+
+which state has the most rivers
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) ) )
+
+what state has the smallest capital
+( A , ( _state ( A ) , _loc ( B , A ) , _smallest ( B , _capital ( B ) ) ) )
+
+what state is the state with the most rivers
+( A , ( _state ( A ) , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) ) ) )
+
+what states border states that border states that border florida
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _next_to ( B , C ) , _state ( C ) , _next_to ( C , D ) , _const ( D , _stateid ( florida ) ) ) )
+
+what states border states that border states that border states that border texas
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _next_to ( B , C ) , _state ( C ) , _next_to ( C , D ) , _state ( D ) , _next_to ( D , E ) , _const ( E , _stateid ( texas ) ) ) )
+
+what states border states that border the state with the largest population
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _next_to ( B , C ) , _largest ( D , ( _state ( C ) , _population ( C , D ) ) ) ) )
+
+what states border states that the mississippi runs through
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what states border states that the ohio runs through
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _const ( C , _riverid ( ohio ) ) , _traverse ( C , B ) ) )
+
+what states border states which the mississippi runs through
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+which states border states through which the mississippi traverses
+( A , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , B ) ) )
+
+what states border texas and have a major river
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) , _loc ( C , A ) , _major ( C ) , _river ( C ) ) )
+
+what states border the mississippi river
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) ) )
+
+which states border the missouri river
+( A , ( _state ( A ) , _next_to ( A , B ) , _const ( B , _riverid ( missouri ) ) , _river ( B ) ) )
+
+what states border the state with the most cities
+( A , ( _state ( A ) , _next_to ( A , B ) , _most ( B , C , ( _state ( B ) , _loc ( C , B ) , _city ( C ) ) ) ) )
+
+what states border the states with the most cities
+( A , ( _state ( A ) , _next_to ( A , B ) , _most ( B , C , ( _state ( B ) , _loc ( C , B ) , _city ( C ) ) ) ) )
+
+what states border the state with the most major cities
+( A , ( _state ( A ) , _next_to ( A , B ) , _most ( B , C , ( _state ( B ) , _loc ( C , B ) , _major ( C ) , _city ( C ) ) ) ) )
+
+what states border the state with the smallest area
+( A , ( _state ( A ) , _next_to ( A , B ) , _smallest ( C , ( _state ( B ) , _area ( B , C ) ) ) ) )
+
+which states border the state with the smallest area
+( A , ( _state ( A ) , _next_to ( A , B ) , _smallest ( C , ( _state ( B ) , _area ( B , C ) ) ) ) )
+
+what states contain at least one major rivers
+( A , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _river ( B ) ) )
+
+what states does the colorado river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( colorado ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the delaware river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( delaware ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the mississippi river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the missouri river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( missouri ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the ohio river go through
+( A , ( _state ( A ) , _const ( B , _riverid ( ohio ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the ohio river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( ohio ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+which states do colorado river flow through
+( A , ( _state ( A ) , _const ( B , _riverid ( colorado ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+which states does the chattahoochee river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( chattahoochee ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+which states does the mississippi river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+which states does the missouri river run through
+( A , ( _state ( A ) , _const ( B , _riverid ( missouri ) ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states does the shortest river run through
+( A , ( _state ( A ) , _shortest ( B , _river ( B ) ) , _traverse ( B , A ) ) )
+
+what states have a capital that is the highest point in the state
+( A , ( _state ( A ) , _loc ( B , A ) , _capital ( B ) , _high_point ( A , B ) ) )
+
+what states have rivers named colorado
+( A , ( _state ( A ) , _loc ( B , A ) , _const ( B , _riverid ( colorado ) ) ) )
+
+what states have rivers running through them
+( A , ( _state ( A ) , _loc ( B , A ) , _river ( B ) , _traverse ( B , A ) ) )
+
+what states high point are higher than that of colorado
+( A , ( _state ( A ) , _high_point ( A , B ) , _higher ( B , C ) , _high_point ( D , C ) , _const ( D , _stateid ( colorado ) ) ) )
+
+what states in the united states have a city of springfield
+( A , ( _state ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) , _loc ( C , A ) , _const ( C , _cityid ( springfield , _ ) ) ) )
+
+what texas city has the largest population
+( A , _largest ( B , _city ( A ) , _loc ( A , C ) , ( _const ( C , _stateid ( texas ) ) , _population ( A , B ) ) ) )
+
+whats the largest city
+( A , _largest ( A , _city ( A ) ) )
+
+where are mountains
+( A , ( _loc ( B , A ) , _mountain ( B ) ) )
+
+where is austin
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+where is baton rouge
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( baton rouge , _ ) ) ) )
+
+where is dallas
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( dallas , _ ) ) ) )
+
+where is fort wayne
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( fort wayne , _ ) ) ) )
+
+where is houston
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( houston , _ ) ) ) )
+
+where is indianapolis
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( indianapolis , _ ) ) ) )
+
+where is new orleans
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( new orleans , _ ) ) ) )
+
+where is portland
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( portland , _ ) ) ) )
+
+where is san diego
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( san diego , _ ) ) ) )
+
+where is san jose
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( san jose , _ ) ) ) )
+
+where is scotts valley
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( scotts valley , _ ) ) ) )
+
+where is springfield
+( A , ( _loc ( B , A ) , _const ( B , _cityid ( springfield , _ ) ) ) )
+
+where is the chattahoochee river
+( A , ( _loc ( B , A ) , _const ( B , _riverid ( chattahoochee ) ) , _river ( B ) ) )
+
+which is the highest peak not in alaska
+( A , _highest ( A , ( _mountain ( A ) , \+ ( _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) ) ) )
+
+which is the lowest point of the states that the mississippi runs through
+( B , _lowest ( B , ( _place ( B ) , _loc ( B , A ) , _state ( A ) , _const ( C , _riverid ( mississippi ) ) , _traverse ( C , A ) ) ) )
+
+which is the smallest state
+( A , _smallest ( A , _state ( A ) ) )
+
+which state is the smallest
+( A , _smallest ( A , _state ( A ) ) )
+
+which rivers do not run through usa
+( A , ( _river ( A ) , \+ ( _traverse ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+which rivers run through states with fewest cities
+( A , ( _river ( A ) , _traverse ( A , B ) , _fewest ( B , C , ( _state ( B ) , _loc ( C , B ) , _city ( C ) ) ) ) )
+
+which state 's capital city is the largest
+( A , _largest ( B , ( _state ( A ) , _capital ( A , B ) , _city ( B ) ) ) )
+
+which state capital has the smallest population
+( A , _smallest ( B , ( _capital ( A ) , _population ( A , B ) ) ) )
+
+which state has the longest river
+( A , _longest ( B , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) ) )
+
+which state has the lowest point that borders idaho
+( A , _lowest ( B , ( _state ( A ) , _loc ( B , A ) , _place ( B ) , _next_to ( A , C ) , _const ( C , _stateid ( idaho ) ) ) ) )
+
+which state has the red river
+( A , ( _state ( A ) , _loc ( B , A ) , _const ( B , _riverid ( red ) ) , _river ( B ) ) )
+
+which state is the largest city in montana in
+( A , ( _state ( A ) , _largest ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _stateid ( montana ) ) ) ) , _loc ( B , A ) ) )
+
+which states border the longest river in the usa
+( A , ( _state ( A ) , _next_to ( A , B ) , _longest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+which states does not border texas
+( A , ( _state ( A ) , \+ ( _next_to ( A , B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+which states have a major city named austin
+( A , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _city ( B ) , _const ( B , _cityid ( austin , _ ) ) ) )
+
+which states have a river
+( A , ( _state ( A ) , _loc ( B , A ) , _river ( B ) ) )
+
+which states have points higher than the highest point in colorado
+( A , ( _state ( A ) , _place ( B ) , _loc ( B , A ) , _higher ( B , C ) , _highest ( C , ( _place ( C ) , _loc ( C , D ) , _const ( D , _stateid ( colorado ) ) ) ) ) )
+
+which states have points that are higher than the highest point in texas
+( A , ( _state ( A ) , _place ( B ) , _loc ( B , A ) , _higher ( B , C ) , _highest ( C , ( _place ( C ) , _loc ( C , D ) , _const ( D , _stateid ( texas ) ) ) ) ) )
+
+which states lie on the largest river in the united states
+( A , ( _state ( A ) , _traverse ( B , A ) , _largest ( B , ( _river ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+
+
+
+
+
+give me the cities in usa
+( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) )
+
+how big is alaska
+( A , ( _size ( B , A ) , _const ( B , _stateid ( alaska ) ) ) )
+
+how big is massachusetts
+( A , ( _size ( B , A ) , _const ( B , _stateid ( massachusetts ) ) ) )
+
+how big is new mexico
+( A , ( _size ( B , A ) , _const ( B , _stateid ( new mexico ) ) ) )
+
+how big is north dakota
+( A , ( _size ( B , A ) , _const ( B , _stateid ( north dakota ) ) ) )
+
+how big is texas
+( A , ( _size ( B , A ) , _const ( B , _stateid ( texas ) ) ) )
+
+how large is alaska
+( A , ( _size ( B , A ) , _const ( B , _stateid ( alaska ) ) ) )
+
+how large is texas
+( A , ( _size ( B , A ) , _const ( B , _stateid ( texas ) ) ) )
+
+what is the size of california
+( A , ( _size ( B , A ) , _const ( B , _stateid ( california ) ) ) )
+
+what is the size of florida
+( A , ( _size ( B , A ) , _const ( B , _stateid ( florida ) ) ) )
+
+what is the size of texas
+( A , ( _size ( B , A ) , _const ( B , _stateid ( texas ) ) ) )
+
+how high is the highest point in montana
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( montana ) ) ) ) ) )
+
+how high is the highest point of alabama
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( alabama ) ) ) ) ) )
+
+how high is the highest point of delaware
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( delaware ) ) ) ) ) )
+
+how high is the highest point of florida
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( florida ) ) ) ) ) )
+
+how high is the highest point of louisiana
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( louisiana ) ) ) ) ) )
+
+how tall is the highest point in montana
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( montana ) ) ) ) ) )
+
+what is the highest elevation in new mexico
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( new mexico ) ) ) ) ) )
+
+what is the highest elevation in south carolina
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( south carolina ) ) ) ) ) )
+
+what is the highest elevation in texas
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( texas ) ) ) ) ) )
+
+what is the highest point in nevada in meters
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _const ( C , _stateid ( nevada ) ) ) ) ) )
+
+how high is the highest point in the largest state
+( A , ( _elevation ( B , A ) , _highest ( B , ( _place ( B ) , _loc ( B , C ) , _largest ( C , _state ( C ) ) ) ) ) )
+
+how long is rio grande
+( A , ( _len ( B , A ) , _const ( B , _riverid ( rio grande ) ) ) )
+
+how long is the mississippi
+( A , ( _len ( B , A ) , _const ( B , _riverid ( mississippi ) ) ) )
+
+what length is the mississippi
+( A , ( _len ( B , A ) , _const ( B , _riverid ( mississippi ) ) ) )
+
+how long is the colorado river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( colorado ) ) , _river ( B ) ) )
+
+how long is the delaware river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( delaware ) ) , _river ( B ) ) )
+
+how long is the mississippi river in miles
+( A , ( _len ( B , A ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) ) )
+
+how long is the mississippi river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) ) )
+
+how long is the missouri river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( missouri ) ) , _river ( B ) ) )
+
+how long is the north platte river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( north platte ) ) , _river ( B ) ) )
+
+how long is the ohio river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( ohio ) ) , _river ( B ) ) )
+
+how long is the rio grande river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( rio grande ) ) , _river ( B ) ) )
+
+what is the length of the colorado river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( colorado ) ) , _river ( B ) ) )
+
+what is the length of the mississippi river
+( A , ( _len ( B , A ) , _const ( B , _riverid ( mississippi ) ) , _river ( B ) ) )
+
+how many cities are there in the united states
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many cities are there in the us
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many cities are there in us
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many cities are there in usa
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many cities does the usa have
+( A , _count ( B , ( _city ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) , A ) )
+
+how many colorado rivers are there
+( A , _count ( B , ( _const ( B , _riverid ( colorado ) ) , _river ( B ) ) , A ) )
+
+how many rivers are called colorado
+( A , _count ( B , ( _const ( B , _riverid ( colorado ) ) , _river ( B ) ) , A ) )
+
+how many major cities are there
+( A , _count ( B , ( _major ( B ) , _city ( B ) ) , A ) )
+
+how many rivers are in the state with the highest point
+( A , _count ( B , ( _river ( B ) , _loc ( B , C ) , _state ( C ) , _loc ( D , C ) , _highest ( D , _place ( D ) ) ) , A ) )
+
+how many rivers run through the states bordering colorado
+( A , _count ( B , ( _river ( B ) , _traverse ( B , C ) , _state ( C ) , _next_to ( C , D ) , _const ( D , _stateid ( colorado ) ) ) , A ) )
+
+how many states are next to major rivers
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _major ( C ) , _river ( C ) ) , A ) )
+
+how many states border the largest state
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _largest ( C , _state ( C ) ) ) , A ) )
+
+how many states border the mississippi river
+( A , _count ( B , ( _state ( B ) , _next_to ( B , C ) , _const ( C , _riverid ( mississippi ) ) , _river ( C ) ) , A ) )
+
+how many states have a city called rochester
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _city ( C ) , _const ( C , _cityid ( rochester , _ ) ) ) , A ) )
+
+how many states have a city named springfield
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _city ( C ) , _const ( C , _cityid ( springfield , _ ) ) ) , A ) )
+
+how many states have cities named austin
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _city ( C ) , _const ( C , _cityid ( austin , _ ) ) ) , A ) )
+
+how many states have cities or towns named springfield
+( A , _count ( B , ( _state ( B ) , _loc ( C , B ) , _city ( C ) , _const ( C , _cityid ( springfield , _ ) ) ) , A ) )
+
+in what state is mount mckinley
+( A , ( _state ( A ) , _const ( B , _placeid ( mount mckinley ) ) , _loc ( B , A ) ) )
+
+which state is mount mckinley in
+( A , ( _state ( A ) , _const ( B , _placeid ( mount mckinley ) ) , _loc ( B , A ) ) )
+
+name all the rivers in colorado
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( colorado ) ) ) )
+
+name the rivers in arkansas
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( arkansas ) ) ) )
+
+rivers in new york
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( new york ) ) ) )
+
+what are all the rivers in texas
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what are the rivers in alaska
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what are the rivers of montana
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( montana ) ) ) )
+
+what rivers are in nevada
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( nevada ) ) ) )
+
+what rivers are in new mexico
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( new mexico ) ) ) )
+
+what rivers are in oregon
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( oregon ) ) ) )
+
+what rivers are in texas
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what rivers are in utah
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( utah ) ) ) )
+
+what rivers are there in texas
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+which rivers are in alaska
+( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what are the highest points of all the states
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) ) ) )
+
+what are the rivers in the state of indiana
+( A , ( _river ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( indiana ) ) ) )
+
+what are the rivers in the state of texas
+( A , ( _river ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what is the area of alaska
+( A , ( _area ( B , A ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what is the area of california
+( A , ( _area ( B , A ) , _const ( B , _stateid ( california ) ) ) )
+
+what is the area of florida
+( A , ( _area ( B , A ) , _const ( B , _stateid ( florida ) ) ) )
+
+what is the area of idaho
+( A , ( _area ( B , A ) , _const ( B , _stateid ( idaho ) ) ) )
+
+what is the area of maine
+( A , ( _area ( B , A ) , _const ( B , _stateid ( maine ) ) ) )
+
+what is the area of maryland in square kilometers
+( A , ( _area ( B , A ) , _const ( B , _stateid ( maryland ) ) ) )
+
+what is the area of new mexico
+( A , ( _area ( B , A ) , _const ( B , _stateid ( new mexico ) ) ) )
+
+what is the area of ohio
+( A , ( _area ( B , A ) , _const ( B , _stateid ( ohio ) ) ) )
+
+what is the area of washington
+( A , ( _area ( B , A ) , _const ( B , _stateid ( washington ) ) ) )
+
+what is the area of south carolina
+( A , ( _area ( B , A ) , _const ( B , _stateid ( south carolina ) ) ) )
+
+what is the area of texas
+( A , ( _area ( B , A ) , _const ( B , _stateid ( texas ) ) ) )
+
+what is the area of the texas state
+( A , ( _area ( B , A ) , _const ( B , _stateid ( texas ) ) ) )
+
+what is the area of wisconsin
+( A , ( _area ( B , A ) , _const ( B , _stateid ( wisconsin ) ) ) )
+
+what is the area of the smallest state
+( A , ( _area ( B , A ) , _smallest ( B , _state ( B ) ) ) )
+
+what is the average population of the us by state
+( A , ( _density ( B , A ) , _const ( B , _countryid ( usa ) ) ) )
+
+what is the average population per square km in the us
+( A , ( _density ( B , A ) , _const ( B , _countryid ( usa ) ) ) )
+
+what is the biggest american city in a state with a river
+( A , _largest ( A , ( _city ( A ) , _loc ( A , B ) , _state ( B ) , _loc ( C , B ) , _river ( C ) ) ) )
+
+what is the capital city of the largest state in the us
+( A , ( _capital ( A ) , _city ( A ) , _loc ( A , B ) , _largest ( B , ( _state ( B ) , _loc ( B , C ) , _const ( C , _countryid ( usa ) ) ) ) ) )
+
+what is the capital of the largest state
+( A , ( _capital ( A ) , _loc ( A , B ) , _largest ( B , _state ( B ) ) ) )
+
+what is the capital of the state that borders the most states
+( A , ( _capital ( A ) , _loc ( A , B ) , _most ( B , C , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) ) ) ) )
+
+what is the capital of the state that borders the state that borders texas
+( A , ( _capital ( A ) , _loc ( A , B ) , _state ( B ) , _next_to ( B , C ) , _state ( C ) , _next_to ( C , D ) , _const ( D , _stateid ( texas ) ) ) )
+
+what is the highest mountain in the us
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest mountain in us
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the tallest mountain in america
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the tallest mountain in the united states
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+where is the highest mountain of the united states
+( A , _highest ( A , ( _mountain ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the highest point in the state with the smallest population
+( A , _highest ( A , ( _place ( A ) , _loc ( A , B ) , _smallest ( C , ( _state ( B ) , _population ( B , C ) ) ) ) ) )
+
+what is the longest river that passes the states that border the state that borders the most states
+( A , _longest ( A , ( _river ( A ) , _traverse ( A , B ) , _state ( B ) , _next_to ( B , C ) , _most ( C , D , ( _state ( C ) , _next_to ( C , D ) , _state ( D ) ) ) ) ) )
+
+what is the lowest point in the state of california
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( california ) ) ) ) )
+
+what is the lowest point in the state of texas
+( A , _lowest ( A , ( _place ( A ) , _loc ( A , B ) , _state ( B ) , _const ( B , _stateid ( texas ) ) ) ) )
+
+what is the most dense state in the usa
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) , _loc ( A , C ) , _const ( C , _countryid ( usa ) ) ) ) )
+
+what is the state with the largest density in usa
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) , _loc ( A , C ) , _const ( C , _countryid ( usa ) ) ) ) )
+
+what is the river that cross over ohio
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( ohio ) ) ) )
+
+what river flows through kansas
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( kansas ) ) ) )
+
+what river flows through texas
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what river runs through illinois
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( illinois ) ) ) )
+
+what river runs through virginia
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( virginia ) ) ) )
+
+what rivers flow through colorado
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( colorado ) ) ) )
+
+what rivers flow through missouri
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( missouri ) ) ) )
+
+what rivers run through arizona
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( arizona ) ) ) )
+
+what rivers run through colorado
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( colorado ) ) ) )
+
+what rivers run through louisiana
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( louisiana ) ) ) )
+
+what rivers run through maine
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( maine ) ) ) )
+
+what rivers run through new york
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( new york ) ) ) )
+
+what rivers run through texas
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( texas ) ) ) )
+
+what rivers run through west virginia
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( west virginia ) ) ) )
+
+which rivers flow through alaska
+( A , ( _river ( A ) , _traverse ( A , B ) , _const ( B , _stateid ( alaska ) ) ) )
+
+what is the shortest river in the united states
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the shortest river in the us
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the shortest river in the usa
+( A , _shortest ( A , ( _river ( A ) , _loc ( A , B ) , _const ( B , _countryid ( usa ) ) ) ) )
+
+what is the shortest river
+( A , _shortest ( A , _river ( A ) ) )
+
+which is the shortest river
+( A , _shortest ( A , _river ( A ) ) )
+
+what is the smallest city in alaska
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( alaska ) ) ) ) )
+
+what is the smallest city in arkansas
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( arkansas ) ) ) ) )
+
+what is the smallest city in hawaii
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( hawaii ) ) ) ) )
+
+what is the smallest city in washington
+( A , _smallest ( A , ( _city ( A ) , _loc ( A , B ) , _const ( B , _stateid ( washington ) ) ) ) )
+
+what is the state with the largest population density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the greatest population density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the highest population density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what state has the largest population density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the greatest density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the highest population density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+which state has the largest density
+( A , _largest ( B , ( _state ( A ) , _density ( A , B ) ) ) )
+
+what is the total length of all rivers in the usa
+( A , _sum ( C , _river ( C ) , _len ( C ) , A ) )
+
+what river traverses the state which borders the most states
+( A , ( _river ( A ) , _traverse ( A , B ) , _most ( B , C , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) ) ) ) )
+
+what rivers traverses the state which borders the most states
+( A , ( _river ( A ) , _traverse ( A , B ) , _most ( B , C , ( _state ( B ) , _next_to ( B , C ) , _state ( C ) ) ) ) )
+
+what state borders most other states
+( A , _most ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) ) ) )
+
+what state borders the most states
+( A , _most ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) ) ) )
+
+which state borders most states
+( A , _most ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) ) ) )
+
+which state borders the most states
+( A , _most ( A , B , ( _state ( A ) , _next_to ( A , B ) , _state ( B ) ) ) )
+
+what state has the most major rivers running through it
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _river ( B ) , _traverse ( B , A ) ) ) )
+
+which state has the most major rivers running through it
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _river ( B ) , _traverse ( B , A ) ) ) )
+
+where is mount whitney located
+( A , ( _loc ( B , A ) , _const ( B , _placeid ( mount whitney ) ) ) )
+
+where is mount whitney
+( A , ( _loc ( B , A ) , _const ( B , _placeid ( mount whitney ) ) ) )
+
+where is the smallest city
+( A , ( _loc ( B , A ) , _smallest ( B , _city ( B ) ) ) )
+
+which capitals are not major cities
+( A , ( _capital ( A ) , \+ ( _major ( A ) , _city ( A ) ) ) )
+
+which is the density of the state that the largest river in the united states runs through
+( A , ( _density ( B , A ) , _state ( B ) , _longest ( C , ( _river ( C ) , _loc ( C , D ) , _const ( D , _countryid ( usa ) ) ) ) , _traverse ( C , B ) ) )
+
+which state has the most major rivers
+( A , _most ( A , B , ( _state ( A ) , _loc ( B , A ) , _major ( B ) , _river ( B ) ) ) )
+
