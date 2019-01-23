@@ -2,3 +2,6 @@
 __pycache__
 *.chk
 *.swp
+params.*
+params
+**/state
