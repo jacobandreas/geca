@@ -17,6 +17,7 @@ flags.DEFINE_integer("wug_count", 2, "number of wugs to insert")
 flags.DEFINE_boolean("compute_adjacency", False, "do compositionality")
 flags.DEFINE_boolean("use_trie", False, "store indices in tries")
 flags.DEFINE_integer("max_comp_len", None, "maximum seq length to attempt")
+flags.DEFINE_integer("max_adjacencies", None, "blah")
 
 variants = 5
 wug_template = "WUG%d"
@@ -166,8 +167,6 @@ class OneShotDataset(object):
                 seq = inp + (sep,) + out
                 if FLAGS.max_comp_len is not None and len(seq) >= FLAGS.max_comp_len:
                     continue
-                #if i > 200:
-                #    break
                 print(i, len(seq))
                 for generic in self._make_generic(seq, keep_args):
                     #print(" ".join(self.vocab.decode(generic[0])))
@@ -195,12 +194,19 @@ class OneShotDataset(object):
             print(i_arg, len(arg_to_templ))
             for templ1 in arg_to_templ[args1]:
                 multiplicity[templ1] += 1
+                c = 0
                 for templ2 in arg_to_templ[args1]:
                     if templ1 == templ2:
                         continue
-                    if (templ1, templ2) in templ_to_templ:
-                        continue
+                    #if (templ1, templ2) in templ_to_templ:
+                    #    continue
                     templ_to_templ[templ2].add(templ1)
+                    c += 1
+                    if (
+                        FLAGS.max_adjacencies is not None 
+                        and c >= FLAGS.max_adjacencies
+                    ):
+                        break
 
         self.templ_to_arg = templ_to_arg
         #self.arg_to_templ = arg_to_templ
