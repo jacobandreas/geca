@@ -1,0 +1,17 @@
+/home/jda/anaconda2/lib/python2.7/site-packages/theano/gpuarray/dnn.py:184: UserWarning: Your cuDNN version is more recent than Theano. If you encounter problems, try updating Theano or downgrading cuDNN to a version >= v5 and <= v7.
+  warnings.warn("Your cuDNN version is more recent than "
+Using cuDNN version 7401 on context None
+Mapped name None to device cuda: Tesla K40c (0000:04:00.0)
+Namespace(aug_frac=0.5, augment='jda_fixed+concat2', beam_size=5, concat_num=1, concat_prob=0.0, copy='attention', data='/data/jda/text2sql-data/data/non-sql-data/geography-logic.txt', dev_frac=0.0, dev_seed=8, distract_num=0, distract_prob=0.0, domain='geoquery', float32=False, hidden_size=200, hostname='127.0.0.1', input_embedding_dim=100, input_vocab_type='raw', jda_augment='../query_retrieval/composed.8.json', lambda_reg=0.0, learning_rate=0.1, load_file=None, model='attention', model_seed=8, num_epochs=[15, 5, 5, 5], output_embedding_dim=100, output_vocab_type='raw', port=9001, reverse_input=False, rnn_type='lstm', save_file='params.8', server=False, shell=False, split='query', stats_file='stats.8.json', step_rule='simple', theano_fast_compile=False, theano_profile=False, unk_cutoff=1, use_lexicon=False)
+Initializing parameters...
+/data/jda/metacomp2/3p/jia/src/py/attnspec.py:87: UserWarning: DEPRECATION: If x is a vector, Softmax will not automatically pad x anymore in next releases. If you need it, please do it manually. The vector case is gonna be supported soon and the output will be a vector.
+  alpha = T.nnet.softmax(scores)[0]
+/data/jda/metacomp2/3p/jia/src/py/outputlayer.py:43: UserWarning: DEPRECATION: If x is a vector, Softmax will not automatically pad x anymore in next releases. If you need it, please do it manually. The vector case is gonna be supported soon and the output will be a vector.
+  return T.nnet.softmax(T.concatenate([scores, attn_scores]))[0]
+Setup complete.
+Saving parameters...
+Evaluating on training data...
+Loading JAR files: evaluator.jar
+2 errors, 0 warnings
+Evaluating on dev data...
+Loading JAR files: evaluator.jar

@@ -19,6 +19,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string("augment", None, "file with composed data for augmentation")
 flags.DEFINE_float("aug_ratio", 0, "fraction of samples to draw from augmentation")
 flags.DEFINE_boolean("invert", False, "swap input/output")
+flags.DEFINE_boolean("test_curve", True, "test in place")
 
 DEVICE = torch.device("cuda:0")
 
@@ -61,7 +62,7 @@ def main(argv):
         with hlog.task("eval_val", timer=False):
             val_data = dataset.get_val()
             val_acc = evaluate(model, val_data, vis=final, beam=final)
-        if FLAGS.TEST:
+        if FLAGS.TEST and (final or FLAGS.test_curve):
             with hlog.task("eval_test", timer=False):
                 test_data = dataset.get_test()
                 evaluate(model, test_data, beam=final)

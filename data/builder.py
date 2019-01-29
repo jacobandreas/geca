@@ -7,6 +7,7 @@ import itertools as it
 import numpy as np
 from torchdec import hlog
 from torchdec.vocab import Vocab
+import pygtrie
 
 FLAGS = flags.FLAGS
 flags.DEFINE_boolean("dedup", False, "deduplicate training examples")
@@ -14,6 +15,9 @@ flags.DEFINE_integer("wug_limit", None, "wug limit")
 flags.DEFINE_integer("wug_size", 4, "wug size")
 flags.DEFINE_integer("wug_count", 2, "number of wugs to insert")
 flags.DEFINE_boolean("compute_adjacency", False, "do compositionality")
+flags.DEFINE_boolean("use_trie", False, "store indices in tries")
+flags.DEFINE_integer("max_comp_len", None, "maximum seq length to attempt")
+flags.DEFINE_integer("max_adjacencies", None, "blah")
 
 variants = 5
 wug_template = "WUG%d"
@@ -21,6 +25,31 @@ def _wugs():
     return [wug_template % i for i in range(FLAGS.wug_count)]
 
 sep = "##"
+
+class DefaultTrie(object):
+    def __init__(self, initializer):
+        self.initializer = initializer
+        self.trie = pygtrie.Trie()
+
+    def __setitem__(self, key, item):
+        self.trie[key] = item
+
+    def __getitem__(self, key):
+        if key not in self.trie:
+            self.trie[key] = self.initializer()
+        return self.trie[key]
+
+    def __len__(self):
+        return len(self.trie)
+
+    def __iter__(self):
+        return iter(self.trie)
+
+    def keys(self):
+        return self.trie.keys()
+
+    def items(self):
+        return self.trie.items()
 
 def t_subseq(subseq, seq):
     for i in range(len(seq)-len(subseq)+1):
@@ -126,42 +155,61 @@ class OneShotDataset(object):
                 for span in range(1, FLAGS.wug_size+1):
                     for i in range(len(enc)+1-span):
                         counts[tuple(enc[i:i+span])] += 1
-        keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
+        if FLAGS.wug_limit is None:
+            keep_args = set(counts.keys())
+        else:
+            keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
 
         print(len(utts))
         def enumerate_templates():
             for i, utt in enumerate(utts):
                 inp, out = utt
                 seq = inp + (sep,) + out
+                if FLAGS.max_comp_len is not None and len(seq) >= FLAGS.max_comp_len:
+                    continue
                 print(i, len(seq))
                 for generic in self._make_generic(seq, keep_args):
                     #print(" ".join(self.vocab.decode(generic[0])))
                     yield generic, utt
 
-        arg_to_templ = defaultdict(set)
-        templ_to_arg = defaultdict(set)
-        templ_to_templ = defaultdict(set)
+        def make_store(initializer):
+            if FLAGS.use_trie:
+                return DefaultTrie(initializer)
+            else:
+                return defaultdict(initializer)
+
+        arg_to_templ = make_store(set)
+        templ_to_arg = make_store(set)
+        templ_to_templ = make_store(set)
         #sim_templ = FuzzyIndex(tfidf=True)
-        templ_to_orig = defaultdict(set)
+        #templ_to_orig = defaultdict(set)
         for (templ, args), orig in enumerate_templates():
             arg_to_templ[args].add(templ)
             templ_to_arg[templ].add(args)
             #sim_templ.put(templ, args)
-            templ_to_orig[templ].add(orig)
+            #templ_to_orig[templ].add(orig)
 
-        multiplicity = defaultdict(lambda: 0)
-        for args1 in arg_to_templ:
+        multiplicity = make_store(lambda: 0)
+        for i_arg, args1 in enumerate(arg_to_templ.keys()):
+            print(i_arg, len(arg_to_templ))
             for templ1 in arg_to_templ[args1]:
                 multiplicity[templ1] += 1
+                c = 0
                 for templ2 in arg_to_templ[args1]:
                     if templ1 == templ2:
                         continue
-                    if (templ1, templ2) in templ_to_templ:
-                        continue
+                    #if (templ1, templ2) in templ_to_templ:
+                    #    continue
                     templ_to_templ[templ2].add(templ1)
+                    c += 1
+                    if (
+                        FLAGS.max_adjacencies is not None 
+                        and c >= FLAGS.max_adjacencies
+                    ):
+                        break
 
         self.templ_to_arg = templ_to_arg
-        self.arg_to_templ = arg_to_templ
+        #self.arg_to_templ = arg_to_templ
         self.templ_to_templ = templ_to_templ
         self.multiplicity = multiplicity
 
