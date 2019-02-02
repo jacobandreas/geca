@@ -74,3 +74,6 @@ class SemparseDataset(OneShotDataset):
             dataset["test"],
             **kwargs
         )
+
+    def score(self, pred, ref_out, ref_inp):
+        return 1 if pred == ref_out else 0

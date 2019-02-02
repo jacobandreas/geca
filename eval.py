@@ -58,14 +58,14 @@ def main(argv):
         final = i_epoch == FLAGS.n_epochs - 1
         with hlog.task("eval_train", timer=False):
             train_data = [dataset.sample_train() for _ in range(1000)]
-            evaluate(model, train_data)
+            evaluate(model, train_data, dataset)
         with hlog.task("eval_val", timer=False):
             val_data = dataset.get_val()
-            val_acc = evaluate(model, val_data, vis=final, beam=final)
+            val_acc = evaluate(model, val_data, dataset, vis=final, beam=final)
         if FLAGS.TEST and (final or FLAGS.test_curve):
             with hlog.task("eval_test", timer=False):
                 test_data = dataset.get_test()
-                evaluate(model, test_data, beam=final)
+                evaluate(model, test_data, dataset, beam=final)
         if (i_epoch+1) % FLAGS.n_checkpoint == 0: 
             torch.save(
                 model.state_dict(),
@@ -75,24 +75,23 @@ def main(argv):
 
     train(dataset, model, sample, callback, staged=False)
 
-def evaluate(model, data, vis=False, beam=False):
+def evaluate(model, data, dataset, vis=False, beam=False):
     correct = 0
     total = 0
     for i in range(0, len(data), FLAGS.n_batch):
         batch = make_batch(data[i:i+FLAGS.n_batch], model.vocab, staged=False)
         preds, _ = model.sample(batch.inp_data, greedy=True, beam=beam)
         for j in range(len(preds)):
-            correct_here = preds[j] == batch.out[j]
+            score_here = dataset.score(preds[j], batch.out[j], batch.inp[j])
             if vis:
                 with hlog.task(str(total)):
                     hlog.value("input", " ".join(model.vocab.decode(batch.inp[j])))
                     hlog.value("pred", " ".join(model.vocab.decode(preds[j])))
                     hlog.value("gold", " ".join(model.vocab.decode(batch.out[j])))
-                    hlog.value("corr", correct_here)
+                    hlog.value("corr", score_here)
                     hlog.log("")
             total += 1
-            if correct_here:
-                correct += 1
+            correct += score_here
     acc = 1. * correct / total
     hlog.value("acc", acc)
     return acc

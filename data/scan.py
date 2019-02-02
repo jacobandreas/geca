@@ -11,6 +11,7 @@ flags.DEFINE_string("scan_file", "addprim_jump", "data file")
 
 TRAIN = "tasks_train_%s.txt"
 TEST = "tasks_test_%s.txt"
+REF = "../tasks.txt"
 
 class ScanDataset(OneShotDataset):
     def __init__(self, **kwargs):
@@ -22,6 +23,10 @@ class ScanDataset(OneShotDataset):
             test = self.load_split(TEST % FLAGS.scan_file)
         else:
             test = val
+
+        ref_data = self.load_split(REF)
+        self.ref = {tuple(k): tuple(v) for k, v in ref_data}
+
         super().__init__(
             train, val, test, 
             #holdout={("jump",), ("I_JUMP",)},
@@ -38,3 +43,14 @@ class ScanDataset(OneShotDataset):
                 out = toks[split+1:]
                 data.append((inp, out))
         return data
+
+    def score(self, pred, ref_out, ref_inp):
+        if FLAGS.invert:
+            # NACS eval
+            pred_str = tuple(self.vocab.decode(pred))
+            inp_str = tuple(self.vocab.decode(ref_inp))
+            if pred_str not in self.ref:
+                return 0
+            return 1 if self.ref[pred_str] == inp_str else 0
+        else:
+            return 1 if pred == ref_out else 0
