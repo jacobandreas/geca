@@ -7,6 +7,7 @@ import flags as _flags
 from data.scan import ScanDataset
 from data.copy import CopyDataset
 from data.semparse import SemparseDataset
+from data.lm import LmDataset
 from model import GeneratorModel, RetrievalModel, StagedModel
 from trainer import train, make_batch, Datum
 
@@ -30,6 +31,8 @@ def get_dataset(**kwargs):
         return ScanDataset(**kwargs)
     if FLAGS.dataset == "copy":
         return CopyDataset(**kwargs)
+    if FLAGS.dataset == "lm":
+        return LmDataset(**kwargs)
     assert False, "unknown dataset %s" % FLAGS.dataset
 
 @profile

@@ -16,7 +16,7 @@ flags.DEFINE_float("clip", 1., "gradient clipping")
 flags.DEFINE_float("sched_factor", 0.5, "opt scheduler reduce factor")
 
 FLAGS = flags.FLAGS
-DEVICE = torch.device("cuda:0")
+DEVICE = torch.device("cpu")
 
 Datum = namedtuple(
     "Datum", 

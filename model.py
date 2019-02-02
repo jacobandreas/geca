@@ -1,6 +1,6 @@
 import flags as _flags
 from torchdec import hlog
-from torchdec.seq import Encoder, Decoder, SimpleAttention, batch_seqs
+from torchdec.seq import Encoder, Decoder, DecoderState, SimpleAttention, batch_seqs
 
 from absl import flags
 from collections import Counter, defaultdict
@@ -180,6 +180,37 @@ class StagedModel(nn.Module):
         )
         return (raw_inp, raw_out), [si + so for si, so in zip(inp_scores, out_scores)]
 
+class LanguageModel(nn.Module):
+    def __init__(self, vocab, copy=False, self_attention=False):
+        super().__init__()
+        self.vocab = vocab
+        self.decoder = Decoder(
+            vocab,
+            FLAGS.n_emb,
+            FLAGS.n_enc,
+            1,
+            dropout=FLAGS.dropout
+        )
+        self.loss = nn.CrossEntropyLoss(ignore_index=vocab.pad())
+
+    def prepare(self, dataset):
+        pass
+
+    def forward(self, inp, out, dout, cout):
+        out_prev = out[:-1, :]
+        out_next = out[1:, :]
+        zero = torch.zeros(1, out.shape[1], FLAGS.n_enc)
+        pred, *_ = self.decoder(
+            (zero, zero),
+            out_prev.shape[0],
+            out_prev
+        )
+        n_batch, n_out = out_next.shape
+        pred = pred.view(n_batch * n_out, -1)
+        out_next = out_next.contiguous().view(-1)
+        loss = self.loss(pred, out_next)
+        return loss
+
 class GeneratorModel(nn.Module):
     def __init__(self, vocab, copy=False, self_attention=False):
         super().__init__()
@@ -235,7 +266,6 @@ class GeneratorModel(nn.Module):
             pred = pred.view(n_batch * n_seq, -1)
             out_next = out_next.contiguous().view(-1)
             loss = self.loss(pred, out_next)
-            return loss
 
         return loss
 
