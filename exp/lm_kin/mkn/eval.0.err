@@ -1,0 +1,276 @@
+# --TEST
+# --seed=0
+# --dataset=lm
+# --model_dir=model
+# --n_checkpoint=10
+# --device=cuda:0
+# --nodedup
+# --wug_size=4
+# --wug_count=2
+# --nocompute_adjacency
+# --nouse_trie
+# --template_sim=none
+# --sim_window_size=2
+# --variants=2
+# --scan_split=add_prim_split
+# --scan_file=addprim_jump
+# --semparse_split=question
+# --semparse_mrl=sql
+# --val_fold=8
+# --test_fold=9
+# --lm_data_dir=/data/jda/wikidata/formatted/kin
+# --n_emb=64
+# --n_enc=512
+# --dropout=0.0
+# --nocopy_sup
+# --n_epochs=512
+# --n_epoch_batches=32
+# --n_batch=64
+# --lr=0.001
+# --clip=1.0
+# --sched_factor=0.5
+# --nologtostderr
+# --noalsologtostderr
+# --log_dir=
+# --verbosity=0
+# --verbosity=0
+# --stderrthreshold=fatal
+# --showprefixforinfo
+# --norun_with_pdb
+# --nopdb_post_mortem
+# --norun_with_profiling
+# --use_cprofile_for_profiling
+# --noonly_check_args
+# --aug_ratio=0.0
+# --test_curve
+# --use_mkn
+# --lm_file=lm_base.0.arpa
+# --aug_lm_file=lm_aug.0.arpa
+# --nohelp
+# --nohelp
+# --nohelpshort
+# --nohelpfull
+# --nohelpxml
+# 
+train 3358
+aug 0
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_base.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+eval_train/ppl 5.7600
+eval_train/t/p nan nan
+eval_val/ppl 258.7819
+eval_val/t/p nan nan
+eval_test/ppl 240.5887
+eval_test/t/p nan nan
+# --TEST
+# --seed=0
+# --dataset=lm
+# --model_dir=model
+# --n_checkpoint=10
+# --device=cuda:0
+# --nodedup
+# --wug_size=4
+# --wug_count=2
+# --nocompute_adjacency
+# --nouse_trie
+# --template_sim=none
+# --sim_window_size=2
+# --variants=2
+# --scan_split=add_prim_split
+# --scan_file=addprim_jump
+# --semparse_split=question
+# --semparse_mrl=sql
+# --val_fold=8
+# --test_fold=9
+# --lm_data_dir=/data/jda/wikidata/formatted/kin
+# --n_emb=64
+# --n_enc=512
+# --dropout=0.0
+# --nocopy_sup
+# --n_epochs=512
+# --n_epoch_batches=32
+# --n_batch=64
+# --lr=0.001
+# --clip=1.0
+# --sched_factor=0.5
+# --nologtostderr
+# --noalsologtostderr
+# --log_dir=
+# --verbosity=0
+# --verbosity=0
+# --stderrthreshold=fatal
+# --showprefixforinfo
+# --norun_with_pdb
+# --nopdb_post_mortem
+# --norun_with_profiling
+# --use_cprofile_for_profiling
+# --noonly_check_args
+# --aug_ratio=0.1
+# --test_curve
+# --use_mkn
+# --lm_file=lm_base.0.arpa
+# --aug_lm_file=lm_aug.0.arpa
+# --nohelp
+# --nohelp
+# --nohelpshort
+# --nohelpfull
+# --nohelpxml
+# 
+train 3358
+aug 0
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_base.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_aug.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+eval_train/ppl 4.4382
+eval_train/t/p -10.468979293 2.92493420371e-25
+eval_val/ppl 258.4256
+eval_val/t/p -1.03951912457 0.298802221164
+eval_test/ppl 239.0772
+eval_test/t/p -2.36091571499 0.0184282859716
+# --TEST
+# --seed=0
+# --dataset=lm
+# --model_dir=model
+# --n_checkpoint=10
+# --device=cuda:0
+# --nodedup
+# --wug_size=4
+# --wug_count=2
+# --nocompute_adjacency
+# --nouse_trie
+# --template_sim=none
+# --sim_window_size=2
+# --variants=2
+# --scan_split=add_prim_split
+# --scan_file=addprim_jump
+# --semparse_split=question
+# --semparse_mrl=sql
+# --val_fold=8
+# --test_fold=9
+# --lm_data_dir=/data/jda/wikidata/formatted/kin
+# --n_emb=64
+# --n_enc=512
+# --dropout=0.0
+# --nocopy_sup
+# --n_epochs=512
+# --n_epoch_batches=32
+# --n_batch=64
+# --lr=0.001
+# --clip=1.0
+# --sched_factor=0.5
+# --nologtostderr
+# --noalsologtostderr
+# --log_dir=
+# --verbosity=0
+# --verbosity=0
+# --stderrthreshold=fatal
+# --showprefixforinfo
+# --norun_with_pdb
+# --nopdb_post_mortem
+# --norun_with_profiling
+# --use_cprofile_for_profiling
+# --noonly_check_args
+# --aug_ratio=0.2
+# --test_curve
+# --use_mkn
+# --lm_file=lm_base.0.arpa
+# --aug_lm_file=lm_aug.0.arpa
+# --nohelp
+# --nohelp
+# --nohelpshort
+# --nohelpfull
+# --nohelpxml
+# 
+train 3358
+aug 0
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_base.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_aug.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+eval_train/ppl 4.2724
+eval_train/t/p -11.9527549309 2.81213990131e-32
+eval_val/ppl 258.5728
+eval_val/t/p -0.557927721527 0.577012448026
+eval_test/ppl 238.9937
+eval_test/t/p -2.34878835057 0.0190359450001
+# --TEST
+# --seed=0
+# --dataset=lm
+# --model_dir=model
+# --n_checkpoint=10
+# --device=cuda:0
+# --nodedup
+# --wug_size=4
+# --wug_count=2
+# --nocompute_adjacency
+# --nouse_trie
+# --template_sim=none
+# --sim_window_size=2
+# --variants=2
+# --scan_split=add_prim_split
+# --scan_file=addprim_jump
+# --semparse_split=question
+# --semparse_mrl=sql
+# --val_fold=8
+# --test_fold=9
+# --lm_data_dir=/data/jda/wikidata/formatted/kin
+# --n_emb=64
+# --n_enc=512
+# --dropout=0.0
+# --nocopy_sup
+# --n_epochs=512
+# --n_epoch_batches=32
+# --n_batch=64
+# --lr=0.001
+# --clip=1.0
+# --sched_factor=0.5
+# --nologtostderr
+# --noalsologtostderr
+# --log_dir=
+# --verbosity=0
+# --verbosity=0
+# --stderrthreshold=fatal
+# --showprefixforinfo
+# --norun_with_pdb
+# --nopdb_post_mortem
+# --norun_with_profiling
+# --use_cprofile_for_profiling
+# --noonly_check_args
+# --aug_ratio=1.0
+# --test_curve
+# --use_mkn
+# --lm_file=lm_base.0.arpa
+# --aug_lm_file=lm_aug.0.arpa
+# --nohelp
+# --nohelp
+# --nohelpshort
+# --nohelpfull
+# --nohelpxml
+# 
+train 3358
+aug 0
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_base.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Loading the LM will be faster if you build a binary file.
+Reading /data/jda/metacomp2/exp/lm_kin/mkn/lm_aug.0.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+eval_train/ppl 3.9455
+eval_train/t/p -15.0338387894 1.73711154084e-49
+eval_val/ppl 259.6299
+eval_val/t/p 1.86798893845 0.0620414551337
+eval_test/ppl 239.3235
+eval_test/t/p -1.64666255349 0.099953690976

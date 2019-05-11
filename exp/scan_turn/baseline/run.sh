@@ -2,13 +2,15 @@
 
 home="../../.."
 
-for i in `seq 7 9`
+for i in `seq 0 9`
 do
 
   python -u $home/eval.py \
     --dataset scan \
     --seed $i \
     --scan_data_dir /data/jda/SCAN \
+    --scan_split template_split \
+    --scan_file template_around_right \
     --dedup \
     --n_epochs 150 \
     --n_enc 512 \

@@ -1,0 +1,27 @@
+=== 1/5 Counting and sorting n-grams ===
+Reading /data/jda/nadata/train.txt
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Unigram tokens 28240 types 1068
+=== 2/5 Calculating and sorting adjusted counts ===
+Chain sizes: 1:12816 2:2632976384 3:4936830976 4:7898929152 5:11519272960
+Statistics:
+1 1068 D1=0.575269 D2=1.08248 D3+=1.54813
+2 9181 D1=0.700404 D2=1.10443 D3+=1.57211
+3 18780 D1=0.829124 D2=1.26173 D3+=1.78238
+4 22760 D1=0.915893 D2=1.44096 D3+=1.53457
+5 23216 D1=0.945992 D2=1.41728 D3+=1.72905
+Memory estimate for binary LM:
+type      kB
+probing 1623 assuming -p 1.5
+probing 1925 assuming -r models -p 1.5
+trie     695 without quantization
+trie     346 assuming -q 8 -b 8 quantization 
+trie     647 assuming -a 22 array pointer compression
+trie     298 assuming -a 22 -q 8 -b 8 array pointer compression and quantization
+=== 3/5 Calculating and sorting initial probabilities ===
+Chain sizes: 1:12816 2:146896 3:375600 4:546240 5:650048
+=== 4/5 Calculating and writing order-interpolated probabilities ===
+Chain sizes: 1:12816 2:146896 3:375600 4:546240 5:650048
+=== 5/5 Writing ARPA model ===
+Name:lmplz	VmPeak:26551532 kB	VmRSS:6104 kB	RSSMax:4658240 kB	user:1.604	sys:2.812	CPU:4.41845	real:4.4228
