@@ -14,6 +14,7 @@ import numpy as np
 import os
 import torch
 from torch import nn
+from torchdec import hlog
 from torchdec.seq import batch_seqs
 
 MODEL_TYPES = ["retrieval", "staged"]
@@ -23,6 +24,7 @@ flags.DEFINE_enum("model_type", None, MODEL_TYPES, "type of model to use")
 flags.DEFINE_string("model", None, "name of the model to load")
 flags.DEFINE_integer("n_sample", 1000, "number of training examples to sample")
 flags.DEFINE_string("write", None, "path to write to")
+flags.DEFINE_boolean("output_only", False, "this is a language modeling task")
 
 DEVICE = torch.device("cuda:0")
 
@@ -50,6 +52,8 @@ def main(argv):
     torch.manual_seed(FLAGS.seed)
     np.random.seed(FLAGS.seed)
 
+    hlog.flags()
+
     dataset = get_dataset()
     model = pick_model(dataset)
 
@@ -73,12 +77,12 @@ def main(argv):
         for inp, out, score in zip(inps, outs, scores):
             inp_realized, inp_used = dataset.realize(inp, names)
             out_realized, out_used = dataset.realize(out, names)
-            if len(inp_used) == 0 or len(out_used) == 0:
+            if ((not FLAGS.output_only) and len(inp_used) == 0) or len(out_used) == 0:
                 continue
             if len(inp_used | out_used) != len(names):
                 continue
             if not (
-                dataset.novel(inp=inp_realized) 
+                (FLAGS.output_only or dataset.novel(inp=inp_realized))
                 and dataset.novel(out=out_realized)
             ):
                 continue
@@ -86,20 +90,15 @@ def main(argv):
                 continue
             keep.append(((inp_realized, out_realized), score))
         for (inp_realized, out_realized), score in keep:
-            print(
-                " ".join(dataset.vocab.decode(templ[0])),
-                " ".join(dataset.vocab.decode(templ[1])),
-                names
-            )
-            print(score)
-            #print(" ".join(dataset.vocab.decode(inp)))
-            print(" ".join(inp_realized))
-            print("--")
-            #print(" ".join(dataset.vocab.decode(out)))
-            print(" ".join(out_realized))
-            print()
+            with hlog.task(str(len(realized))):
+                hlog.value("inp", " ".join(dataset.vocab.decode(templ[0])))
+                hlog.value("out", " ".join(dataset.vocab.decode(templ[1])))
+                hlog.value("var", names)
+                hlog.value("score", score)
+                with hlog.task("realized"):
+                    hlog.value("inp", " ".join(inp_realized))
+                    hlog.value("out", " ".join(out_realized))
             realized.add((inp_realized, out_realized))
-            print(len(realized))
 
     data = [{"inp": inp, "out": out} for inp, out in realized]
     with open(FLAGS.write, "w") as fh:

@@ -2,9 +2,6 @@
 
 import flags as _flags
 from train import get_dataset
-from data.scan import ScanDataset
-from data.copy import CopyDataset
-from data.semparse import SemparseDataset
 from model import GeneratorModel
 from trainer import train, make_batch, Datum
 
@@ -20,8 +17,6 @@ flags.DEFINE_string("augment", None, "file with composed data for augmentation")
 flags.DEFINE_float("aug_ratio", 0, "fraction of samples to draw from augmentation")
 flags.DEFINE_boolean("invert", False, "swap input/output")
 flags.DEFINE_boolean("test_curve", True, "test in place")
-
-DEVICE = torch.device("cuda:0")
 
 def main(argv):
     torch.manual_seed(FLAGS.seed)
@@ -40,7 +35,7 @@ def main(argv):
         dataset.vocab,
         copy=True,
         self_attention=False
-    ).to(DEVICE)
+    ).to(_flags.device())
 
     fine_tune = [True]
 

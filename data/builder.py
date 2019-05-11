@@ -18,6 +18,9 @@ flags.DEFINE_boolean("compute_adjacency", False, "do compositionality")
 flags.DEFINE_boolean("use_trie", False, "store indices in tries")
 flags.DEFINE_integer("max_comp_len", None, "maximum seq length to attempt")
 flags.DEFINE_integer("max_adjacencies", None, "blah")
+flags.DEFINE_enum("template_sim", "none", ["none", "window"], "similarity function")
+flags.DEFINE_integer("sim_window_size", 2, "similarity window size")
+flags.DEFINE_integer("variants", 2, "number of different args to swap in")
 
 variants = 5
 wug_template = "WUG%d"
@@ -160,23 +163,43 @@ class OneShotDataset(object):
         else:
             keep_args = set([c for c, n in counts.items() if n <= FLAGS.wug_limit])
 
-        print(len(utts))
+        def make_store(initializer):
+            if FLAGS.use_trie:
+                return DefaultTrie(initializer)
+            else:
+                return defaultdict(initializer)
+
+        def compute_templ_sim(templates):
+            wugs = {self.vocab[w] for w in _wugs()}
+            size = FLAGS.sim_window_size
+            def wug_indices(templ):
+                return tuple(i for i, t in enumerate(templ) if t in wugs)
+            templ_to_sig = make_store(set)
+            sig_to_templ = make_store(set)
+
+            for templ in templates:
+                indices = wug_indices(templ)
+                sig = tuple(templ[i-size:i+size+1] for i in indices)
+                templ_to_sig[templ].add(sig)
+                sig_to_templ[sig].add(templ)
+
+            templ_sim = make_store(set)
+            for templ1 in templates:
+                for sig in templ_to_sig[templ1]:
+                    for templ2 in sig_to_templ[sig]:
+                        templ_sim[templ1].add(templ2)
+            return templ_sim
+
         def enumerate_templates():
             for i, utt in enumerate(utts):
                 inp, out = utt
                 seq = inp + (sep,) + out
                 if FLAGS.max_comp_len is not None and len(seq) >= FLAGS.max_comp_len:
                     continue
-                print(i, len(seq))
+                if i % 1000 == 0:
+                    hlog.value("template_utt", "%d/%d" % (i, len(utts)))
                 for generic in self._make_generic(seq, keep_args):
-                    #print(" ".join(self.vocab.decode(generic[0])))
                     yield generic, utt
-
-        def make_store(initializer):
-            if FLAGS.use_trie:
-                return DefaultTrie(initializer)
-            else:
-                return defaultdict(initializer)
 
         arg_to_templ = make_store(set)
         templ_to_arg = make_store(set)
@@ -189,24 +212,31 @@ class OneShotDataset(object):
             #sim_templ.put(templ, args)
             #templ_to_orig[templ].add(orig)
 
+        if FLAGS.template_sim == "window":
+            templ_sim = compute_templ_sim(templ_to_arg.keys())
+        else:
+            templ_sim = {t: set(t) for t in templ_to_arg.keys}
+
         multiplicity = make_store(lambda: 0)
         for i_arg, args1 in enumerate(arg_to_templ.keys()):
-            print(i_arg, len(arg_to_templ))
+            if i_arg % 10000 == 0:
+                hlog.value("template_arg", "%d/%d" % (i_arg, len(arg_to_templ)))
             for templ1 in arg_to_templ[args1]:
                 multiplicity[templ1] += 1
                 c = 0
-                for templ2 in arg_to_templ[args1]:
-                    if templ1 == templ2:
-                        continue
-                    #if (templ1, templ2) in templ_to_templ:
-                    #    continue
-                    templ_to_templ[templ2].add(templ1)
-                    c += 1
-                    if (
-                        FLAGS.max_adjacencies is not None 
-                        and c >= FLAGS.max_adjacencies
-                    ):
-                        break
+                for templ2_pre in arg_to_templ[args1]:
+                    for templ2 in templ_sim[templ2_pre]:
+                        if templ1 == templ2:
+                            continue
+                        #if (templ1, templ2) in templ_to_templ:
+                        #    continue
+                        templ_to_templ[templ2].add(templ1)
+                        c += 1
+                        if (
+                            FLAGS.max_adjacencies is not None 
+                            and c >= FLAGS.max_adjacencies
+                        ):
+                            break
 
         self.templ_to_arg = templ_to_arg
         #self.arg_to_templ = arg_to_templ
@@ -290,7 +320,7 @@ class OneShotDataset(object):
                 continue
             np.random.shuffle(args)
             #args = it.islice(it.chain.from_iterable(it.repeat(args)), variants)
-            args = args[:2]
+            args = args[:FLAGS.variants]
             for arg in args:
                 dec_arg = [self.vocab.decode(a) for a in arg]
                 names = dict(zip(_wugs(), dec_arg))
@@ -302,7 +332,7 @@ class OneShotDataset(object):
                 continue
             args = list(self.templ_to_arg[templ])
             np.random.shuffle(args)
-            for arg in args[:2]:
+            for arg in args[:FLAGS.variants]:
                 dec_arg = [self.vocab.decode(a) for a in arg]
                 names = dict(zip(_wugs(), dec_arg))
                 yield self.split(templ), names

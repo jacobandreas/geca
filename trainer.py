@@ -1,3 +1,5 @@
+import flags as _flags
+
 from absl import flags
 from collections import namedtuple
 import torch
@@ -16,7 +18,6 @@ flags.DEFINE_float("clip", 1., "gradient clipping")
 flags.DEFINE_float("sched_factor", 0.5, "opt scheduler reduce factor")
 
 FLAGS = flags.FLAGS
-DEVICE = torch.device("cpu")
 
 Datum = namedtuple(
     "Datum", 
@@ -24,13 +25,14 @@ Datum = namedtuple(
 )
 
 def make_batch(samples, vocab, staged):
+    device = _flags.device()
     seqs = zip(*samples)
     if staged:
         ref, tgt, *extra = seqs
         (ref_inp, ref_out) = zip(*ref)
         (inp, out) = zip(*tgt)
         ref_inp_data, ref_out_data, inp_data, out_data = (
-            batch_seqs(seq).to(DEVICE) for seq in (ref_inp, ref_out, inp, out)
+            batch_seqs(seq).to(device) for seq in (ref_inp, ref_out, inp, out)
         )
         return Datum(
             (ref_inp, ref_out), (inp, out), (ref_inp_data, ref_out_data), 
@@ -38,8 +40,8 @@ def make_batch(samples, vocab, staged):
         )
     else:
         inp, out, *extra = seqs
-        inp_data = batch_seqs(inp).to(DEVICE)
-        out_data = batch_seqs(out).to(DEVICE)
+        inp_data = batch_seqs(inp).to(device)
+        out_data = batch_seqs(out).to(device)
 
         direct_out = []
         copy_out = []
@@ -48,8 +50,8 @@ def make_batch(samples, vocab, staged):
             copy_out.append([o[0]] + cout + [o[-1]])
             dout = [vocab.copy() if tok in i[1:-1] else tok for tok in o[1:-1]]
             direct_out.append([o[0]] + dout + [o[-1]])
-        direct_out_data = batch_seqs(direct_out).to(DEVICE)
-        copy_out_data = batch_seqs(copy_out).to(DEVICE)
+        direct_out_data = batch_seqs(direct_out).to(device)
+        copy_out_data = batch_seqs(copy_out).to(device)
         #direct_out_data = None
         return Datum(
             inp, out, inp_data, out_data, direct_out_data, copy_out_data, extra

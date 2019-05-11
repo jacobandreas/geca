@@ -199,7 +199,7 @@ class LanguageModel(nn.Module):
     def forward(self, inp, out, dout, cout):
         out_prev = out[:-1, :]
         out_next = out[1:, :]
-        zero = torch.zeros(1, out.shape[1], FLAGS.n_enc)
+        zero = torch.zeros(1, out.shape[1], FLAGS.n_enc).to(out.device)
         pred, *_ = self.decoder(
             (zero, zero),
             out_prev.shape[0],
@@ -234,7 +234,8 @@ class GeneratorModel(nn.Module):
             self_attention=self_attention,
             dropout=FLAGS.dropout
         )
-        self.loss = nn.CrossEntropyLoss(ignore_index=vocab.pad())
+        #self.loss = nn.CrossEntropyLoss(ignore_index=vocab.pad())
+        self.loss = nn.CrossEntropyLoss()
 
     def prepare(self, dataset):
         pass
