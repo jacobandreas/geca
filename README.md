@@ -4,5 +4,5 @@ A simple rule-based data augmentation scheme aimed at encouraging generalization
 
 Jacob Andreas, ACL 2020. https://arxiv.org/abs/1904.09545
 
-Semantic parsing dataset (Finnegan-Dolak et al.): https://github.com/jkkummerfeld/text2sql-data
-SCAN dataset (Lake and Baroni): https://github.com/brendenlake/SCAN
+- Semantic parsing dataset (Finnegan-Dolak et al.): https://github.com/jkkummerfeld/text2sql-data
+- SCAN dataset (Lake and Baroni): https://github.com/brendenlake/SCAN
