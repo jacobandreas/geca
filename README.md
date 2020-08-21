@@ -21,3 +21,19 @@ augmentation.
   Na data, which is derived from "Cross-Lingual Word Embeddings for Low-Resource
   Language Modeling" (Adams et al. 2017). Note different train/test splits for
   Na.
+
+**To use on a new dataset**:
+
+1. Point `torchdec` at https://github.com/jacobandreas/torchdec.
+2. Create a new data loader under `data` (look at `data/scan.py` for a simple
+   example).
+3. Update `get_dataset` in `train.py` to use the new loader.
+4. Run the experiment pipeline (look at `exp/scan_jump/retrieval/run.sh` for an
+   example). 
+
+The `wug_size` and `wug_count` flags (defined in `data/builder.py`) determine
+the number and size of the fragments that will be extracted from each template.
+the `template_sim` flag determines whether the whole string or a fixed-size
+window will be used for evaluating template similarity; `sim_window_size`
+determines the window size. The number and diversity of generated templates can
+be further controlled using the `variants` and `n_sample` flags.
