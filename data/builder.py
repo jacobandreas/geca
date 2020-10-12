@@ -215,7 +215,7 @@ class OneShotDataset(object):
         if FLAGS.template_sim == "window":
             templ_sim = compute_templ_sim(templ_to_arg.keys())
         else:
-            templ_sim = {t: set(t) for t in templ_to_arg.keys}
+            templ_sim = {t: set([t]) for t in templ_to_arg.keys()}
 
         multiplicity = make_store(lambda: 0)
         for i_arg, args1 in enumerate(arg_to_templ.keys()):
