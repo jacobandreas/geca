@@ -4,6 +4,13 @@ A simple rule-based data augmentation scheme aimed at encouraging generalization
 
 Jacob Andreas, ACL 2020. https://arxiv.org/abs/1904.09545
 
+**Important reproducibility note**:
+
+I seem to have introduced a bug into a recent version of the codebase. If you
+want to reproduce the SCAN or semantic parsing experiments from the ACL paper,
+please use the version of the code at commit
+[6be7628](https://github.com/jacobandreas/geca/commit/6be7628dcbf7d6f8a5307fd9b5e3d3f7af06d9c5).
+
 **Experiments**:
 
 Look in the `exp` folder. Experiments labeled `retrieval` use GECA for data
