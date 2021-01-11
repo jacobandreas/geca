@@ -7,6 +7,8 @@ import flags as _flags
 from data.scan import ScanDataset
 from data.copy import CopyDataset
 from data.semparse import SemparseDataset
+from data.morph import MorphDataset
+from data.colors import ColorsDataset
 from data.lm import LmDataset
 from model import GeneratorModel, RetrievalModel, StagedModel
 from trainer import train, make_batch, Datum
@@ -33,6 +35,10 @@ def get_dataset(**kwargs):
         return CopyDataset(**kwargs)
     if FLAGS.dataset == "lm":
         return LmDataset(**kwargs)
+    if FLAGS.dataset == "morph":
+        return MorphDataset(**kwargs)
+    if FLAGS.dataset == "colors":
+        return ColorsDataset(**kwargs)
     assert False, "unknown dataset %s" % FLAGS.dataset
 
 @profile

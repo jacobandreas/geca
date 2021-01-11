@@ -4,18 +4,6 @@ A simple rule-based data augmentation scheme aimed at encouraging generalization
 
 Jacob Andreas, ACL 2020. https://arxiv.org/abs/1904.09545
 
-**Important reproducibility note**:
-
-I seem to have introduced a bug into a recent version of the codebase. If you
-want to reproduce the SCAN or semantic parsing experiments from the ACL paper,
-please use the version of the code at commit
-[6be7628](https://github.com/jacobandreas/geca/commit/6be7628dcbf7d6f8a5307fd9b5e3d3f7af06d9c5).
-
-**Experiments**:
-
-Look in the `exp` folder. Experiments labeled `retrieval` use GECA for data
-augmentation.
-
 **Data**:
 
 - Semantic parsing dataset (Finnegan-Dolak et al.): 
@@ -29,10 +17,16 @@ augmentation.
   Language Modeling" (Adams et al. 2017). Note different train/test splits for
   Na.
 
+- Human sequence-to-sequence learning (Lake, Linzen and Baroni):
+  Fig 2 in https://arxiv.org/pdf/1901.04587.pdf
+
+- COGS dataset (Kim and Linzen): 
+  https://github.com/najoungkim/COGS
+
 **To use on a new dataset**:
 
 1. Point `torchdec` at https://github.com/jacobandreas/torchdec.
-2. Create a new data loader under `data` (look at `data/scan.py` for a simple
+2. Create a new data loader under `data` (look at `data/colors.py` for a minimal
    example).
 3. Update `get_dataset` in `train.py` to use the new loader.
 4. Run the experiment pipeline (look at `exp/scan_jump/retrieval/run.sh` for an
